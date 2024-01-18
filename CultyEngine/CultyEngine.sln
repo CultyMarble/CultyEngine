@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F3B005
 		VSProps\Common\Library.props = VSProps\Common\Library.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VGP242", "VGP242", "{3E09D8F4-7E42-484B-958A-B151B0520CA1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_HelloWindow", "VGP242\01_HelloWindow\01_HelloWindow.vcxproj", "{CD29BC72-B683-480E-BA3C-CDA18612D185}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -48,6 +52,14 @@ Global
 		{C653AAB0-57DF-4E8B-A6BF-5D34EE4F0B86}.Release|x64.Build.0 = Release|x64
 		{C653AAB0-57DF-4E8B-A6BF-5D34EE4F0B86}.Release|x86.ActiveCfg = Release|Win32
 		{C653AAB0-57DF-4E8B-A6BF-5D34EE4F0B86}.Release|x86.Build.0 = Release|Win32
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Debug|x64.ActiveCfg = Debug|x64
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Debug|x64.Build.0 = Debug|x64
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Debug|x86.ActiveCfg = Debug|Win32
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Debug|x86.Build.0 = Debug|Win32
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Release|x64.ActiveCfg = Release|x64
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Release|x64.Build.0 = Release|x64
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Release|x86.ActiveCfg = Release|Win32
+		{CD29BC72-B683-480E-BA3C-CDA18612D185}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +68,7 @@ Global
 		{02BFEA78-10FA-4EC2-A0F1-EA72F3EE0ED2} = {E03A026F-9A02-426F-A509-AC7739FBA0BB}
 		{C653AAB0-57DF-4E8B-A6BF-5D34EE4F0B86} = {D1A585D4-C5A9-450F-9FF7-23C490A1F2ED}
 		{F3B005C0-0D5C-4AC7-80F1-5631830A8FC2} = {188D6DB9-6897-4ABE-B6D0-1E825B15BDF8}
+		{CD29BC72-B683-480E-BA3C-CDA18612D185} = {3E09D8F4-7E42-484B-958A-B151B0520CA1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {033DDF7C-49D3-4D78-851F-7A065F9F78EE}

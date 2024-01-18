@@ -18,9 +18,24 @@
     <ClInclude Include="Src\Precompiled.h">
       <Filter>Src</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\DebugUtils.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\TimeUtils.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Window.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TimeUtils.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Window.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
