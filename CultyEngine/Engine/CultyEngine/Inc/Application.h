@@ -2,11 +2,14 @@
 
 namespace CultyEngine
 {
+    class ApplicationState;
+
     struct ApplicationConfig
     {
         std::wstring applicationName = L"ApplicationName";
-        uint32_t winWidth = 1280;
-        uint32_t winHeight = 720;
+
+        uint32_t winWidth = 1280;   // default
+        uint32_t winHeight = 720;   // default
     };
 
     class Application final
@@ -15,7 +18,7 @@ namespace CultyEngine
         template<class StateType> 
         void AddState(const std::string& stateName)
         {
-            static_assert(std::is_base_of_v<ApplicationState, StateType>, "AddState must be of type ");
+            static_assert(std::is_base_of_v<ApplicationState, StateType>, "AddState must be of type ApplicationState");
 
             auto [iter, success] = mApplicationStates.try_emplace(stateName, nullptr);
             if (success)
@@ -36,7 +39,7 @@ namespace CultyEngine
         void Quit();
 
     private:
-        using ApplicationStateMap = std::map < std::string, std::unique_ptr<ApplicationState>>;
+        using ApplicationStateMap = std::map<std::string, std::unique_ptr<ApplicationState>>;
 
         ApplicationStateMap mApplicationStates;
         ApplicationState* mCurrentState = nullptr;

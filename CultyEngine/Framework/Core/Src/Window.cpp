@@ -30,7 +30,7 @@ namespace CultyEngine
         wcex.style = CS_HREDRAW | CS_VREDRAW;
         wcex.lpfnWndProc = WindowMessageHandler;
         wcex.cbClsExtra = 0;
-        wcex.cbClsExtra = 0;
+        wcex.cbWndExtra = 0;
         wcex.hInstance = instance;
         wcex.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
         wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);

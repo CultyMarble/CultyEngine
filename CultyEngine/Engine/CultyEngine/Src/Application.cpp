@@ -17,6 +17,7 @@ namespace CultyEngine
         );
 
         ASSERT(_mWindow.IsActive(), "Failed to create a Window!");
+
         ASSERT(mCurrentState != nullptr, "Application: need an application state!");
         mCurrentState->Initialize();
 
@@ -24,9 +25,6 @@ namespace CultyEngine
         while (mIsRunning)
         {
             _mWindow.ProcessMessage();
-
-            float deltaTime = TimeUtils::GetDeltaTime();
-
             if (_mWindow.IsActive() == false)
             {
                 Quit();
@@ -51,10 +49,9 @@ namespace CultyEngine
     void Application::ChangeState(const std::string& stateName)
     {
         auto iter = mApplicationStates.find(stateName);
+
         if (iter != mApplicationStates.end())
-        {
             mNextState = iter->second.get();
-        }
     }
 
     void Application::Quit()

@@ -17,15 +17,55 @@ public:
     void Update(float deltaTime)
     {
         mLifeTime -= deltaTime;
-        if ()
+        if (mLifeTime <= 0.0f)
+        {
+            CultyEngine::Application& myApplication = CultyEngine::MainApplication();
+            myApplication.ChangeState("GameState");
+        }
     }
+
+private:
+    float mLifeTime = {};
+};
+
+class GameState : public CultyEngine::ApplicationState
+{
+public:
+    void Initialize()
+    {
+        LOG("GAME STATE INITIALIZED!");
+        mLifeTime = 2.0f;
+    }
+
+    void Terminate()
+    {
+        LOG("GAME STATE TERMINATED!");
+    }
+
+    void Update(float deltaTime)
+    {
+        mLifeTime -= deltaTime;
+        if (mLifeTime <= 0.0f)
+        {
+            CultyEngine::Application& myApplication = CultyEngine::MainApplication();
+            myApplication.ChangeState("MainState");
+        }
+    }
+
+private:
+    float mLifeTime = {};
 };
 
 int WINAPI WinMain(HINSTANCE istance, HINSTANCE, LPSTR, int)
 {
-    CultyEngine::Application myApplication;
     CultyEngine::ApplicationConfig myAppConfig;
     myAppConfig.applicationName = L"HelloWindow";
+    // myAppConfig.winWidth = 1280;
+    // myAppConfig.winHeight = 720;
+
+    CultyEngine::Application& myApplication = CultyEngine::MainApplication();
+    myApplication.AddState<MainState>("MainState");
+    myApplication.AddState<GameState>("GameState");
 
     myApplication.Run(myAppConfig);
 

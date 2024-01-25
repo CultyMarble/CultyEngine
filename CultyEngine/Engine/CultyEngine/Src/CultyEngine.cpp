@@ -5,6 +5,7 @@ namespace CultyEngine
 {
     Application& MainApplication()
     {
-        
+        static Application sApplication;
+        return sApplication;
     }
 }
