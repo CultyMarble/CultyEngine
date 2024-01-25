@@ -56,17 +56,20 @@ private:
     float mLifeTime = {};
 };
 
-int WINAPI WinMain(HINSTANCE istance, HINSTANCE, LPSTR, int)
+int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
+    // CONFIG
     CultyEngine::ApplicationConfig myAppConfig;
     myAppConfig.applicationName = L"HelloWindow";
-    // myAppConfig.winWidth = 1280;
-    // myAppConfig.winHeight = 720;
+    myAppConfig.winWidth = 1920;
+    myAppConfig.winHeight = 1080;
 
+    // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();
     myApplication.AddState<MainState>("MainState");
     myApplication.AddState<GameState>("GameState");
 
+    // RUNTIME
     myApplication.Run(myAppConfig);
 
     return EXIT_SUCCESS;

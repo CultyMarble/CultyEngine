@@ -27,7 +27,7 @@ namespace CultyEngine
                 ptr = std::make_unique<StateType>();
                 if (mCurrentState == nullptr)
                 {
-                    LOG("Application: Current state &s", stateName.c_str());
+                    LOG("Application: Current state %s", stateName.c_str());
                     mCurrentState = ptr.get();
                 }
             }

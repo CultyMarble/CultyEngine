@@ -143,7 +143,9 @@
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Precompiled.cpp" />
+    <ClCompile Include="Src\Precompiled.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Src\TimeUtils.cpp" />
     <ClCompile Include="Src\Window.cpp" />
   </ItemGroup>
