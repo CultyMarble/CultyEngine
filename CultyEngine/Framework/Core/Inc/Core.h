@@ -5,3 +5,4 @@
 #include "DebugUtils.h"
 #include "TimeUtils.h"
 #include "Window.h"
+#include "WindowMessageHandler.h"

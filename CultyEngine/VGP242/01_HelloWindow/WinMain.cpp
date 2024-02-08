@@ -6,6 +6,7 @@ public:
     void Initialize()
     {
         LOG("MAIN STATE INITIALIZED!");
+        CultyEngine::Graphics::GraphicsSystem::Get()->SetClearColor(CultyEngine::Colors::Red);
         mLifeTime = 2.0f;
     }
 
@@ -34,6 +35,7 @@ public:
     void Initialize()
     {
         LOG("GAME STATE INITIALIZED!");
+        CultyEngine::Graphics::GraphicsSystem::Get()->SetClearColor(CultyEngine::Colors::Blue);
         mLifeTime = 2.0f;
     }
 
@@ -61,8 +63,8 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     // CONFIG
     CultyEngine::ApplicationConfig myAppConfig;
     myAppConfig.applicationName = L"HelloWindow";
-    myAppConfig.winWidth = 1920;
-    myAppConfig.winHeight = 1080;
+    myAppConfig.winWidth = 1280;
+    myAppConfig.winHeight = 720;
 
     // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();
