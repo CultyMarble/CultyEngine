@@ -1,0 +1,58 @@
+#include "Precompiled.h"
+#include "PixelShader.h"
+
+#include "GraphicsSystem.h"
+
+using namespace CultyEngine;
+using namespace CultyEngine::Graphics;
+
+void PixelShader::Initialize(const std::filesystem::path& filePath)
+{
+    auto device = GraphicsSystem::Get()->GetDevice();
+
+    DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
+    ID3DBlob* shaderBlob = nullptr;
+    ID3DBlob* errorBlob = nullptr;
+
+    //===========================================================================
+    // Need to create a pixel shader
+    HRESULT hResult = D3DCompileFromFile(
+        filePath.c_str(),
+        nullptr,
+        D3D_COMPILE_STANDARD_FILE_INCLUDE,
+        "PS", "ps_5_0",
+        shaderFlags, 0,
+        &shaderBlob,
+        &errorBlob
+    );
+
+    if (errorBlob != nullptr && errorBlob->GetBufferPointer() != nullptr)
+    {
+        LOG("%s", static_cast<const char*>(errorBlob->GetBufferPointer()));
+    }
+    ASSERT(SUCCEEDED(hResult), "Failed to compile pixel shader!");
+
+    hResult = device->CreatePixelShader(
+        shaderBlob->GetBufferPointer(),
+        shaderBlob->GetBufferSize(),
+        nullptr,
+        &mPixelShader
+    );
+
+    ASSERT(SUCCEEDED(hResult), "Failed to create pixel shader!");
+    SafeRelease(shaderBlob);
+    SafeRelease(errorBlob);
+}
+
+void PixelShader::Terminate()
+{
+	SafeRelease(mPixelShader);
+}
+
+void PixelShader::Bind()
+{
+    auto context = CultyEngine::Graphics::GraphicsSystem::Get()->GetContext();
+
+    // Bind
+    context->PSSetShader(mPixelShader, nullptr, 0);
+}
