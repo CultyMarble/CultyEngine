@@ -11,36 +11,13 @@ void GameState::Initialize()
     mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
     // Create a shape
-    mMesh.vertices.push_back({ { -0.5f, -0.5f, 0.0f }, Colors::Red });
-    mMesh.vertices.push_back({ { -0.5f,  0.5f, 0.0f }, Colors::Blue });
-    mMesh.vertices.push_back({ {  0.5f,  0.5f, 0.0f }, Colors::Green });
-    mMesh.vertices.push_back({ {  0.5f, -0.5f, 0.0f }, Colors::Yellow });
-
-    mMesh.vertices.push_back({ { -0.5f, -0.5f, 1.0f }, Colors::Red });
-    mMesh.vertices.push_back({ { -0.5f,  0.5f, 1.0f }, Colors::Blue });
-    mMesh.vertices.push_back({ {  0.5f,  0.5f, 1.0f }, Colors::Green });
-    mMesh.vertices.push_back({ {  0.5f, -0.5f, 1.0f }, Colors::Yellow });
-
-    mMesh.indices = { 
-        // front
-        0, 1, 2, 
-        0, 2, 3,
-        // back
-        7, 5, 4,
-        7, 6, 5,
-        // right
-        3, 2, 6,
-        3, 6, 7,
-        // left
-        4, 5, 1,
-        4, 1, 0,
-        // top
-        1, 5, 6,
-        1, 6, 2,
-        // bottom
-        0, 3, 7,
-        0, 7, 4,
-    };
+    //mMesh = MeshBuilder::CreateRectanglePC(2.0f);
+    //mMesh = MeshBuilder::CreateCubePC(2.0f);
+    //mMesh = MeshBuilder::CreateRectanglePC(2.0f, 0.5f, 1.0f);
+    //mMesh = MeshBuilder::CreateVerticalPlanePC(10, 10, 1.0f);
+    //mMesh = MeshBuilder::CreateHorizontalPlanePC(10, 10, 1.0f);
+    //mMesh = MeshBuilder::CreateCylinderPC(10, 4);
+    mMesh = MeshBuilder::CreateSpherePC(100.0f, 100.0f, 1.0f);
 
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTransform.fx";
 
