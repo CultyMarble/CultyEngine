@@ -16,8 +16,12 @@ private:
     CultyEngine::Graphics::Camera mCamera;
     CultyEngine::Graphics::ConstantBuffer mConstantBuffer;
 
-    CultyEngine::Graphics::MeshPC mMesh;
+    //CultyEngine::Graphics::MeshPC mMesh;
+    CultyEngine::Graphics::MeshPX mMesh;
     CultyEngine::Graphics::MeshBuffer mMeshBuffer;
     CultyEngine::Graphics::VertexShader mVertexShader;
     CultyEngine::Graphics::PixelShader mPixelShader;
+
+    CultyEngine::Graphics::Texture mTexture;
+    CultyEngine::Graphics::Sampler mSampler;
 };

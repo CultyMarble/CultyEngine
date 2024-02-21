@@ -12,42 +12,69 @@ Texture::~Texture()
 	ASSERT(mShaderResourceView == nullptr, "Texture: Must call terminate");
 }
 
-Texture::Texture(Texture&&) noexcept
+Texture::Texture(Texture&& rhs) noexcept
+	:mShaderResourceView(rhs.mShaderResourceView)
 {
+	rhs.mShaderResourceView = nullptr;
+}
 
+Texture& Texture::operator=(Texture&& rhs) noexcept
+{
+	mShaderResourceView = rhs.mShaderResourceView;
+	rhs.mShaderResourceView = nullptr;
+
+	return *this;
 }
 
 void Texture::Initialize(const std::filesystem::path& fileName)
 {
+	auto device = GraphicsSystem::Get()->GetDevice();
+	auto context = GraphicsSystem::Get()->GetContext();
 
+	HRESULT hr = DirectX::CreateWICTextureFromFile(device, context, fileName.c_str(), nullptr, &mShaderResourceView);
+	ASSERT(SUCCEEDED(hr), "Texture: Failed to create texture %ls", fileName.c_str());
 }
 
 void Texture::Initialize(uint32_t width, uint32_t heigth, Format format)
 {
-
+	ASSERT(false, "Texture: Not yet implemented!");
 }
 
 void Texture::Terminate()
 {
-
+	SafeRelease(mShaderResourceView);
 }
 
 void Texture::BindVS(uint32_t slot) const
 {
-
+	auto context = GraphicsSystem::Get()->GetContext();
+	context->VSGetShaderResources(slot, 1, &mShaderResourceView);
 }
 
 void Texture::BindPS(uint32_t slot) const
 {
-
+	auto context = GraphicsSystem::Get()->GetContext();
+	context->PSGetShaderResources(slot, 1, &mShaderResourceView);
 }
 
 void* Texture::GetRawData() const
 {
-	return nullptr;
+	return mShaderResourceView;
 }
 
 DXGI_FORMAT Texture::GetDXGIFormat(Format format)
 {
-	return DXGI_FORMAT();
+	switch (format)
+	{
+	case Format::RGBA_U8:
+		return DXGI_FORMAT_R8G8B8A8_UNORM;
+		break;
+	case Format::RGBA_U32:
+		return DXGI_FORMAT_R32G32B32A32_UINT;
+		break;
+	default:
+		break;
+	}
+
+	return DXGI_FORMAT_R8G8B8A8_UNORM;
 }

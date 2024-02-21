@@ -7,7 +7,7 @@ namespace CultyEngine::Graphics
 	public:
 		enum class Format
 		{
-			RGBA_UB,
+			RGBA_U8,
 			RGBA_U32,
 		};
 
@@ -16,10 +16,11 @@ namespace CultyEngine::Graphics
 
 		// delete copy
 		Texture(const Texture&) = delete;
-		Texture& operator=(const Texture&) = delete;
+		Texture& operator=(const Texture&&) = delete;
 
 		// allow the move
 		Texture(Texture&&) noexcept;
+		Texture& operator=(Texture&&) noexcept;
 
 		virtual void Initialize(const std::filesystem::path& fileName);
 		virtual void Initialize(uint32_t width, uint32_t heigth, Format format);
@@ -30,8 +31,8 @@ namespace CultyEngine::Graphics
 
 		void* GetRawData() const;
 
-	private:
+	protected:
 		DXGI_FORMAT GetDXGIFormat(Format format);
-		ID3D10ShaderResourceView* mShaderResourceView = nullptr;
+		ID3D11ShaderResourceView* mShaderResourceView = nullptr;
 	};
 }

@@ -17,18 +17,34 @@ void GameState::Initialize()
     //mMesh = MeshBuilder::CreateVerticalPlanePC(10, 10, 1.0f);
     //mMesh = MeshBuilder::CreateHorizontalPlanePC(10, 10, 1.0f);
     //mMesh = MeshBuilder::CreateCylinderPC(10, 4);
-    mMesh = MeshBuilder::CreateSpherePC(100.0f, 100.0f, 1.0f);
+    //mMesh = MeshBuilder::CreateSpherePC(10.0f, 10.0f, 1.0f);
 
-    std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTransform.fx";
+    mMesh.vertices.push_back({ { -1.0f, -1.0f, 0.0f }, { 0.0f, 1.0f } });
+    mMesh.vertices.push_back({ { -1.0f,  1.0f, 0.0f }, { 0.0f, 0.0f } });
+    mMesh.vertices.push_back({ {  1.0f,  1.0f, 0.0f }, { 1.0f, 0.0f } });
+    mMesh.vertices.push_back({ {  1.0f, -1.0f, 0.0f }, { 1.0f, 1.0f } });
+    mMesh.indices = {
+        0, 1, 2,
+        0, 2, 3,
+    };
+
+    std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTexturing.fx";
 
     mMeshBuffer.Initialize(mMesh);
     mConstantBuffer.Initialize(sizeof(MathC::Matrix4));
-    mVertexShader.Initialize<VertexPC>(shaderFilePath);
+    //mVertexShader.Initialize<VertexPC>(shaderFilePath);
+    mVertexShader.Initialize<VertexPX>(shaderFilePath);
     mPixelShader.Initialize(shaderFilePath);
+
+    mTexture.Initialize(L"../../Assets/Images/misc/basketball.jpg");
+    mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 }
 
 void GameState::Terminate()
 {
+    mSampler.Terminate();
+    mTexture.Terminate();
+
     mPixelShader.Terminate();
     mVertexShader.Terminate();
     mConstantBuffer.Terminate();
@@ -68,6 +84,8 @@ void GameState::Render()
     // Bind
     mVertexShader.Bind();
     mPixelShader.Bind();
+    mTexture.BindPS(0);
+    mSampler.BindPS(0);
 
     MathC::Matrix4 matWorld = MathC::Matrix4::Identity;
     MathC::Matrix4 matView = mCamera.GetViewMatrix();

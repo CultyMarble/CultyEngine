@@ -48,7 +48,7 @@ namespace
 		{
 			for (uint32_t c = 0; c < numCols; ++c)
 			{
-				uint32_t i = (r + (numCols + 1)) + c;
+				uint32_t i = (r * (numCols + 1)) + c;
 
 				// triangle 1
 				indices.push_back(i);
@@ -66,12 +66,13 @@ namespace
 
 MeshPC MeshBuilder::CreatePyramidPC(float size)
 {
-	MeshPC mesh;
-	const float hs = size * 0.5f;
-	
 	srand(time(nullptr));
 	int index = rand() & 100;
 
+	MeshPC mesh;
+
+	const float hs = size * 0.5f;
+	
 	// front
 	mesh.vertices.push_back({ {-hs, -hs, -hs}, GetNextColor(index)});
 	mesh.vertices.push_back({ {0.0f, hs, 0.0f}, GetNextColor(index) });
@@ -100,12 +101,12 @@ MeshPC MeshBuilder::CreatePyramidPC(float size)
 
 MeshPC MeshBuilder::CreateCubePC(float size)
 {
+	srand(time(nullptr));
+	int index = rand() % 100;
+
 	MeshPC meshPC;
 
 	const float hs = size * 0.5f;
-
-	srand(time(nullptr));
-	int index = rand() % 100;
 
 	// front
 	meshPC.vertices.push_back({ {-hs, -hs, -hs}, GetNextColor(index) });
@@ -157,6 +158,7 @@ MeshPC MeshBuilder::CreateVerticalPlanePC(uint32_t numRows, uint32_t numCols, fl
 	int index = rand() % 100;
 
 	MeshPC meshPC;
+
 	const float hpw = static_cast<float>(numCols) * spacing * 0.5f;
 	const float hph = static_cast<float>(numRows) * spacing * 0.5f;
 
@@ -170,7 +172,6 @@ MeshPC MeshBuilder::CreateVerticalPlanePC(uint32_t numRows, uint32_t numCols, fl
 			meshPC.vertices.push_back({ {x, y, 0.0f}, GetNextColor(index) });
 			x += spacing;
 		}
-
 		x = -hpw;
 		y += spacing;
 	}
@@ -186,6 +187,7 @@ MeshPC MeshBuilder::CreateHorizontalPlanePC(uint32_t numRows, uint32_t numCols, 
 	int index = rand() % 100;
 
 	MeshPC meshPC;
+
 	const float hpw = static_cast<float>(numCols) * spacing * 0.5f;
 	const float hph = static_cast<float>(numRows) * spacing * 0.5f;
 
@@ -209,7 +211,7 @@ MeshPC MeshBuilder::CreateHorizontalPlanePC(uint32_t numRows, uint32_t numCols, 
 	return meshPC;
 }
 
-MeshPC CultyEngine::Graphics::MeshBuilder::CreateCylinderPC(uint32_t slices, uint32_t rings)
+MeshPC MeshBuilder::CreateCylinderPC(uint32_t slices, uint32_t rings)
 {
 	srand(time(nullptr));
 	int index = rand() % 100;
@@ -227,18 +229,23 @@ MeshPC CultyEngine::Graphics::MeshBuilder::CreateCylinderPC(uint32_t slices, uin
 			float slicePos = static_cast<float>(s);
 			float rotation = (slicePos / static_cast<float>(slices)) * MathC::Constants::TwoPi;
 
-			meshPC.vertices.push_back({ {cos(rotation),ringPos - hh,sin(rotation) },GetNextColor(index) });
+			meshPC.vertices.push_back({ 
+				{cos(rotation), ringPos - hh, sin(rotation)}, 
+				GetNextColor(index)
+				});
 		}
 	}
 
+	CreatePlaneIndices(meshPC.indices, rings, slices);
+
+	// Top and Bottom cap
 	meshPC.vertices.push_back({ {0.0f, hh, 0.0f}, GetNextColor(index) });
 	meshPC.vertices.push_back({ {0.0f, -hh, 0.0f}, GetNextColor(index) });
 
-	CreatePlaneIndices(meshPC.indices, slices, rings);
-
 	uint32_t bottomIndex = meshPC.vertices.size() - 1;
 	uint32_t topIndex = bottomIndex - 1;
-	for (uint32_t s = 0; s <= slices; ++s)
+
+	for (uint32_t s = 0; s < slices; ++s)
 	{
 		// bottom triangle
 		meshPC.indices.push_back(bottomIndex);
@@ -255,25 +262,25 @@ MeshPC CultyEngine::Graphics::MeshBuilder::CreateCylinderPC(uint32_t slices, uin
 	return meshPC;
 }
 
-MeshPC CultyEngine::Graphics::MeshBuilder::CreateSpherePC(uint32_t slices, uint32_t rings, float radius)
+MeshPC MeshBuilder::CreateSpherePC(uint32_t slices, uint32_t rings, float radius)
 {
 	srand(time(nullptr));
 	int index = rand() % 100;
 
 	MeshPC meshPC;
 
-	const float verticalRotation = (MathC::Constants::Pi / static_cast<float>(rings));
-	const float horizontalRotation = (MathC::Constants::TwoPi / static_cast<float>(slices));
+	const float vertRotation = (MathC::Constants::Pi / static_cast<float>(rings));
+	const float horzRotation = (MathC::Constants::TwoPi / static_cast<float>(slices));
 
 	for (uint32_t r = 0; r <= rings; ++r)
 	{
 		float ringPos = static_cast<float>(r);
-		float phi = ringPos * verticalRotation;
+		float phi = ringPos * vertRotation;
 
 		for (uint32_t s = 0; s <= rings; ++s)
 		{
 			float slicePos = static_cast<float>(s);
-			float rotation = slicePos * horizontalRotation;
+			float rotation = slicePos * horzRotation;
 
 			meshPC.vertices.push_back({ {
 				radius * sin(rotation) * sin(phi),

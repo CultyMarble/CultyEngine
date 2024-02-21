@@ -9,6 +9,7 @@
 #include "MeshBuilder.h"
 #include "MeshTypes.h"
 #include "PixelShader.h"
+#include "Sampler.h"
+#include "Texture.h"
 #include "VertexTypes.h"
 #include "VertexShader.h"
-#include "Texture.h"
