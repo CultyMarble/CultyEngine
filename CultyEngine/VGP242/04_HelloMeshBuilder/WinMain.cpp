@@ -6,8 +6,8 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     // CONFIG
     CultyEngine::ApplicationConfig myAppConfig;
     myAppConfig.applicationName = L"Hello Cude";
-    myAppConfig.winWidth = 1920.0f;
-    myAppConfig.winHeight = 1080.0f;
+    myAppConfig.winWidth = 1920;
+    myAppConfig.winHeight = 1080;
 
     // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();

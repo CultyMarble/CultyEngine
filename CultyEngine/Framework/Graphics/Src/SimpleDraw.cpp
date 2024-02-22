@@ -110,24 +110,24 @@ namespace
 }
 
 
-void CultyEngine::Graphics::SimpleDraw::StaticInitialize(uint32_t maxVertexCount)
+void SimpleDraw::StaticInitialize(uint32_t maxVertexCount)
 {
 	sInstance = std::make_unique<SimpleDrawImpl>();
 	sInstance->Initialize(maxVertexCount);
 }
 
-void CultyEngine::Graphics::SimpleDraw::StaticTerminate()
+void SimpleDraw::StaticTerminate()
 {
 	sInstance->Terminate();
 	sInstance.reset();
 }
 
-void CultyEngine::Graphics::SimpleDraw::AddLine(const Vector3& v0, const Vector3& v1, const Color& color)
+void SimpleDraw::AddLine(const Vector3& v0, const Vector3& v1, const Color& color)
 {
 	sInstance->AddLine(v0, v1, color);
 }
 
-void CultyEngine::Graphics::SimpleDraw::AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Color& color)
+void SimpleDraw::AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Color& color)
 {
 	sInstance->AddFace(v0, v1, v2, color);
 }
@@ -217,7 +217,7 @@ void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const 
 	Vector3 v0 = Vector3::Zero;
 	Vector3 v1 = Vector3::Zero;
 
-	const float vertRotation = (Pi / static_cast<float>(rings - 1));
+	const float vertRotation = (TwoPi / static_cast<float>(rings - 1));
 	const float horzRotation = (Pi / static_cast<float>(slices - 1));
 
 	for (uint32_t r = 0; r < rings; ++r)
@@ -259,17 +259,56 @@ void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const 
 
 void SimpleDraw::AddGroundPlane(float size, const Color& color)
 {
+	const float hs = size * 0.5f;
+	const uint32_t iSize = static_cast<uint32_t>(size);
 
+	for (uint32_t i = 0; i <= size; ++i)
+	{
+		AddLine({ i - hs, 0.0f, -hs }, { i - hs, 0.0f, hs }, color);
+		AddLine({ -hs, 0.0f, i - hs }, { hs, 0.0f, i - hs }, color);
+	}
 }
 
 void SimpleDraw::AddGroundCircle(uint32_t slices, float radius, const Color& color)
 {
+	Vector3 v0 = Vector3::Zero;
+	Vector3 v1 = Vector3::Zero;
+
+	float horzRotation = (TwoPi / static_cast<float>(slices - 1));
+	for (uint32_t s = 0; s < slices; ++s)
+	{
+		float sPos0 = static_cast<float>(s);
+		float sPos1 = static_cast<float>(s + 1);
+		float rot0 = sPos0 * horzRotation;
+		float rot1 = sPos1 * horzRotation;
+
+		v0 = {
+			radius * sin(rot0),
+			0.0f,
+			radius * cos(rot0)
+		};
+
+		v1 = {
+			radius * sin(rot0),
+			0.0f,
+			radius * cos(rot0)
+		};
+
+		AddLine(v0, v1, color);
+	}
 
 }
 
 void SimpleDraw::AddTransform(const Matrix4& matrix)
 {
+	const Vector3 side = { matrix._11, matrix._12, matrix._13 };
+	const Vector3 up = { matrix._21, matrix._22, matrix._23 };
+	const Vector3 forward = { matrix._31, matrix._32, matrix._33 };
+	const Vector3 pos = { matrix._41, matrix._42, matrix._43 };
 
+	AddLine(pos, pos + side, Colors::Red);
+	AddLine(pos, pos + up, Colors::Green);
+	AddLine(pos, pos + forward, Colors::Blue);
 }
 
 void SimpleDraw::Render(const Camera& camera)
