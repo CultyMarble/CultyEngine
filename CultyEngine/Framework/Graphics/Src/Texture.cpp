@@ -48,13 +48,13 @@ void Texture::Terminate()
 void Texture::BindVS(uint32_t slot) const
 {
 	auto context = GraphicsSystem::Get()->GetContext();
-	context->VSGetShaderResources(slot, 1, &mShaderResourceView);
+	context->VSSetShaderResources(slot, 1, &mShaderResourceView);
 }
 
 void Texture::BindPS(uint32_t slot) const
 {
 	auto context = GraphicsSystem::Get()->GetContext();
-	context->PSGetShaderResources(slot, 1, &mShaderResourceView);
+	context->PSSetShaderResources(slot, 1, &mShaderResourceView);
 }
 
 void* Texture::GetRawData() const

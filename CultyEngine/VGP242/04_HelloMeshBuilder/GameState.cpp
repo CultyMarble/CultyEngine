@@ -10,7 +10,7 @@ void GameState::Initialize()
     mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
     mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
-    // Create a shape
+    // Create a shape PC
     //mMesh = MeshBuilder::CreateRectanglePC(2.0f);
     //mMesh = MeshBuilder::CreateCubePC(2.0f);
     //mMesh = MeshBuilder::CreateRectanglePC(2.0f, 0.5f, 1.0f);
@@ -19,15 +19,13 @@ void GameState::Initialize()
     //mMesh = MeshBuilder::CreateCylinderPC(10, 4);
     //mMesh = MeshBuilder::CreateSpherePC(10.0f, 10.0f, 1.0f);
 
-    mMesh.vertices.push_back({ { -1.0f, -1.0f, 0.0f }, { 0.0f, 1.0f } });
-    mMesh.vertices.push_back({ { -1.0f,  1.0f, 0.0f }, { 0.0f, 0.0f } });
-    mMesh.vertices.push_back({ {  1.0f,  1.0f, 0.0f }, { 1.0f, 0.0f } });
-    mMesh.vertices.push_back({ {  1.0f, -1.0f, 0.0f }, { 1.0f, 1.0f } });
-    mMesh.indices = {
-        0, 1, 2,
-        0, 2, 3,
-    };
+    // Create a shape PX
+    //mMesh = MeshBuilder::CreateHorizontalPlanePX(10, 10, 1.0f);
+    //mMesh = MeshBuilder::CreateSpherePX(100, 100, 1.0f);
+    //mMesh = MeshBuilder::CreateSkySpherePX(100, 100, 100.0f);
+    mMesh = MeshBuilder::CreateSkyBoxPX(100.0f);
 
+    // std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTransform.fx";
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTexturing.fx";
 
     mMeshBuffer.Initialize(mMesh);
@@ -36,7 +34,8 @@ void GameState::Initialize()
     mVertexShader.Initialize<VertexPX>(shaderFilePath);
     mPixelShader.Initialize(shaderFilePath);
 
-    mTexture.Initialize(L"../../Assets/Images/misc/basketball.jpg");
+    //mTexture.Initialize(L"../../Assets/Images/misc/basketball.jpg");
+    mTexture.Initialize(L"../../Assets/Images/skybox/skybox_texture.jpg");
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 }
 
