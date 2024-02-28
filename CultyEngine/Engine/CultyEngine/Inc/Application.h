@@ -10,6 +10,8 @@ namespace CultyEngine
 
         uint32_t winWidth = 1280;   // default
         uint32_t winHeight = 720;   // default
+
+        uint32_t maxVertexCount = 10000;
     };
 
     class Application final

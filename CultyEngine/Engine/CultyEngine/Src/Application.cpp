@@ -25,7 +25,7 @@ void Application::Run(const ApplicationConfig& config)
 
     Graphics::GraphicsSystem::StaticInitialize(windowHandle, false);
     Input::InputSystem::StaticInitialize(windowHandle);
-    //
+    SimpleDraw::StaticInitialize(config.maxVertexCount);
 
     ASSERT(mCurrentState != nullptr, "Application: need an application state!");
     mCurrentState->Initialize();
@@ -63,6 +63,7 @@ void Application::Run(const ApplicationConfig& config)
     // Clean Up
     mCurrentState->Terminate();
 
+    SimpleDraw::StaticTerminate();
     Input::InputSystem::StaticTerminate();
     Graphics::GraphicsSystem::StaticTerminate();
 

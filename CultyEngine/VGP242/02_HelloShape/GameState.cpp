@@ -5,8 +5,6 @@ using namespace CultyEngine::Input;
 
 void GameState::Initialize()
 {
-    LOG("GAME STATE INITIALIZED!");
-
     // Create a shape data
     CreateShapeData();
 

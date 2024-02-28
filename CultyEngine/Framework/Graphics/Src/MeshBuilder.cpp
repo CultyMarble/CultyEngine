@@ -183,7 +183,7 @@ MeshPC MeshBuilder::CreateVerticalPlanePC(uint32_t numRows, uint32_t numCols, fl
 
 MeshPX MeshBuilder::CreateVerticalPlanePX(uint32_t numRows, uint32_t numCols, float spacing)
 {
-	MeshPX meshPX;
+	MeshPX mesh;
 
 	const float hpw = static_cast<float>(numCols) * spacing * 0.5f;
 	const float hph = static_cast<float>(numRows) * spacing * 0.5f;
@@ -199,7 +199,7 @@ MeshPX MeshBuilder::CreateVerticalPlanePX(uint32_t numRows, uint32_t numCols, fl
 	{
 		for (uint32_t c = 0; c <= numCols; ++c)
 		{
-			meshPX.vertices.push_back({ {x, y, 0.0f}, {u, v} });
+			mesh.vertices.push_back({ {x, y, 0.0f}, {u, v} });
 			x += spacing;
 			u += uInc;
 		}
@@ -210,9 +210,9 @@ MeshPX MeshBuilder::CreateVerticalPlanePX(uint32_t numRows, uint32_t numCols, fl
 		v += (-vInc);
 	}
 
-	CreatePlaneIndices(meshPX.indices, numRows, numCols);
+	CreatePlaneIndices(mesh.indices, numRows, numCols);
 
-	return meshPX;
+	return mesh;
 }
 
 MeshPC MeshBuilder::CreateHorizontalPlanePC(uint32_t numRows, uint32_t numCols, float spacing)

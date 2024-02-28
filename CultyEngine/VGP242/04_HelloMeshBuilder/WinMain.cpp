@@ -5,13 +5,18 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
     // CONFIG
     CultyEngine::ApplicationConfig myAppConfig;
-    myAppConfig.applicationName = L"Hello Cude";
-    myAppConfig.winWidth = 1920;
-    myAppConfig.winHeight = 1080;
+    myAppConfig.applicationName = L"Hello Mesh Builder";
 
     // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();
-    myApplication.AddState<GameState>("GameState");
+    myApplication.AddState<StateCube>("StateCube");
+    myApplication.AddState<StateRect>("StateRect");
+    myApplication.AddState<StateVertPlane>("StateVertPlane");
+    myApplication.AddState<StateHorzPlane>("StateHorzPlane");
+    myApplication.AddState<StateSphere>("StateSphere");
+    myApplication.AddState<StateCylinder>("StateCylinder");
+    myApplication.AddState<StateSkyBox>("StateSkyBox");
+    myApplication.AddState<StateSkySphere>("StateSkySphere");
 
     // RUNTIME
     myApplication.Run(myAppConfig);

@@ -19,7 +19,7 @@ namespace
 	public:
 		void Initialize(uint32_t maxVertexCount);
 		void Terminate();
-		
+
 		void AddLine(const Vector3& v0, const Vector3& v1, const Color& color);
 		void AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Color& color);
 
@@ -33,7 +33,6 @@ namespace
 
 		std::unique_ptr<VertexPC[]> mLineVertices;
 		std::unique_ptr<VertexPC[]> mFaceVertices;
-		std::unique_ptr<VertexPC[]> mFaceVertices;
 
 		uint32_t mLineVertexCount = {};
 		uint32_t mFaceVertexCount = {};
@@ -43,6 +42,7 @@ namespace
 	void SimpleDrawImpl::Initialize(uint32_t maxVertexCount)
 	{
 		std::filesystem::path shaderPath = L"../../Assets/Shaders/DoTransform.fx"; // Change to SimpleDraw.fx
+
 		mVertexShader.Initialize<VertexPC>(shaderPath);
 		mPixelShader.Initialize(shaderPath);
 		mConstantBuffer.Initialize(sizeof(Matrix4));
@@ -84,9 +84,9 @@ namespace
 
 	void SimpleDrawImpl::Render(const Camera& camera)
 	{
-		const Matrix4& matView = camera.GetViewMatrix();
-		const Matrix4& matProj = camera.GetProjectionMatrix();
-		const Matrix4& transform = Transpose(matView * matProj);
+		const Matrix4 matView = camera.GetViewMatrix();
+		const Matrix4 matProj = camera.GetProjectionMatrix();
+		const Matrix4 transform = Transpose(matView * matProj);
 
 		mConstantBuffer.Update(&transform);
 		mConstantBuffer.BindVS(0);
@@ -108,7 +108,6 @@ namespace
 
 	std::unique_ptr<SimpleDrawImpl> sInstance;
 }
-
 
 void SimpleDraw::StaticInitialize(uint32_t maxVertexCount)
 {
@@ -172,7 +171,7 @@ void SimpleDraw::AddAABB(float minX, float minY, float minZ, float maxX, float m
 
 void SimpleDraw::AddFilledAABB(const Vector3& min, const Vector3& max, const Color& color)
 {
-	AddAABB(min.x, min.y, min.z, max.x, max.y, max.z, color);
+	AddFilledAABB(min.x, min.y, min.z, max.x, max.y, max.z, color);
 }
 
 void SimpleDraw::AddFilledAABB(float minX, float minY, float minZ, float maxX, float maxY, float maxZ, const Color& color)
@@ -199,7 +198,7 @@ void SimpleDraw::AddFilledAABB(float minX, float minY, float minZ, float maxX, f
 	AddFace(trb, trf, tlf, color);
 	AddFace(trb, tlf, tlb, color);
 
-	// top
+	// bottom
 	AddFace(brb, blf, brf, color);
 	AddFace(brb, blb, blf, color);
 
@@ -262,7 +261,7 @@ void SimpleDraw::AddGroundPlane(float size, const Color& color)
 	const float hs = size * 0.5f;
 	const uint32_t iSize = static_cast<uint32_t>(size);
 
-	for (uint32_t i = 0; i <= size; ++i)
+	for (uint32_t i = 0; i <= iSize; ++i)
 	{
 		AddLine({ i - hs, 0.0f, -hs }, { i - hs, 0.0f, hs }, color);
 		AddLine({ -hs, 0.0f, i - hs }, { hs, 0.0f, i - hs }, color);
@@ -289,14 +288,13 @@ void SimpleDraw::AddGroundCircle(uint32_t slices, float radius, const Color& col
 		};
 
 		v1 = {
-			radius * sin(rot0),
+			radius * sin(rot1),
 			0.0f,
-			radius * cos(rot0)
+			radius * cos(rot1)
 		};
 
 		AddLine(v0, v1, color);
 	}
-
 }
 
 void SimpleDraw::AddTransform(const Matrix4& matrix)
@@ -304,11 +302,11 @@ void SimpleDraw::AddTransform(const Matrix4& matrix)
 	const Vector3 side = { matrix._11, matrix._12, matrix._13 };
 	const Vector3 up = { matrix._21, matrix._22, matrix._23 };
 	const Vector3 forward = { matrix._31, matrix._32, matrix._33 };
-	const Vector3 pos = { matrix._41, matrix._42, matrix._43 };
+	const Vector3 position = { matrix._41, matrix._42, matrix._43 };
 
-	AddLine(pos, pos + side, Colors::Red);
-	AddLine(pos, pos + up, Colors::Green);
-	AddLine(pos, pos + forward, Colors::Blue);
+	AddLine(position, position + side, Colors::Red);
+	AddLine(position, position + up, Colors::Green);
+	AddLine(position, position + forward, Colors::Blue);
 }
 
 void SimpleDraw::Render(const Camera& camera)

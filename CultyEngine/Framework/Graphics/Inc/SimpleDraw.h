@@ -1,12 +1,13 @@
 #pragma once
-
 #include "Colors.h"
 
 using namespace CultyEngine::MathC;
 
 namespace CultyEngine::Graphics
 {
-	class SimpleDraw
+	class Camera;
+
+	namespace SimpleDraw
 	{
 		void StaticInitialize(uint32_t maxVertexCount);
 		void StaticTerminate();
