@@ -25,6 +25,7 @@ void Application::Run(const ApplicationConfig& config)
 
     Graphics::GraphicsSystem::StaticInitialize(windowHandle, false);
     Input::InputSystem::StaticInitialize(windowHandle);
+    DebugUI::StaticInitialize(windowHandle, false, true);
     SimpleDraw::StaticInitialize(config.maxVertexCount);
 
     ASSERT(mCurrentState != nullptr, "Application: need an application state!");
@@ -56,7 +57,11 @@ void Application::Run(const ApplicationConfig& config)
         // Render
         Graphics::GraphicsSystem* gs = Graphics::GraphicsSystem::Get();
         gs->BeginRender();
-        mCurrentState->Render();
+            mCurrentState->Render();
+
+            DebugUI::BeginRender();
+                mCurrentState->DebugUI();
+            DebugUI::EndRender();
         gs->EndRender();
     }
 
@@ -64,6 +69,7 @@ void Application::Run(const ApplicationConfig& config)
     mCurrentState->Terminate();
 
     SimpleDraw::StaticTerminate();
+    DebugUI::StaticTerminate();
     Input::InputSystem::StaticTerminate();
     Graphics::GraphicsSystem::StaticTerminate();
 
