@@ -38,6 +38,9 @@ namespace
     {
         if (InputSystem::Get()->IsKeyPressed(KeyCode::ONE))
         {
+            if (MainApplication().IsStateActive("StateCube"))
+                return;
+
             MainApplication().ChangeState("StateCube");
         }
         else if (InputSystem::Get()->IsKeyPressed(KeyCode::TWO))

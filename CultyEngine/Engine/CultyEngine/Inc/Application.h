@@ -37,6 +37,8 @@ namespace CultyEngine
 
         void ChangeState(const std::string& stateName);
 
+        bool IsStateActive(const std::string& stateName);
+
         void Run(const ApplicationConfig& config);
         void Quit();
 

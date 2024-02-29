@@ -78,6 +78,12 @@ void Application::ChangeState(const std::string& stateName)
         mNextState = iter->second.get();
 }
 
+bool Application::IsStateActive(const std::string& stateName)
+{
+    auto iter = mApplicationStates.find(stateName);
+    return (iter != mApplicationStates.end()) && mCurrentState == iter->second.get();
+}
+
 void Application::Quit()
 {
     mIsRunning = false;
