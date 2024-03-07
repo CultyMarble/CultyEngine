@@ -12,5 +12,5 @@ public:
 
 protected:
     CultyEngine::Graphics::Camera mCamera;
-    float mSphereAlpha = 1.0f;
+    CultyEngine::MathC::Vector3 transformPos = CultyEngine::MathC::Vector3::Zero;
 };

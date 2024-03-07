@@ -21,11 +21,11 @@ void Application::Run(const ApplicationConfig& config)
 
     ASSERT(myWindow.IsActive(), "Failed to create a Window!");
 
-    auto windowHandle = myWindow.GetWindowHandle();
+    auto wHandle = myWindow.GetWindowHandle();
 
-    Graphics::GraphicsSystem::StaticInitialize(windowHandle, false);
-    Input::InputSystem::StaticInitialize(windowHandle);
-    DebugUI::StaticInitialize(windowHandle, false, true);
+    Graphics::GraphicsSystem::StaticInitialize(wHandle, false);
+    Input::InputSystem::StaticInitialize(wHandle);
+    DebugUI::StaticInitialize(wHandle, false, true);
     SimpleDraw::StaticInitialize(config.maxVertexCount);
 
     ASSERT(mCurrentState != nullptr, "Application: need an application state!");
@@ -58,7 +58,6 @@ void Application::Run(const ApplicationConfig& config)
         Graphics::GraphicsSystem* gs = Graphics::GraphicsSystem::Get();
         gs->BeginRender();
             mCurrentState->Render();
-
             DebugUI::BeginRender();
                 mCurrentState->DebugUI();
             DebugUI::EndRender();

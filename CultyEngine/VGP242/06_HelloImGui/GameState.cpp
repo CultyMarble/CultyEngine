@@ -4,6 +4,22 @@ using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 using namespace CultyEngine::Input;
 
+const char* shapeTypeChar[]
+{
+    "Sphere",
+    "AABB",
+    "FilledAABB",
+    "Circle",
+};
+
+enum class ShapeType
+{
+    Sphere,
+    AABB,
+    FilledAABB,
+    Circle,
+};
+
 namespace
 {
     void CameraControl(float deltaTime, Camera& mCamera)
@@ -56,26 +72,81 @@ void GameState::Render()
 
 }
 
-bool buttonOn = false;
+Color shapeColor = Colors::Orange;
+ShapeType shapeType = ShapeType::Sphere;
+int currentShapeIndex = (int)shapeType;
+bool showGrid = true;
+bool showTransform = true;
+float mShapeAlpha = 1.0f;
+float sphereRadius = 1.0f;
+float circleRadius = 1.0f;
 void GameState::DebugUI()
 {
-    ImGui::Begin("DebugUI", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::LabelText("Title", "Hello World!");
-    if (ImGui::Button("Button"))
-    {
-        buttonOn = !buttonOn;
-    }
-    if (buttonOn)
-    {
+    ImGui::Begin("DebugUI: ImGui Configs", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
-    }
+        ImGui::LabelText("Title", "Hello Simple Draw!");
 
-    ImGui::DragFloat("SphereAlpha", &mSphereAlpha, 0.1f, 0.0f, 1.0f);
-    ImGui::DragFloat3("TransformPos", &mPosition.x);
+        if (ImGui::CollapsingHeader("Theme", ImGuiTreeNodeFlags_CollapsingHeader))
+        {
+            if (ImGui::Button("Classic"))
+                DebugUI::SetTheme(DebugUI::Theme::Classic);
+
+            if (ImGui::Button("Dark"))
+                DebugUI::SetTheme(DebugUI::Theme::Dark);
+
+            if (ImGui::Button("Flashbang"))
+                DebugUI::SetTheme(DebugUI::Theme::Light);
+        }
+
+        if (ImGui::CollapsingHeader("Gizmo Settings", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Checkbox("Show Grid", &showGrid);
+            ImGui::Checkbox("Show Transform", &showTransform);
+            ImGui::DragFloat3("Transform Position", &transformPos.x, 0.01f);
+        }
+
+        if (ImGui::CollapsingHeader("Shape Settings", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            currentShapeIndex = (int)shapeType;
+            if (ImGui::Combo("Shape Type", &currentShapeIndex, shapeTypeChar, 4))
+            {
+                shapeType = (ShapeType)currentShapeIndex;
+            }
+
+            ImGui::ColorEdit4("Shape Color", &shapeColor.r);
+            ImGui::DragFloat("Shape Alpha", &mShapeAlpha, 0.001f, 0.0f, 1.0f);
+
+            ImGui::DragFloat("Sphere Radius", &sphereRadius, 0.1f, 0.1f, 5.0f);
+            ImGui::DragFloat("Circle Radius", &circleRadius, 0.1f, 0.1f, 5.0f);
+        }
+
     ImGui::End();
 
-    SimpleDraw::AddTransform(MathC::Matrix4::Identity);
-    SimpleDraw::AddGroundPlane(100, Colors::White);
-    SimpleDraw::AddSphere(50, 50, 10, Colors::Pink);
+    shapeColor.a = mShapeAlpha;
+
+    switch (shapeType)
+    {
+    case ShapeType::Sphere:
+        SimpleDraw::AddSphere(50, 50, sphereRadius, shapeColor);
+        break;
+    case ShapeType::AABB:
+        SimpleDraw::AddAABB(-MathC::Vector3::One, MathC::Vector3::One, shapeColor);
+        break;
+    case ShapeType::FilledAABB:
+        SimpleDraw::AddFilledAABB(-MathC::Vector3::One, MathC::Vector3::One, shapeColor);
+        break;
+    case ShapeType::Circle:
+        SimpleDraw::AddGroundCircle(60, circleRadius, shapeColor);
+        break;
+    default:
+        break;
+    }
+
+    if (showGrid)
+        SimpleDraw::AddGroundPlane(20, Colors::White);
+
+    if (showTransform)
+        SimpleDraw::AddTransform(MathC::Matrix4::Translation(transformPos));
+
     SimpleDraw::Render(mCamera);
 }

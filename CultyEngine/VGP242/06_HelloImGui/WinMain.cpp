@@ -5,7 +5,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
     // CONFIG
     CultyEngine::ApplicationConfig myAppConfig;
-    myAppConfig.applicationName = L"Hello Simple Draw";
+    myAppConfig.applicationName = L"Hello ImGui";
 
     // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();

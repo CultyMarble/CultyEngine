@@ -9,7 +9,12 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 
     // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();
-    myApplication.AddState<GameState>("GameState");
+    myApplication.AddState<StateTransform>("StateTransform");
+    myApplication.AddState<StateGroundPlane>("StateGroundPlane");
+    myApplication.AddState<StateSphere>("StateSphere");
+    myApplication.AddState<StateAABB>("StateAABB");
+    myApplication.AddState<StateFilledAABB>("StateFilledAABB");
+    myApplication.AddState<StateLines>("StateLines");
 
     // RUNTIME
     myApplication.Run(myAppConfig);

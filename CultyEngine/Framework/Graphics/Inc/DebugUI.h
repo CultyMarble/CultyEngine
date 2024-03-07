@@ -1,20 +1,19 @@
 #pragma once
-#include <wtypes.h>
 
 namespace CultyEngine::Graphics::DebugUI
 {
-	enum class Theme
-	{
-		Classic,
-		Dark,
-		FlashBang,
-	};
+    enum class Theme
+    {
+        Classic,
+        Dark,
+        Light,
+    };
 
-	void StaticInitialize(HWND window, bool docking = false, bool multiViewPort = false);
-	void StaticTerminate();
+    void StaticInitialize(HWND window, bool docking = false, bool multiViewport = false);
+    void StaticTerminate();
 
-	void SetTheme(Theme theme);
+    void SetTheme(Theme theme);
 
-	void BeginRender();
-	void EndRender();
+    void BeginRender();
+    void EndRender();
 }

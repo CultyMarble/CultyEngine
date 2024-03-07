@@ -9,16 +9,16 @@ namespace CultyEngine::Graphics
 
 		enum class BlendMode
 		{
-			Opaque,
+			Additive,
 			AlphaBlend,
 			AlphaPremultiplied,
-			Additive,
+			Opaque,
 		};
 
 		BlendState() = default;
 		~BlendState();
 
-		BlendState(const BlendState&) = default;
+		BlendState(const BlendState&) = delete;
 		BlendState& operator=(const BlendState&) = delete;
 
 		void Initialize(BlendMode mode);
