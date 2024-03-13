@@ -11,17 +11,17 @@ void GameState::Initialize()
     mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
     // Create a shape
-    mMesh.vertices.push_back({ { -0.5f, -0.5f, 0.0f }, Colors::Red });
-    mMesh.vertices.push_back({ { -0.5f,  0.5f, 0.0f }, Colors::Blue });
-    mMesh.vertices.push_back({ {  0.5f,  0.5f, 0.0f }, Colors::Green });
-    mMesh.vertices.push_back({ {  0.5f, -0.5f, 0.0f }, Colors::Yellow });
+    mMeshPX.vertices.push_back({ { -0.5f, -0.5f, 0.0f }, Colors::Red });
+    mMeshPX.vertices.push_back({ { -0.5f,  0.5f, 0.0f }, Colors::Blue });
+    mMeshPX.vertices.push_back({ {  0.5f,  0.5f, 0.0f }, Colors::Green });
+    mMeshPX.vertices.push_back({ {  0.5f, -0.5f, 0.0f }, Colors::Yellow });
 
-    mMesh.vertices.push_back({ { -0.5f, -0.5f, 1.0f }, Colors::Red });
-    mMesh.vertices.push_back({ { -0.5f,  0.5f, 1.0f }, Colors::Blue });
-    mMesh.vertices.push_back({ {  0.5f,  0.5f, 1.0f }, Colors::Green });
-    mMesh.vertices.push_back({ {  0.5f, -0.5f, 1.0f }, Colors::Yellow });
+    mMeshPX.vertices.push_back({ { -0.5f, -0.5f, 1.0f }, Colors::Red });
+    mMeshPX.vertices.push_back({ { -0.5f,  0.5f, 1.0f }, Colors::Blue });
+    mMeshPX.vertices.push_back({ {  0.5f,  0.5f, 1.0f }, Colors::Green });
+    mMeshPX.vertices.push_back({ {  0.5f, -0.5f, 1.0f }, Colors::Yellow });
 
-    mMesh.indices = { 
+    mMeshPX.indices = { 
         // front
         0, 1, 2, 
         0, 2, 3,
@@ -44,7 +44,7 @@ void GameState::Initialize()
 
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTransform.fx";
 
-    mMeshBuffer.Initialize(mMesh);
+    mMeshBuffer.Initialize(mMeshPX);
     mConstantBuffer.Initialize(sizeof(MathC::Matrix4));
     mVertexShader.Initialize<VertexPC>(shaderFilePath);
     mPixelShader.Initialize(shaderFilePath);

@@ -4,35 +4,37 @@
 
 namespace CultyEngine::Graphics
 {
-	class MeshBuilder
-	{
-	public:
-		// Pyramid
-		static MeshPC CreatePyramidPC(float size);
+    class MeshBuilder
+    {
+    public:
+        // Pyramid
+        static MeshPC CreatePyramidPC(float size);
 
-		// Cude
-		static MeshPC CreateCubePC(float size);
+        // Cude
+        static MeshPC CreateCubePC(float size);
 
-		// Rectangle
-		static MeshPC CreateRectanglePC(float width, float height, float depth);
+        // Rectangle
+        static MeshPC CreateRectanglePC(float width, float height, float depth);
 
-		// Vertical Plane
-		static MeshPC CreateVerticalPlanePC(uint32_t numRows, uint32_t numCols, float spacing);
-		static MeshPX CreateVerticalPlanePX(uint32_t numRows, uint32_t numCols, float spacing);
+        // Vertical Plane
+        static MeshPC CreateVerticalPlanePC(uint32_t numRows, uint32_t numCols, float spacing);
+        static MeshPX CreateVerticalPlanePX(uint32_t numRows, uint32_t numCols, float spacing);
 
-		// Horizontal Plane
-		static MeshPC CreateHorizontalPlanePC(uint32_t numRows, uint32_t numCols, float spacing);
-		static MeshPX CreateHorizontalPlanePX(uint32_t numRows, uint32_t numCols, float spacing);
+        // Horizontal Plane
+        static MeshPC CreateHorizontalPlanePC(uint32_t numRows, uint32_t numCols, float spacing);
+        static MeshPX CreateHorizontalPlanePX(uint32_t numRows, uint32_t numCols, float spacing);
 
-		// Create Cylinder
-		static MeshPC CreateCylinderPC(uint32_t slice, uint32_t rings);
+        // Create Cylinder
+        static MeshPC CreateCylinderPC(uint32_t slice, uint32_t rings);
 
-		// Create Sphere
-		static MeshPC CreateSpherePC(uint32_t slices, uint32_t rings, float radius);
-		static MeshPX CreateSpherePX(uint32_t slices, uint32_t rings, float radius);
+        // Create Sphere
+        static MeshPC CreateSpherePC(uint32_t slices, uint32_t rings, float radius);
 
-		// Sky Stuff
-		static MeshPX CreateSkySpherePX(uint32_t slices, uint32_t rings, float radius);
-		static MeshPX CreateSkyBoxPX(float size);
-	};
+        static MeshPX CreateSpherePX(uint32_t slices, uint32_t rings, float radius);
+        static MeshPX CreateSpherePX(uint32_t slices, uint32_t rings, float radius, const MathC::Matrix4& matrix);
+
+        // Sky Stuff
+        static MeshPX CreateSkySpherePX(uint32_t slices, uint32_t rings, float radius);
+        static MeshPX CreateSkyBoxPX(float size);
+    };
 }

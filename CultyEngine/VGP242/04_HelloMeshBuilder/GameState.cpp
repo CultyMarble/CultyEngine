@@ -201,3 +201,13 @@ void StateSkySphere::CreateTextureData()
 {
     mTexture.Initialize(L"../../Assets/Images/skysphere/space.jpg");
 }
+
+void StateSpherePX::CreateMeshData()
+{
+    mMesh = MeshBuilder::CreateSpherePX(100, 100, 1.0f);
+}
+
+void StateSpherePX::CreateTextureData()
+{
+    mTexture.Initialize(L"../../Assets/Images/misc/basketball.jpg");
+}

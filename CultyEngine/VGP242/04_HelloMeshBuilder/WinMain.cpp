@@ -9,6 +9,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 
     // APPLICATION
     CultyEngine::Application& myApplication = CultyEngine::MainApplication();
+    myApplication.AddState<StateSpherePX>("StateSpherePX");
     myApplication.AddState<StateCube>("StateCube");
     myApplication.AddState<StateRect>("StateRect");
     myApplication.AddState<StateVertPlane>("StateVertPlane");

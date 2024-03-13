@@ -264,6 +264,94 @@ void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const 
         }
     }
 }
+void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const Color& color, const Matrix4& matrix)
+{
+    Vector3 v0 = Vector3::Zero;
+    Vector3 v1 = Vector3::Zero;
+
+    const float vertRotation = (TwoPi / static_cast<float>(rings - 1));
+    const float horzRotation = (Pi / static_cast<float>(slices - 1));
+
+    for (uint32_t r = 0; r < rings; ++r)
+    {
+        float rPos0 = static_cast<float>(r);
+        float rPos1 = static_cast<float>(r + 1);
+        float phi0 = rPos0 * vertRotation;
+        float phi1 = rPos1 * vertRotation;
+
+        for (uint32_t s = 0; s < slices; ++s)
+        {
+            float sPos0 = static_cast<float>(s);
+            float sPos1 = static_cast<float>(s + 1);
+            float rot0 = sPos0 * horzRotation;
+            float rot1 = sPos1 * horzRotation;
+
+            v0 = {
+                radius * sin(rot0) * sin(phi0) + matrix._41,
+                radius * cos(phi0) + matrix._42,
+                radius * cos(rot0) * sin(phi0) + matrix._43
+            };
+
+            v1 = {
+                radius * sin(rot1) * sin(phi0) + matrix._41,
+                radius * cos(phi0) + matrix._42,
+                radius * cos(rot1) * sin(phi0) + matrix._43
+            };
+            AddLine(v0, v1, color);
+
+            v1 = {
+                radius * sin(rot0) * sin(phi1) + matrix._41,
+                radius * cos(phi1) + matrix._42,
+                radius * cos(rot0) * sin(phi1) + matrix._43
+            };
+            AddLine(v0, v1, color);
+        }
+    }
+}
+void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const Color& color, const Matrix4& matrix, const float deltaRotate)
+{
+    Vector3 v0 = Vector3::Zero;
+    Vector3 v1 = Vector3::Zero;
+
+    const float vertRotation = (TwoPi / static_cast<float>(rings - 1));
+    const float horzRotation = (Pi / static_cast<float>(slices - 1));
+
+    for (uint32_t r = 0; r < rings; ++r)
+    {
+        float rPos0 = static_cast<float>(r);
+        float rPos1 = static_cast<float>(r + 1);
+        float phi0 = rPos0 * vertRotation;
+        float phi1 = rPos1 * vertRotation;
+
+        for (uint32_t s = 0; s < slices; ++s)
+        {
+            float sPos0 = static_cast<float>(s);
+            float sPos1 = static_cast<float>(s + 1);
+            float rot0 = sPos0 * horzRotation + deltaRotate;
+            float rot1 = sPos1 * horzRotation + deltaRotate;
+
+            v0 = {
+                radius * sin(rot0) * sin(phi0) + matrix._41,
+                radius * cos(phi0) + matrix._42,
+                radius * cos(rot0) * sin(phi0) + matrix._43
+            };
+
+            v1 = {
+                radius * sin(rot1) * sin(phi0) + matrix._41,
+                radius * cos(phi0) + matrix._42,
+                radius * cos(rot1) * sin(phi0) + matrix._43
+            };
+            AddLine(v0, v1, color);
+
+            v1 = {
+                radius * sin(rot0) * sin(phi1) + matrix._41,
+                radius * cos(phi1) + matrix._42,
+                radius * cos(rot0) * sin(phi1) + matrix._43
+            };
+            AddLine(v0, v1, color);
+        }
+    }
+}
 
 void SimpleDraw::AddGroundPlane(float size, const Color& color)
 {
@@ -308,10 +396,10 @@ void SimpleDraw::AddGroundCircle(uint32_t slices, float radius, const Color& col
 
 void SimpleDraw::AddTransform(const Matrix4& matrix)
 {
-    const Vector3 side = { matrix._11, matrix._12, matrix._13 };
-    const Vector3 up = { matrix._21, matrix._22, matrix._23 };
-    const Vector3 forward = { matrix._31, matrix._32, matrix._33 };
-    const Vector3 position = { matrix._41, matrix._42, matrix._43 };
+    const Vector3 side =        { matrix._11, matrix._12, matrix._13 };
+    const Vector3 up =          { matrix._21, matrix._22, matrix._23 };
+    const Vector3 forward =     { matrix._31, matrix._32, matrix._33 };
+    const Vector3 position =    { matrix._41, matrix._42, matrix._43 };
 
     AddLine(position, position + side, Colors::Red);
     AddLine(position, position + up, Colors::Green);

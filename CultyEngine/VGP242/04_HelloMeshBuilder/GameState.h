@@ -83,6 +83,13 @@ protected:
     void CreateMeshData() override;
 };
 
+class StateSpherePX : public StateMeshPX
+{
+protected:
+    void CreateMeshData() override;
+    void CreateTextureData() override;
+};
+
 class StateSkyBox : public StateMeshPX
 {
 protected:
