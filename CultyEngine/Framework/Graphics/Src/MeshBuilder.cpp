@@ -397,40 +397,6 @@ MeshPX MeshBuilder::CreateSpherePX(uint32_t slices, uint32_t rings, float radius
 
     return meshPX;
 }
-MeshPX MeshBuilder::CreateSpherePX(uint32_t slices, uint32_t rings, float radius, const MathC::Matrix4& matrix)
-{
-    MeshPX meshPX;
-
-    const float vertRotation = (MathC::Constants::Pi / static_cast<float>(rings));
-    const float horzRotation = (MathC::Constants::TwoPi / static_cast<float>(slices));
-    const float uInc = 1.0f / static_cast<float>(slices);
-    const float vInc = 1.0f / static_cast<float>(rings);
-
-    for (uint32_t r = 0; r <= rings; ++r)
-    {
-        float ringPos = static_cast<float>(r);
-        float phi = ringPos * vertRotation;
-
-        for (uint32_t s = 0; s <= rings; ++s)
-        {
-            float slicePos = static_cast<float>(s);
-            float rotation = slicePos * horzRotation;
-
-            float u = 1.0f - (uInc * slicePos);
-            float v = vInc * ringPos;
-
-            meshPX.vertices.push_back({ {
-                radius * sin(rotation) * sin(phi) + matrix._41,
-                radius * cos(phi) + matrix._42,
-                radius * cos(rotation) * sin(phi) + matrix._43},
-                {u, v} });
-        }
-    }
-
-    CreatePlaneIndices(meshPX.indices, rings, slices);
-
-    return meshPX;
-}
 
 MeshPX MeshBuilder::CreateSkySpherePX(uint32_t slices, uint32_t rings, float radius)
 {

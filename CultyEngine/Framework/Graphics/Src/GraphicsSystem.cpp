@@ -166,7 +166,7 @@ void GraphicsSystem::Resize(uint32_t width, uint32_t height)
 	descDepth.ArraySize = 1;
 	descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	descDepth.SampleDesc.Count = 1;
-	descDepth.SampleDesc.Quality = 1;
+	descDepth.SampleDesc.Quality = 0;
 	descDepth.Usage = D3D11_USAGE_DEFAULT;
 	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	descDepth.CPUAccessFlags = 0;

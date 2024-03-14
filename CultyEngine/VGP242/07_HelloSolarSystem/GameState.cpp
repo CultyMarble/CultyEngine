@@ -1,5 +1,6 @@
 #include "GameState.h"
 
+
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 using namespace CultyEngine::Input;
@@ -33,21 +34,12 @@ namespace
             mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
         }
     }
+}
 
-    void CreateMeshData()
-    {
-        //mMesh = MeshBuilder::CreateCubePC(2.0f);
-        //mMesh = MeshBuilder::CreateRectanglePC(2.0f, 0.5f, 1.0f);
-        //mMesh = MeshBuilder::CreateVerticalPlanePC(5, 7, 1.0f);
-        //mMesh = MeshBuilder::CreateHorizontalPlanePC(8, 3, 1.0f);
-        //mMesh = MeshBuilder::CreateSpherePC(100.0f, 100.0f, 1.0f);
-        //mMesh = MeshBuilder::CreateCylinderPC(100, 2);
-
-        //mMesh = MeshBuilder::CreateSkySpherePX(100, 100, 100.0f);
-        //mTexture.Initialize(L"../../Assets/Images/skysphere/space.jpg");
-
-        //std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTransform.fx";
-    }
+GameState::~GameState()
+{
+    delete(sun);
+    delete(mercury);
 }
 
 void GameState::Initialize()
@@ -55,73 +47,38 @@ void GameState::Initialize()
     mCamera.SetPosition({ 0.0f, 50.0f, -100.0f });
     mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
-    // Create Mesh Data
-    mMesh_Sun = MeshBuilder::CreateSpherePX(100, 100, 10.0f);
-
     // Set up Shader Data
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/DoTexturing.fx";
 
-    mMeshBuffer.Initialize(mMesh_Sun);
     mConstantBuffer.Initialize(sizeof(MathC::Matrix4));
     mVertexShader.Initialize<VertexPX>(shaderFilePath);
     mPixelShader.Initialize(shaderFilePath);
 
-    // Create Texture Data
-    mTexture.Initialize(L"../../Assets/Images/planets/sun.jpg");
-
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+
+    sun = new Planet(L"../../Assets/Images/planets/sun.jpg", 10.0f, 0.0f);
+    mercury = new Planet(L"../../Assets/Images/planets/mercury.jpg", 3.0f, 30.0f);
 }
 
 void GameState::Terminate()
 {
     mSampler.Terminate();
-    mTexture.Terminate();
 
     mPixelShader.Terminate();
     mVertexShader.Terminate();
     mConstantBuffer.Terminate();
-    mMeshBuffer.Terminate();
+
+    // Terminate Planet Data
+    mercury->Terminate();
+    sun->Terminate();
 }
 
 void GameState::Update(float deltaTime)
 {
     CameraControl(deltaTime, mCamera);
 
-    // Planet X
-    SpherePos.x = SPHERE_REVOLUTION_RADIUS;
-    SpherePos.z = sqrt(Sqr(SPHERE_REVOLUTION_RADIUS) - Sqr(SpherePos.x));
-
-    /*if (moveForward)
-        SpherePos.x += SPHERE_MOVE_SPEED_X * deltaTime;
-    else
-        SpherePos.x -= SPHERE_MOVE_SPEED_X * deltaTime;
-
-    if (SpherePos.x >= SPHERE_REVOLUTION_RADIUS)
-    {
-        moveForward = false;
-        if (upperHalf)
-            upperHalf = false;
-    }
-    else if (SpherePos.x <= -SPHERE_REVOLUTION_RADIUS)
-    {
-        if (moveForward == false && upperHalf == false)
-            upperHalf = true;
-
-        moveForward = true;
-    }
-
-    if (upperHalf)
-    {
-        SpherePos.z = sqrt(Sqr(SPHERE_REVOLUTION_RADIUS) - Sqr(SpherePos.x));
-    }
-    else
-    {
-        SpherePos.z = -sqrt(Sqr(SPHERE_REVOLUTION_RADIUS) - Sqr(SpherePos.x));;
-    }*/
-
-    deltaRotate += rotateSpeed * deltaTime;
-    if (deltaRotate >= 360.0f)
-        deltaRotate -= 360.0f;
+    sun->Update(deltaTime, 0.0f, 0.0f);
+    mercury->Update(deltaTime, 1.0f, 0.0f);
 }
 
 void GameState::Render()
@@ -129,19 +86,11 @@ void GameState::Render()
     // Bind
     mVertexShader.Bind();
     mPixelShader.Bind();
-    mTexture.BindPS(0);
     mSampler.BindPS(0);
 
-    MathC::Matrix4 matWorld = MathC::Matrix4::Identity;
-    MathC::Matrix4 matView = mCamera.GetViewMatrix();
-    MathC::Matrix4 matProjection = mCamera.GetProjectionMatrix();
-    MathC::Matrix4 matFinal = matWorld * matView * matProjection;
-    MathC::Matrix4 wvp = MathC::Transpose(matFinal);
-
-    mConstantBuffer.Update(&wvp);
-    mConstantBuffer.BindVS(0);
-
-    mMeshBuffer.Render();
+    // Render each planet
+    sun->Render(mCamera, mConstantBuffer);
+    mercury->Render(mCamera, mConstantBuffer);
 }
 
 namespace
@@ -164,15 +113,7 @@ void GameState::DebugUI()
             ImGui::DragFloat3("Transform Position", &transformPos.x, 0.01f);
         }
 
-        if (ImGui::CollapsingHeader("Gizmo", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::DragFloat3("Transform Position", &SpherePos.x, 0.01f);
-        }
-
     ImGui::End();
-
-    SimpleDraw::AddSphere(20, 20, 2.5f, Colors::Pink, MathC::Matrix4::Translation(SpherePos), deltaRotate);
-    SimpleDraw::AddGroundCircle(50, SPHERE_REVOLUTION_RADIUS, Colors::White);
 
     if (showGrid)
         SimpleDraw::AddGroundPlane(20, Colors::White);

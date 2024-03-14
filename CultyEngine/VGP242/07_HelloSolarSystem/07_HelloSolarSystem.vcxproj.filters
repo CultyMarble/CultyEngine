@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Planet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Planet.h" />
   </ItemGroup>
 </Project>
