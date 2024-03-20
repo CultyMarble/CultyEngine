@@ -7,7 +7,7 @@ class Planet
 public:
     Planet(std::filesystem::path texturePath, float radius, float distance);
     void Terminate();
-    void Update(float deltaTime, float rotateSpeed, float revolveSpeed);
+    void Update(float deltaTime, float revolveSpeed, float rotateSpeed);
     void Render(CultyEngine::Graphics::Camera& mCamera, CultyEngine::Graphics::ConstantBuffer& mConstantBuffer);
 
 protected:

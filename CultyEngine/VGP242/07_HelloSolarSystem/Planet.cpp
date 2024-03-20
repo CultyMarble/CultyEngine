@@ -23,14 +23,14 @@ void Planet::Terminate()
 	mMeshBuffer.Terminate();
 }
 
-void Planet::Update(float deltaTime, float rotateSpeed, float revolveSpeed)
+void Planet::Update(float deltaTime, float revolveSpeed, float rotateSpeed)
 {
 	// Local Rotate
-	Matrix4 localRotation = Matrix4::RotationY(1.0f * rotateSpeed * deltaTime);
+	Matrix4 localRotation = Matrix4::RotationY(1.0f * revolveSpeed * deltaTime);
 	localDirection = TransformNormal(localDirection, localRotation);
 
 	// World Rotate
-	Matrix4 worldRotation = Matrix4::RotationY(1.0f * revolveSpeed * deltaTime);
+	Matrix4 worldRotation = Matrix4::RotationY(1.0f * rotateSpeed * deltaTime);
 	worldDirection = TransformNormal(worldDirection, worldRotation);
 }
 

@@ -26,7 +26,20 @@ protected:
 
     CultyEngine::Graphics::Sampler mSampler;
 
+    // Create skySphere
+    CultyEngine::Graphics::MeshBuffer mMeshBuffer;
+    CultyEngine::Graphics::MeshPX mGalaxyBG;
+    CultyEngine::Graphics::Texture mGalaxyTexture;
+
     // Create Planets
     Planet* sun;
     Planet* mercury;
+    Planet* venus;
+    Planet* earth;
+    Planet* mars;
+    Planet* jupiter;
+    Planet* saturn;
+    Planet* uranus;
+    Planet* neptune;
+    Planet* pluto;
 };
