@@ -11,8 +11,7 @@ public:
     void Render(CultyEngine::Graphics::Camera& mCamera, CultyEngine::Graphics::ConstantBuffer& mConstantBuffer);
 
 protected:
-    Matrix4 GetLocalViewMatrix();
-    Matrix4 GetWorldViewMatrix();
+    Matrix4 GetViewMatrix(CultyEngine::MathC::Vector3& direction, CultyEngine::MathC::Vector3& viewPosition);
 
     CultyEngine::Graphics::MeshPX mMesh;
     CultyEngine::Graphics::MeshBuffer mMeshBuffer;

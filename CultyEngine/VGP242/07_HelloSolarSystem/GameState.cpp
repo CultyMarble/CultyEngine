@@ -7,8 +7,20 @@ using namespace CultyEngine::Input;
 namespace
 {
     bool showGrid = true;
+    float gridAlpha = 0.5f;
+    Vector4 gridColor = CultyEngine::Colors::White;
 
     CultyEngine::MathC::Vector3 transformPos = CultyEngine::MathC::Vector3::Zero;
+
+    bool drawMercury = true;
+    bool drawVenus = true;
+    bool drawEarth = true;
+    bool drawMars = true;
+    bool drawJupiter = true;
+    bool drawSaturn = true;
+    bool drawUranus = true;
+    bool drawNeptune = true;
+    bool drawPluto = true;
 
     const float RING_MERCURY =  15.0f;
     const float RING_VENUS =    27.7f;
@@ -161,16 +173,17 @@ void GameState::Update(float deltaTime)
 {
     CameraControl(deltaTime, mCamera);
 
-    sun->Update(deltaTime,      0.0f, 0.0f);
-    mercury->Update(deltaTime,  revolveMercury, rotateMercury);
-    venus->Update(deltaTime,    revolveVenus, rotateVenus);
-    earth->Update(deltaTime,    revolveEarth, rotateEarth);
-    mars->Update(deltaTime,     revolveMars, rotateMars);
-    jupiter->Update(deltaTime,  revolveJupiter, rotateJupiter);
-    saturn->Update(deltaTime,   revolveSaturn, rotateSaturn);
-    uranus->Update(deltaTime,   revolveUranus, rotateUranus);
-    neptune->Update(deltaTime,  revolveNeptune, rotateNeptune);
-    pluto->Update(deltaTime,    revolvePluto, rotatePluto);
+    sun->Update(deltaTime, 0.0f, 0.1f);
+
+    mercury->Update(deltaTime, revolveMercury, rotateMercury);
+    venus->Update(deltaTime, revolveVenus, rotateVenus);
+    earth->Update(deltaTime, revolveEarth, rotateEarth);
+    mars->Update(deltaTime, revolveMars, rotateMars);
+    jupiter->Update(deltaTime, revolveJupiter, rotateJupiter);
+    saturn->Update(deltaTime, revolveSaturn, rotateSaturn);
+    uranus->Update(deltaTime, revolveUranus, rotateUranus);
+    neptune->Update(deltaTime, revolveNeptune, rotateNeptune);
+    pluto->Update(deltaTime, revolvePluto, rotatePluto);
 }
 
 void GameState::Render()
@@ -196,15 +209,25 @@ void GameState::Render()
 
     // Render each planet
     sun->Render(mCamera, mConstantBuffer);
-    mercury->Render(mCamera, mConstantBuffer);
-    venus->Render(mCamera, mConstantBuffer);
-    earth->Render(mCamera, mConstantBuffer);
-    mars->Render(mCamera, mConstantBuffer);
-    jupiter->Render(mCamera, mConstantBuffer);
-    saturn->Render(mCamera, mConstantBuffer);
-    uranus->Render(mCamera, mConstantBuffer);
-    neptune->Render(mCamera, mConstantBuffer);
-    pluto->Render(mCamera, mConstantBuffer);
+
+    if (drawMercury)
+        mercury->Render(mCamera, mConstantBuffer);
+    if (drawVenus)
+        venus->Render(mCamera, mConstantBuffer);
+    if (drawEarth)
+        earth->Render(mCamera, mConstantBuffer);
+    if (drawMars)
+        mars->Render(mCamera, mConstantBuffer);
+    if (drawJupiter)
+        jupiter->Render(mCamera, mConstantBuffer);
+    if (drawSaturn)
+        saturn->Render(mCamera, mConstantBuffer);
+    if (drawUranus)
+        uranus->Render(mCamera, mConstantBuffer);
+    if (drawNeptune)
+        neptune->Render(mCamera, mConstantBuffer);
+    if (drawPluto)
+        pluto->Render(mCamera, mConstantBuffer);
 }
 
 void GameState::DebugUI()
@@ -215,6 +238,7 @@ void GameState::DebugUI()
         if (ImGui::CollapsingHeader("Gizmo", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::Checkbox("Show Grid", &showGrid);
+            ImGui::DragFloat("Grid Alpha", &gridAlpha, 0.001f, 0.0f, 1.0f);
         }
 
         if (ImGui::CollapsingHeader("Planet Configs", ImGuiTreeNodeFlags_DefaultOpen))
@@ -234,54 +258,63 @@ void GameState::DebugUI()
 
             if (ImGui::CollapsingHeader("MERCURY", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawMercury);
                 ImGui::DragFloat("Rotate Speed", &rotateMercury, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveMercury, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("VENUS", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawVenus);
                 ImGui::DragFloat("Rotate Speed", &rotateVenus, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveVenus, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("EARTH", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawEarth);
                 ImGui::DragFloat("Rotate Speed", &rotateEarth, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveEarth, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("MARS", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawMars);
                 ImGui::DragFloat("Rotate Speed", &rotateMars, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveMars, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("JUPITER", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawJupiter);
                 ImGui::DragFloat("Rotate Speed", &rotateJupiter, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveJupiter, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("SATURN", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawSaturn);
                 ImGui::DragFloat("Rotate Speed", &rotateSaturn, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveSaturn, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("URANUS", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawUranus);
                 ImGui::DragFloat("Rotate Speed", &rotateUranus, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveUranus, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("NEPTUNE", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawNeptune);
                 ImGui::DragFloat("Rotate Speed", &rotateNeptune, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolveNeptune, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("PLUTO", ImGuiTreeNodeFlags_CollapsingHeader))
             {
+                ImGui::Checkbox("Draw", &drawPluto);
                 ImGui::DragFloat("Rotate Speed", &rotatePluto, 0.05f, 0.0f, 50.0f);
                 ImGui::DragFloat("Revolve Speed", &revolvePluto, 0.05f, 0.0f, 50.0f);
             }
@@ -291,15 +324,17 @@ void GameState::DebugUI()
 
     if (showGrid)
     {
-        SimpleDraw::AddGroundCircle(1000, RING_MERCURY, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_VENUS, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_EARTH, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_MARS, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_JUPITER, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_SATURN, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_URANUS, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_NEPTUNE, Colors::White);
-        SimpleDraw::AddGroundCircle(1000, RING_PLUTO, Colors::White);
+        gridColor.a = gridAlpha;
+
+        SimpleDraw::AddGroundCircle(1000, RING_MERCURY, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_VENUS, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_EARTH, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_MARS, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_JUPITER, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_SATURN, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_URANUS, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_NEPTUNE, gridColor);
+        SimpleDraw::AddGroundCircle(1000, RING_PLUTO, gridColor);
     }
 
     SimpleDraw::Render(mCamera);
