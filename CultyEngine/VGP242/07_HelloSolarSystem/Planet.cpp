@@ -25,11 +25,11 @@ void Planet::Terminate()
 
 void Planet::Update(float deltaTime, float revolveSpeed, float rotateSpeed)
 {
-    // World Rotate
+    // World View Rotate
     Matrix4 worldRotation = Matrix4::RotationY(1.0f * revolveSpeed * deltaTime);
     worldDirection = TransformNormal(worldDirection, worldRotation);
 
-    // Local Rotate
+    // Local View Rotate
     Matrix4 localRotation = Matrix4::RotationY(1.0f * rotateSpeed * deltaTime);
     localDirection = TransformNormal(localDirection, localRotation);
 }

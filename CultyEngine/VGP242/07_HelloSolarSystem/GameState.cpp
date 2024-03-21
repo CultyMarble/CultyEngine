@@ -40,7 +40,7 @@ namespace
     const float REVOLVE_SATURN =    0.969f;
     const float REVOLVE_URANUS =    0.681f;
     const float REVOLVE_NEPTUNE =   0.543f;
-    const float REVOLVE_PLUTO =     0.470f;
+    const float REVOLVE_PLUTO =     0.270f;
 
     const float ROTATE_MERCURY =    3.750f;
     const float ROTATE_VENUS =      -0.02f;
@@ -134,14 +134,14 @@ void GameState::Initialize()
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 
     sun =       new Planet(L"../../Assets/Images/planets/sun.jpg",          10.00f, 00.0f);
-    mercury =   new Planet(L"../../Assets/Images/planets/mercury.jpg",      0.349f, 15.0f);
-    venus =     new Planet(L"../../Assets/Images/planets/venus.jpg",        0.864f, 27.7f);
-    earth =     new Planet(L"../../Assets/Images/planets/earth/earth.jpg",  0.910f, 38.5f);
-    mars =      new Planet(L"../../Assets/Images/planets/mars.jpg",         0.485f, 58.5f);
-    jupiter =   new Planet(L"../../Assets/Images/planets/jupiter.jpg",      9.987f, 86.0f);
-    saturn =    new Planet(L"../../Assets/Images/planets/saturn.jpg",       8.319f, 129.3f);
-    uranus =    new Planet(L"../../Assets/Images/planets/uranus.jpg",       3.623f, 179.5f);
-    neptune =   new Planet(L"../../Assets/Images/planets/neptune.jpg",      3.517f, 235.9f);
+    mercury =   new Planet(L"../../Assets/Images/planets/mercury.jpg",      0.249f, 15.0f);
+    venus =     new Planet(L"../../Assets/Images/planets/venus.jpg",        0.764f, 27.7f);
+    earth =     new Planet(L"../../Assets/Images/planets/earth/earth.jpg",  0.810f, 38.5f);
+    mars =      new Planet(L"../../Assets/Images/planets/mars.jpg",         0.385f, 58.5f);
+    jupiter =   new Planet(L"../../Assets/Images/planets/jupiter.jpg",      3.987f, 86.0f);
+    saturn =    new Planet(L"../../Assets/Images/planets/saturn.jpg",       5.319f, 129.3f);
+    uranus =    new Planet(L"../../Assets/Images/planets/uranus.jpg",       1.323f, 179.5f);
+    neptune =   new Planet(L"../../Assets/Images/planets/neptune.jpg",      1.217f, 235.9f);
     pluto =     new Planet(L"../../Assets/Images/planets/pluto.jpg",        0.295f, 312.5f);
 }
 
@@ -235,7 +235,7 @@ void GameState::DebugUI()
     ImGui::Begin("DebugUI: Hello Solar System", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
         DebugUI::SetTheme(DebugUI::Theme::Dark);
 
-        if (ImGui::CollapsingHeader("Gizmo", ImGuiTreeNodeFlags_DefaultOpen))
+        if (ImGui::CollapsingHeader("Gizmo", ImGuiTreeNodeFlags_CollapsingHeader))
         {
             ImGui::Checkbox("Show Grid", &showGrid);
             ImGui::DragFloat("Grid Alpha", &gridAlpha, 0.001f, 0.0f, 1.0f);
@@ -259,64 +259,64 @@ void GameState::DebugUI()
             if (ImGui::CollapsingHeader("MERCURY", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawMercury);
-                ImGui::DragFloat("Rotate Speed", &rotateMercury, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveMercury, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("01. Rotate Speed", &rotateMercury, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("02. Revolve Speed", &revolveMercury, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("VENUS", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawVenus);
-                ImGui::DragFloat("Rotate Speed", &rotateVenus, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveVenus, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("03. Rotate Speed", &rotateVenus, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("04. Revolve Speed", &revolveVenus, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("EARTH", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawEarth);
-                ImGui::DragFloat("Rotate Speed", &rotateEarth, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveEarth, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("05. Rotate Speed", &rotateEarth, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("06. Revolve Speed", &revolveEarth, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("MARS", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawMars);
-                ImGui::DragFloat("Rotate Speed", &rotateMars, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveMars, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("07. Rotate Speed", &rotateMars, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("08. Revolve Speed", &revolveMars, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("JUPITER", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawJupiter);
-                ImGui::DragFloat("Rotate Speed", &rotateJupiter, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveJupiter, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("09. Rotate Speed", &rotateJupiter, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("10.Revolve Speed", &revolveJupiter, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("SATURN", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawSaturn);
-                ImGui::DragFloat("Rotate Speed", &rotateSaturn, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveSaturn, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("11. Rotate Speed", &rotateSaturn, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("12. Revolve Speed", &revolveSaturn, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("URANUS", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawUranus);
-                ImGui::DragFloat("Rotate Speed", &rotateUranus, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveUranus, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("13. Rotate Speed", &rotateUranus, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("14. Revolve Speed", &revolveUranus, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("NEPTUNE", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawNeptune);
-                ImGui::DragFloat("Rotate Speed", &rotateNeptune, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolveNeptune, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("15. Rotate Speed", &rotateNeptune, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("16. Revolve Speed", &revolveNeptune, 0.05f, 0.0f, 50.0f);
             }
 
             if (ImGui::CollapsingHeader("PLUTO", ImGuiTreeNodeFlags_CollapsingHeader))
             {
                 ImGui::Checkbox("Draw", &drawPluto);
-                ImGui::DragFloat("Rotate Speed", &rotatePluto, 0.05f, 0.0f, 50.0f);
-                ImGui::DragFloat("Revolve Speed", &revolvePluto, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("17. Rotate Speed", &rotatePluto, 0.05f, 0.0f, 50.0f);
+                ImGui::DragFloat("18. Revolve Speed", &revolvePluto, 0.05f, 0.0f, 50.0f);
             }
         }
 
