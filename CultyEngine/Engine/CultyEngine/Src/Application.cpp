@@ -27,6 +27,7 @@ void Application::Run(const ApplicationConfig& config)
     Input::InputSystem::StaticInitialize(wHandle);
     DebugUI::StaticInitialize(wHandle, false, true);
     SimpleDraw::StaticInitialize(config.maxVertexCount);
+    TextureManager::StaticInitialize("../../Assets/Images/");
 
     ASSERT(mCurrentState != nullptr, "Application: need an application state!");
     mCurrentState->Initialize();
@@ -67,10 +68,11 @@ void Application::Run(const ApplicationConfig& config)
     // Clean Up
     mCurrentState->Terminate();
 
+    TextureManager::StaticTerminate();
     SimpleDraw::StaticTerminate();
     DebugUI::StaticTerminate();
-    Input::InputSystem::StaticTerminate();
-    Graphics::GraphicsSystem::StaticTerminate();
+    InputSystem::StaticTerminate();
+    GraphicsSystem::StaticTerminate();
 
     myWindow.Terminate();
 }

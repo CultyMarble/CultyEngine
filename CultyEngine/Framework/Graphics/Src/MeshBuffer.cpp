@@ -54,7 +54,7 @@ void CultyEngine::Graphics::MeshBuffer::Update(const void* vertices, uint32_t ve
     context->Unmap(mVertexBuffer, 0);
 }
 
-void MeshBuffer::Render()
+void MeshBuffer::Render() const
 {
     auto context = GraphicsSystem::Get()->GetContext();
 

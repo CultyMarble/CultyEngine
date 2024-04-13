@@ -398,6 +398,50 @@ MeshPX MeshBuilder::CreateSpherePX(uint32_t slices, uint32_t rings, float radius
     return meshPX;
 }
 
+Mesh CultyEngine::Graphics::MeshBuilder::CreateSphere(uint32_t slices, uint32_t rings, float radius)
+{
+    Mesh mesh;
+
+    const float vertRotation = (MathC::Constants::Pi / static_cast<float>(rings));
+    const float horzRotation = (MathC::Constants::TwoPi / static_cast<float>(slices));
+    const float uInc = 1.0f / static_cast<float>(slices);
+    const float vInc = 1.0f / static_cast<float>(rings);
+
+    for (uint32_t r = 0; r <= rings; ++r)
+    {
+        float ringPos = static_cast<float>(r);
+        float phi = ringPos * vertRotation;
+
+        for (uint32_t s = 0; s <= rings; ++s)
+        {
+            float slicePos = static_cast<float>(s);
+            float rotation = slicePos * horzRotation;
+
+            float u = 1.0f - (uInc * slicePos);
+            float v = vInc * ringPos;
+
+            float x = radius * sin(rotation) * sin(phi);
+            float y = radius * cos(phi);
+            float z = radius * cos(rotation) * sin(phi);
+
+            MathC::Vector3 position = { x, y, z };
+            MathC::Vector3 normal = MathC::Normalize(position);
+            MathC::Vector3 tangent = MathC::Normalize({-z, 0.0f, x});
+            MathC::Vector2 uvCoord = { u , v };
+
+            mesh.vertices.push_back({
+                position,
+                normal,
+                tangent,
+                uvCoord});
+        }
+    }
+
+    CreatePlaneIndices(mesh.indices, rings, slices);
+
+    return mesh;
+}
+
 MeshPX MeshBuilder::CreateSkySpherePX(uint32_t slices, uint32_t rings, float radius)
 {
     MeshPX meshPX;

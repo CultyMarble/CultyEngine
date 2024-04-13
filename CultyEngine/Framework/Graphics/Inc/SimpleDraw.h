@@ -22,8 +22,6 @@ namespace CultyEngine::Graphics
         void AddFilledAABB(float minX, float minY, float minZ, float maxX, float maxY, float maxZ, const Color& color);
 
         void AddSphere(uint32_t slices, uint32_t rings, float radius, const Color& color);
-        void AddSphere(uint32_t slices, uint32_t rings, float radius, const Color& color, const Matrix4& matrix);
-        void AddSphere(uint32_t slices, uint32_t rings, float radius, const Color& color, const Matrix4& matrix, const float deltaRotate);
 
         void AddGroundPlane(float size, const Color& color);
         void AddGroundCircle(uint32_t slices, float radius, const Color& color);
