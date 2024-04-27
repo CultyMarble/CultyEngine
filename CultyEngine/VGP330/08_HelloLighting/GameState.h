@@ -11,12 +11,14 @@ public:
     void DebugUI() override;
 
 protected:
+    CultyEngine::Graphics::DirectionalLight mDirectionalLight;
     CultyEngine::Graphics::Camera mCamera;
+
     CultyEngine::Graphics::Mesh mMesh;
+    CultyEngine::Graphics::RenderObject mRenderObject;
+    CultyEngine::Graphics::RenderObject mRenderObject2;
 
-    // CultyEngine::Graphics::RenderObject mRenderObject1;
-
-    std::vector<CultyEngine::Graphics::RenderObject> mRenderObject;
+    //std::vector<CultyEngine::Graphics::RenderObject> mRenderObject;
 
     CultyEngine::Graphics::StandardEffect mStandardEffect;
 };

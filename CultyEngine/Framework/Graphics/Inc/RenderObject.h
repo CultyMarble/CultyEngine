@@ -1,17 +1,22 @@
 #pragma once
 #include "MeshBuffer.h"
+#include "Material.h"
 #include "TextureManager.h"
 #include "Transform.h"
 
 namespace CultyEngine::Graphics
 {
-	struct RenderObject
-	{
-		void Terminate();
+    struct RenderObject
+    {
+        void Terminate();
 
-		Transform transform;
-		MeshBuffer meshBuffer;
+        Transform transform;
+        MeshBuffer meshBuffer;
 
-		TextureID diffuseTextureID;
-	};
+        Material material;
+
+        TextureID diffuseMapID;
+        TextureID normalMapID;
+        TextureID specularMapID;
+    };
 }

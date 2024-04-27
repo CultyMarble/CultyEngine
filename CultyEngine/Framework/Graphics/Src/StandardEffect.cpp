@@ -9,76 +9,118 @@ using namespace CultyEngine::Graphics;
 
 void StandardEffect::Initialize(const std::filesystem::path& filePath)
 {
-	mTransformBuffer.Initialize();
-	mSettingsBuffer.Initialize();
-	mVertexShader.Initialize<Vertex>(filePath);
-	mPixelShader.Initialize(filePath);
-	mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+    mTransformBuffer.Initialize();
+    mSettingsBuffer.Initialize();
+    mLightBuffer.Initialize();
+    mMaterialBuffer.Initialize();
+    mVertexShader.Initialize<Vertex>(filePath);
+    mPixelShader.Initialize(filePath);
+    mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
 }
 
 void StandardEffect::Terminate()
 {
-	mSampler.Terminate();
-	mPixelShader.Terminate();
-	mVertexShader.Terminate();
-	mSettingsBuffer.Terminate();
-	mTransformBuffer.Terminate();
+    mSampler.Terminate();
+    mPixelShader.Terminate();
+    mVertexShader.Terminate();
+    mMaterialBuffer.Terminate();
+    mLightBuffer.Terminate();
+    mSettingsBuffer.Terminate();
+    mTransformBuffer.Terminate();
 }
 
 void StandardEffect::Begin()
 {
-	ASSERT(mCamera != nullptr, "StandardEffect: No Camera Set!");
+    ASSERT(mCamera != nullptr, "StandardEffect: No Camera Set!");
+    ASSERT(mDirectionalLight != nullptr, "StandardEffect: No Light Set!");
 
-	mVertexShader.Bind();
-	mPixelShader.Bind();
+    mVertexShader.Bind();
+    mPixelShader.Bind();
 
-	mSampler.BindVS(0);
-	mSampler.BindPS(0);
+    mSampler.BindVS(0);
+    mSampler.BindPS(0);
 
-	mTransformBuffer.BindVS(0);
-	mSettingsBuffer.BindPS(1);
+    mTransformBuffer.BindVS(0);
+    mSettingsBuffer.BindPS(1);
+    mLightBuffer.BindVS(2); // To Get infomation from .fx file
+    mLightBuffer.BindPS(2); // To Get infomation from .fx file
+
+    mMaterialBuffer.BindPS(3);
 }
 
 void StandardEffect::End()
 {
-	// nothing until shadow
+    // nothing until shadow
 }
 
 void StandardEffect::Render(const RenderObject& renderObject)
 {
-	const MathC::Matrix4 matWorld = renderObject.transform.GetMatrix4();
-	const MathC::Matrix4 matView = mCamera->GetViewMatrix();
-	const MathC::Matrix4 matProj = mCamera->GetProjectionMatrix();
+    const MathC::Matrix4 matWorld = renderObject.transform.GetMatrix4();
+    const MathC::Matrix4 matView = mCamera->GetViewMatrix();
+    const MathC::Matrix4 matProj = mCamera->GetProjectionMatrix();
 
-	MathC::Matrix4 matFinal = matWorld * matView * matProj;
+    MathC::Matrix4 matFinal = matWorld * matView * matProj;
 
-	TransformData transformData;
-	transformData.wvp = MathC::Transpose(matFinal);
-	mTransformBuffer.Update(transformData);
+    TransformData transformData;
+    transformData.wvp = MathC::Transpose(matFinal);
+    transformData.world = MathC::Transpose(matWorld);
+    transformData.viewPosition = mCamera->GetPosition();
+    mTransformBuffer.Update(transformData);
 
-	SettingsData settingsData;
-	settingsData.useDiffuseMap = renderObject.diffuseTextureID > 0 && 
-		mSettingsData.useDiffuseMap > 0 ? 1 : 0;
-	mSettingsBuffer.Update(settingsData);
+    SettingsData settingsData;
+    settingsData.useDiffuseMap  = renderObject.diffuseMapID > 0 && mSettingsData.useDiffuseMap > 0 ? 1 : 0;
+    settingsData.useNormalMap   = renderObject.normalMapID > 0 && mSettingsData.useNormalMap > 0 ? 1 : 0;
+    settingsData.useSpecularMap = renderObject.specularMapID > 0 && mSettingsData.useSpecularMap > 0 ? 1 : 0;
+    settingsData.useLighting    = mSettingsData.useLighting > 0 ? 1 : 0;
+    mSettingsBuffer.Update(settingsData);
 
-	TextureManager* tm = TextureManager::Get();
-	tm->BindPS(renderObject.diffuseTextureID, 0);
-	renderObject.meshBuffer.Render();
+    mLightBuffer.Update(*mDirectionalLight);
+    mMaterialBuffer.Update(renderObject.material);
+
+    TextureManager* tm = TextureManager::Get();
+    tm->BindPS(renderObject.diffuseMapID, 0);
+    tm->BindPS(renderObject.normalMapID, 1);
+    tm->BindPS(renderObject.specularMapID, 2);
+
+    renderObject.meshBuffer.Render();
 }
 
 void StandardEffect::SetCamera(const Camera& camera)
 {
-	mCamera = &camera;
+    mCamera = &camera;
+}
+
+void StandardEffect::SetDirectionalLight(const DirectionalLight& directionalLight)
+{
+    mDirectionalLight = &directionalLight;
 }
 
 void StandardEffect::DebugUI()
 {
-	if (ImGui::CollapsingHeader("StandardEffect", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		bool useDiffuseMap = mSettingsData.useDiffuseMap > 0;
-		if (ImGui::Checkbox("UseDiffuseMap", &useDiffuseMap))
-		{
-			mSettingsData.useDiffuseMap = useDiffuseMap ? 1 : 0;
-		}
-	}
+    if (ImGui::CollapsingHeader("StandardEffect", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        bool useDiffuseMap = mSettingsData.useDiffuseMap > 0;
+        if (ImGui::Checkbox("UseDiffuseMap", &useDiffuseMap))
+        {
+            mSettingsData.useDiffuseMap = useDiffuseMap ? 1 : 0;
+        }
+
+        bool useNormalMap = mSettingsData.useNormalMap > 0;
+        if (ImGui::Checkbox("UseNormalMap", &useNormalMap))
+        {
+            mSettingsData.useNormalMap = useNormalMap ? 1 : 0;
+        }
+
+        bool useSpecularMap = mSettingsData.useSpecularMap > 0;
+        if (ImGui::Checkbox("UseSpecularMap", &useSpecularMap))
+        {
+            mSettingsData.useSpecularMap = useSpecularMap ? 1 : 0;
+        }
+
+        bool useLighting = mSettingsData.useLighting > 0;
+        if (ImGui::Checkbox("UseLight", &useLighting))
+        {
+            mSettingsData.useLighting = useLighting ? 1 : 0;
+        }
+    }
 }
