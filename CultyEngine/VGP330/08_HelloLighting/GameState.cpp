@@ -51,15 +51,16 @@ void GameState::Initialize()
 
     mRenderObject.meshBuffer.Initialize(mMesh);
     mRenderObject.diffuseMapID = tm->LoadTexture("planets/earth/earth.jpg");
-    mRenderObject.specularMapID = tm->LoadTexture("planets/earth/earth_spec.jpg");
     mRenderObject.normalMapID = tm->LoadTexture("planets/earth/earth_normal.jpg");
+    mRenderObject.specularMapID = tm->LoadTexture("planets/earth/earth_spec.jpg");
+    mRenderObject.bumpMapID = tm->LoadTexture("planets/earth/earth_bump.jpg");
     mRenderObject.transform.position.x = 0.0f;
 
-    mRenderObject2.meshBuffer.Initialize(mMesh);
-    mRenderObject2.diffuseMapID = tm->LoadTexture("download/mars_diffuse.jpg");
-    mRenderObject2.specularMapID = tm->LoadTexture("download/mars_spec.jpg");
-    mRenderObject2.normalMapID = tm->LoadTexture("download/mars_normal.jpg");
-    mRenderObject2.transform.position.x = 2.0f;
+    //mRenderObject2.meshBuffer.Initialize(mMesh);
+    //mRenderObject2.diffuseMapID = tm->LoadTexture("download/mars_diffuse.jpg");
+    //mRenderObject2.specularMapID = tm->LoadTexture("download/mars_spec.jpg");
+    //mRenderObject2.normalMapID = tm->LoadTexture("download/mars_normal.jpg");
+    //mRenderObject2.transform.position.x = 2.0f;
 
     //int numberOfObjects = 1;
     //for (int i = 0; i < numberOfObjects; ++i)
@@ -85,7 +86,7 @@ void GameState::Terminate()
 {
     mStandardEffect.Terminate();
 
-    mRenderObject2.Terminate();
+    //mRenderObject2.Terminate();
     mRenderObject.Terminate();
 
     //for (auto& r : mRenderObject)
@@ -104,7 +105,7 @@ void GameState::Render()
 
     mStandardEffect.Begin();
         mStandardEffect.Render(mRenderObject);
-        mStandardEffect.Render(mRenderObject2);
+        //mStandardEffect.Render(mRenderObject2);
 
         //for (auto& r : mRenderObject)
         //    mStandardEffect.Render(r);

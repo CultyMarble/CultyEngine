@@ -42,6 +42,9 @@ namespace CultyEngine::Graphics
             int useNormalMap = 1;
             int useSpecularMap = 1;
             int useLighting = 1;
+            int useBumpMap = 1;
+            float bumpWeight = 1.0f;
+            float padding[2] = { 0.0f };
         };
 
         using TransformBuffer = TypedConstantBuffer<TransformData>;

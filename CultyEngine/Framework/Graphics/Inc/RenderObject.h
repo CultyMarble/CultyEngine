@@ -18,5 +18,6 @@ namespace CultyEngine::Graphics
         TextureID diffuseMapID;
         TextureID normalMapID;
         TextureID specularMapID;
+        TextureID bumpMapID;
     };
 }

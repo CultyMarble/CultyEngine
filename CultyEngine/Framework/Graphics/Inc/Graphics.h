@@ -15,6 +15,7 @@
 #include "PixelShader.h"
 #include "Sampler.h"
 #include "RenderObject.h"
+#include "RenderTarget.h"
 #include "SimpleDraw.h"
 #include "StandardEffect.h"
 #include "Texture.h"
