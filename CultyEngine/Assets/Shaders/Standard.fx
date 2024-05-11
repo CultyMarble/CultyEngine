@@ -70,7 +70,7 @@ VS_OUTPUT VS(VS_INPUT input)
         localPosition += (input.normal * bumpValue * bumpWeight);
     }
 
-    float3 worldPosition = mul(float4(localPosition, 1.0f), world);
+    float3 worldPosition = mul(float4(localPosition, 1.0f), world).xyz;
 
     output.position         = mul(float4(localPosition, 1.0f), wvp);
     output.worldNormal      = mul(input.normal, (float3x3) world);

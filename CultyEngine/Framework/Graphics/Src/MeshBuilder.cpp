@@ -279,6 +279,42 @@ MeshPX MeshBuilder::CreateHorizontalPlanePX(uint32_t numRows, uint32_t numCols, 
     return meshPX;
 }
 
+Mesh MeshBuilder::CreateHorizontalPlane(uint32_t numRows, uint32_t numCols, float spacing)
+{
+    Mesh mesh;
+
+    const MathC::Vector3& up = MathC::Vector3::YAxis;
+    const MathC::Vector3& right = MathC::Vector3::XAxis;
+    const float hpw = static_cast<float>(numCols) * spacing * 0.5f;
+    const float hph = static_cast<float>(numRows) * spacing * 0.5f;
+    const float uInc = 1.0f / static_cast<float>(numCols);
+    const float vInc = 1.0f / static_cast<float>(numRows);
+
+    float x = -hpw;
+    float z = -hph;
+    float u = 0.0f;
+    float v = 1.0f;
+
+    for (uint32_t r = 0; r <= numRows; ++r)
+    {
+        for (uint32_t c = 0; c <= numCols; ++c)
+        {
+            mesh.vertices.push_back({ {x, 0.0f, z}, up, right, {u, v} });
+            x += spacing;
+            u += uInc;
+        }
+
+        x = -hpw;
+        z += spacing;
+        u = 0.0f;
+        v += (-vInc);
+    }
+
+    CreatePlaneIndices(mesh.indices, numRows, numCols);
+
+    return mesh;
+}
+
 MeshPC MeshBuilder::CreateCylinderPC(uint32_t slices, uint32_t rings)
 {
     srand(time(nullptr));
@@ -398,7 +434,7 @@ MeshPX MeshBuilder::CreateSpherePX(uint32_t slices, uint32_t rings, float radius
     return meshPX;
 }
 
-Mesh CultyEngine::Graphics::MeshBuilder::CreateSphere(uint32_t slices, uint32_t rings, float radius)
+Mesh MeshBuilder::CreateSphere(uint32_t slices, uint32_t rings, float radius)
 {
     Mesh mesh;
 
@@ -544,6 +580,19 @@ MeshPX MeshBuilder::CreateSkyBoxPX(float size)
         22, 21, 20,
         22, 20, 23
     };
+
+    return meshPX;
+}
+
+MeshPX MeshBuilder::CreateScreenQuad()
+{
+    MeshPX meshPX;
+    meshPX.vertices.push_back({ { -1.0f,  1.0f, 0.0f }, {0.0f, 0.0f} });
+    meshPX.vertices.push_back({ {  1.0f,  1.0f, 0.0f }, {1.0f, 0.0f} });
+    meshPX.vertices.push_back({ {  1.0f, -1.0f, 0.0f }, {1.0f, 1.0f} });
+    meshPX.vertices.push_back({ { -1.0f, -1.0f, 0.0f }, {0.0f, 1.0f} });
+
+    meshPX.indices = { 0 , 1, 3, 1, 2, 3 };
 
     return meshPX;
 }
