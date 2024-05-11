@@ -6,6 +6,8 @@
 
 namespace CultyEngine::Graphics
 {
+    struct Model;
+
     struct RenderObject
     {
         void Terminate();
@@ -20,4 +22,19 @@ namespace CultyEngine::Graphics
         TextureID specularMapID;
         TextureID bumpMapID;
     };
+
+    using RenderGroup = std::vector<RenderObject>;
+    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model);
+    void CleanupRenderGroup(RenderGroup& renderGroup);
+
+    void SetRenderGroupPosition(RenderGroup& renderGroup, const MathC::Vector3& newPosition);
+
+    template<class Effect>
+    void DrawRenderGroup(Effect& effect, const RenderGroup& renderGroup)
+    {
+        for (const RenderObject& renderObject : renderGroup)
+        {
+            effect.Render(renderObject);
+        }
+    }
 }

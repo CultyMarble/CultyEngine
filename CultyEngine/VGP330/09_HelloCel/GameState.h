@@ -15,7 +15,7 @@ protected:
     CultyEngine::Graphics::Camera mCamera;
 
     CultyEngine::Graphics::Mesh mMesh;
-    CultyEngine::Graphics::RenderObject mRenderObject;
+    CultyEngine::Graphics::RenderObject mCharacter;
 
     //CultyEngine::Graphics::RenderObject mRenderObject2;
     //std::vector<CultyEngine::Graphics::RenderObject> mRenderObject;
