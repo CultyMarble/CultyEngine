@@ -21,7 +21,6 @@ protected:
     // Objects
     CultyEngine::Graphics::RenderObject mGround;
     CultyEngine::Graphics::RenderGroup mCharacter03;
-
     CultyEngine::Graphics::RenderObject mScreenQuad;
 
     CultyEngine::Graphics::Texture mCombinedTexture;

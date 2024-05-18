@@ -50,7 +50,7 @@ void GameState::Initialize()
     // Objects
     Mesh groundMesh = MeshBuilder::CreateHorizontalPlane(20, 20, 1.0f);
     mGround.meshBuffer.Initialize(groundMesh);
-    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
+    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/basketball.jpg");
 
     Model model;
     ModelIO::LoadModel("../../Assets/Models/Character03/Parasite_L_Starkie.fbx", model);

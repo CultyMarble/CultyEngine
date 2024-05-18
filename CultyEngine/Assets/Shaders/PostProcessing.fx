@@ -36,33 +36,28 @@ float4 PS(VS_INPUT input) : SV_Target
 {
     float4 finalColor = 1.0f;
     
-    // none
-    if (mode == 0)
+    if (mode == 0)      // None
     {
         finalColor = textureMap0.Sample(textureSampler, input.texCoord);
     }
-    // monochrome
-    else if (mode == 1)
+    else if (mode == 1) // Monochrome
     {
         float4 color = textureMap0.Sample(textureSampler, input.texCoord);
         finalColor = (color.r + color.r + color.r) / 3.0f;
     }
-    // invert
-    else if (mode == 2)
+    else if (mode == 2) // Invert
     {
         float4 color = textureMap0.Sample(textureSampler, input.texCoord);
         finalColor = 1.0f - color;
     }
-    // invert
-    else if (mode == 3)
+    else if (mode == 3) // Mirror
     {
         float2 texCoord = input.texCoord;
         texCoord.x *= params0;
         texCoord.y *= params1;
         finalColor = textureMap0.Sample(textureSampler, texCoord);
     }
-    // blur
-    else if (mode == 4)
+    else if (mode == 4) // Blur
     {
         float u = input.texCoord.x;
         float v = input.texCoord.y;
@@ -79,22 +74,27 @@ float4 PS(VS_INPUT input) : SV_Target
         
         finalColor *= 0.1111f;
     }
-    // combine2
-    else if (mode == 5)
+    else if (mode == 5) // Combine2
     {
         float color0 = textureMap0.Sample(textureSampler, input.texCoord);
         float color1 = textureMap1.Sample(textureSampler, input.texCoord);
         finalColor = (color0 + color1) * 0.5f;
-        // finalColor = (1.0f - color1.a) * color0) + (color1.a * color1);
+        // finalColor = ((1.0f - color1.a) * color0) + (color1.a * color1);
     }
-    // chromatic abberation
-    else if (mode == 6)
+    else if (mode == 6) // Chromatic Abberation
     {
         float2 distortion = float2(params0, -params1);
-        float4 redChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.x * input.texCoord);
-        float4 greenChannel = textureMap0.Sample(textureSampler, input.texCoord);
-        float4 blueChannel = textureMap0.Sample(textureSampler, input.texCoord + distortion.y * input.texCoord);
-        finalColor = float4(redChannel.r, greenChannel.g, blueChannel.b, 1.0f);
+        float4 R_Channel = textureMap0.Sample(textureSampler, input.texCoord + distortion.x * input.texCoord);
+        float4 G_Channel = textureMap0.Sample(textureSampler, input.texCoord);
+        float4 B_Channel = textureMap0.Sample(textureSampler, input.texCoord + distortion.y * input.texCoord);
+        finalColor = float4(R_Channel.r, G_Channel.g, B_Channel.b, 1.0f);
+    }
+    else if (mode == 7)
+    {
+        float waveValue = input.texCoord.x * (3.14159f * params0);
+        float2 texCoord = input.texCoord;
+        texCoord.y += sin(waveValue) * params1;
+        finalColor = textureMap0.Sample(textureSampler, texCoord);
     }
     
     return finalColor;

@@ -21,6 +21,7 @@ namespace CultyEngine::Graphics
 			Blur,
 			Combine2,
 			ChromaticAberration,
+            Wave
 		};
 
 		void Initialize(const std::filesystem::path& filePath);
@@ -59,5 +60,7 @@ namespace CultyEngine::Graphics
 		float mMirrorY = 1.0f;
 		float mBlurStrength = 5.0f;
 		float mAberrationValue = 0.005f;
+        int mWaveCount = 20;
+        float mWaveLength = 0.05f;
 	};
 }
