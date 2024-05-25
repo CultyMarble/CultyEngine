@@ -57,45 +57,22 @@ void GameState::Initialize()
     ModelIO::LoadMaterial("../../Assets/Models/Character03/Parasite_L_Starkie.fbx", model);
     mCharacter03 = CreateRenderGroup(model);
 
-    MeshPX screenQuad = MeshBuilder::CreateScreenQuad();
-    mScreenQuad.meshBuffer.Initialize(screenQuad);
-
     // Effect
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFilePath);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-    shaderFilePath = L"../../Assets/Shaders/PostProcessing.fx";
-    mPostProcessingEffect.Initialize(shaderFilePath);
-    mPostProcessingEffect.SetTexture(&mRenderTarget);
-    mPostProcessingEffect.SetTexture(&mGaussianBlurEffect.GetResultTexture(), 1);
-    mPostProcessingEffect.SetMode(PostProcessingEffect::Mode::Combine2);
-
-    mGaussianBlurEffect.Initialize();
-    mGaussianBlurEffect.SetSourceTexture(mBlurRenderTarget);
-
-    GraphicsSystem* gs = GraphicsSystem::Get();
-    const uint32_t screenWidth = gs->GetBackBufferWidth();
-    const uint32_t screenHeight = gs->GetBackBufferHeight();
-
-    mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
-    mBlurRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
+    mShadowEffect.Initialize();
+    mShadowEffect.SetDirectionalLight(mDirectionalLight);
 }
 
 void GameState::Terminate()
 {
-    // RenderTarget
-    mBlurRenderTarget.Terminate();
-    mRenderTarget.Terminate();
-    mGaussianBlurEffect.Terminate();
-
     // Effect
-    mPostProcessingEffect.Terminate();
     mStandardEffect.Terminate();
 
     // Mesh Stuffs
-    mScreenQuad.Terminate();
     mGround.Terminate();
     CleanupRenderGroup(mCharacter03);
 }
@@ -107,31 +84,17 @@ void GameState::Update(float deltaTime)
 
 void GameState::Render()
 {
-    //SimpleDraw::AddGroundPlane(10.0f, Colors::White);
-    //SimpleDraw::Render(mCamera);
+    SimpleDraw::AddGroundPlane(10.0f, Colors::White);
+    SimpleDraw::Render(mCamera);
 
-    mRenderTarget.BeginRender();
-        mStandardEffect.Begin();
-            DrawRenderGroup(mStandardEffect, mCharacter03);
-            mStandardEffect.Render(mGround);
-        mStandardEffect.End();
-    mRenderTarget.EndRender();
+    mShadowEffect.Begin();
+        DrawRenderGroup(mShadowEffect, mCharacter03);
+    mShadowEffect.End();
 
-    // Easier customize. Blur Objects will be inside the block
-    mBlurRenderTarget.BeginRender();
-        mStandardEffect.Begin();
-            DrawRenderGroup(mStandardEffect, mCharacter03);
-            // mStandardEffect.Render(mGround);
-        mStandardEffect.End();
-    mBlurRenderTarget.EndRender();
-
-    mGaussianBlurEffect.Begin();
-        mGaussianBlurEffect.Render(mScreenQuad);
-    mGaussianBlurEffect.End();
-
-    mPostProcessingEffect.Begin();
-        mPostProcessingEffect.Render(mScreenQuad);
-    mPostProcessingEffect.End();
+    mStandardEffect.Begin();
+        DrawRenderGroup(mStandardEffect, mCharacter03);
+        mStandardEffect.Render(mGround);
+    mStandardEffect.End();
 }
 
 void GameState::DebugUI()
@@ -140,13 +103,12 @@ void GameState::DebugUI()
         ImGui::Separator();
         ImGui::Text("Render Target:");
         ImGui::Image(
-            mBlurRenderTarget.GetRawData(),
+            .GetRawData(),
             { 128, 128 },
             { 0, 0 },
             { 1 ,1 },
             { 1, 1, 1, 1 },
-            { 1, 1, 1, 1 }
-        );
+            { 1, 1, 1, 1 });
 
         if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
         {
@@ -161,7 +123,7 @@ void GameState::DebugUI()
         }
 
         mStandardEffect.DebugUI();
-        mGaussianBlurEffect.DebugUI();
+        mShadowEffect.DebugUI();
 
     ImGui::End();
 }

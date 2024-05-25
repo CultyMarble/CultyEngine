@@ -24,6 +24,7 @@ namespace CultyEngine::Graphics
 
         void SetCamera(const Camera& camera);
         void SetDirectionalLight(const DirectionalLight& directionalLight);
+        void SetShadowMap(const Texture& shadowMap);
 
         void DebugUI();
 
@@ -43,8 +44,10 @@ namespace CultyEngine::Graphics
             int useSpecularMap = 1;
             int useLighting = 1;
             int useBumpMap = 1;
+            int useShadowMap = 1;
+
             float bumpWeight = 1.0f;
-            float padding[2] = { 0.0f };
+            float depthBias = 0.0f;
         };
 
         using TransformBuffer = TypedConstantBuffer<TransformData>;

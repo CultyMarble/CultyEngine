@@ -99,6 +99,11 @@ void StandardEffect::SetDirectionalLight(const DirectionalLight& directionalLigh
     mDirectionalLight = &directionalLight;
 }
 
+void StandardEffect::SetShadowMap(const Texture& shadowMap)
+{
+    mShadowMap = &shadowMap;
+}
+
 void StandardEffect::DebugUI()
 {
     if (ImGui::CollapsingHeader("StandardEffect", ImGuiTreeNodeFlags_DefaultOpen))
