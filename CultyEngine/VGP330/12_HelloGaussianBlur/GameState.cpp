@@ -69,27 +69,26 @@ void GameState::Initialize()
     shaderFilePath = L"../../Assets/Shaders/PostProcessing.fx";
     mPostProcessingEffect.Initialize(shaderFilePath);
     mPostProcessingEffect.SetTexture(&mRenderTarget);
-    mPostProcessingEffect.SetTexture(&mCombinedTexture, 1);
+    mPostProcessingEffect.SetTexture(&mGaussianBlurEffect.GetResultTexture(), 1);
+    mPostProcessingEffect.SetMode(PostProcessingEffect::Mode::Combine2);
+
+    mGaussianBlurEffect.Initialize();
+    mGaussianBlurEffect.SetSourceTexture(mBlurRenderTarget);
 
     GraphicsSystem* gs = GraphicsSystem::Get();
     const uint32_t screenWidth = gs->GetBackBufferWidth();
     const uint32_t screenHeight = gs->GetBackBufferHeight();
 
-    // Extra for pixelate effect
-    // const uint32_t screenWidth = gs->GetBackBufferWidth() / 4;
-    // const uint32_t screenHeight = gs->GetBackBufferHeight() / 4;
-
     mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
-
-    mCombinedTexture.Initialize("../../Assets/Images/water/water_spec.jpg");
+    mBlurRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
 }
 
 void GameState::Terminate()
 {
-    mCombinedTexture.Terminate();
-
     // RenderTarget
+    mBlurRenderTarget.Terminate();
     mRenderTarget.Terminate();
+    mGaussianBlurEffect.Terminate();
 
     // Effect
     mPostProcessingEffect.Terminate();
@@ -97,29 +96,38 @@ void GameState::Terminate()
 
     // Mesh Stuffs
     mScreenQuad.Terminate();
-    CleanupRenderGroup(mCharacter03);
     mGround.Terminate();
+    CleanupRenderGroup(mCharacter03);
 }
 
 void GameState::Update(float deltaTime)
 {
     CameraControl(deltaTime, mCamera);
-
-    // Extra
-    // mPostProcessingEffect.Update(deltaTime);
 }
 
 void GameState::Render()
 {
-    SimpleDraw::AddGroundPlane(10.0f, Colors::White);
-    SimpleDraw::Render(mCamera);
+    //SimpleDraw::AddGroundPlane(10.0f, Colors::White);
+    //SimpleDraw::Render(mCamera);
 
     mRenderTarget.BeginRender();
-    mStandardEffect.Begin();
-        mStandardEffect.Render(mGround);
-        DrawRenderGroup(mStandardEffect, mCharacter03);
-    mStandardEffect.End();
+        mStandardEffect.Begin();
+            DrawRenderGroup(mStandardEffect, mCharacter03);
+            mStandardEffect.Render(mGround);
+        mStandardEffect.End();
     mRenderTarget.EndRender();
+
+    // Easier customize. Blur Objects will be inside the block
+    mBlurRenderTarget.BeginRender();
+        mStandardEffect.Begin();
+            DrawRenderGroup(mStandardEffect, mCharacter03);
+            mStandardEffect.Render(mGround);
+        mStandardEffect.End();
+    mBlurRenderTarget.EndRender();
+
+    mGaussianBlurEffect.Begin();
+        mGaussianBlurEffect.Render(mScreenQuad);
+    mGaussianBlurEffect.End();
 
     mPostProcessingEffect.Begin();
         mPostProcessingEffect.Render(mScreenQuad);
@@ -132,7 +140,7 @@ void GameState::DebugUI()
         ImGui::Separator();
         ImGui::Text("Render Target:");
         ImGui::Image(
-            mRenderTarget.GetRawData(),
+            mBlurRenderTarget.GetRawData(),
             { 128, 128 },
             { 0, 0 },
             { 1 ,1 },
@@ -153,7 +161,7 @@ void GameState::DebugUI()
         }
 
         mStandardEffect.DebugUI();
-        mPostProcessingEffect.DebugUI();
+        mGaussianBlurEffect.DebugUI();
 
     ImGui::End();
 }

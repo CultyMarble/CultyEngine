@@ -76,8 +76,12 @@ float4 PS(VS_INPUT input) : SV_Target
     }
     else if (mode == 5) // Combine2
     {
-        float color0 = textureMap0.Sample(textureSampler, input.texCoord);
-        float color1 = textureMap1.Sample(textureSampler, input.texCoord);
+        float4 color0 = textureMap0.Sample(textureSampler, input.texCoord);
+        float4 color1 = textureMap1.Sample(textureSampler, input.texCoord);
+        
+        // Extra
+        // float4 color1 = textureMap1.Sample(textureSampler, float2(input.texCoord.x + params0, input.texCoord.y));
+        
         finalColor = (color0 + color1) * 0.5f;
         // finalColor = ((1.0f - color1.a) * color0) + (color1.a * color1);
     }

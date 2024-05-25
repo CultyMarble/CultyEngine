@@ -30,10 +30,13 @@ namespace CultyEngine::Graphics
 		void Begin();
 		void End();
 
+        // void Update(float deltaTime);
+
 		void Render(const RenderObject& renderObject);
 
 		void DebugUI();
 
+        void SetMode(Mode mode);
 		void SetTexture(const Texture* texture, uint32_t slot = 0);
 
 	private:
@@ -62,5 +65,8 @@ namespace CultyEngine::Graphics
 		float mAberrationValue = 0.005f;
         int mWaveCount = 20;
         float mWaveLength = 0.05f;
+
+        // Extra
+        // float mUVOffsetX = 0.0f;
 	};
 }

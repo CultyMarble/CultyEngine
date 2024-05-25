@@ -11,7 +11,7 @@ namespace CultyEngine::Graphics
 			RGBA_U32,
 		};
 
-		static void UnBindPS(uint32_t slot);
+		static void UnbindPS(uint32_t slot);
 
 		Texture() = default;
 		virtual ~Texture();

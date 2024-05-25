@@ -7,7 +7,7 @@
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 
-void Texture::UnBindPS(uint32_t slot)
+void Texture::UnbindPS(uint32_t slot)
 {
 	static ID3D11ShaderResourceView* dummy = nullptr;
 	GraphicsSystem::Get()->GetContext()->PSSetShaderResources(slot, 1, &dummy);
