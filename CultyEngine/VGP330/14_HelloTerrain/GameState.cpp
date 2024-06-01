@@ -48,14 +48,21 @@ void GameState::Initialize()
     mDirectionalLight.specular = { 1.0f, 1.0f, 1.0f, 1.0f };
 
     // Objects
-    Mesh groundMesh = MeshBuilder::CreateHorizontalPlane(20, 20, 1.0f);
-    mGround.meshBuffer.Initialize(groundMesh);
-    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/basketball.jpg");
-
     Model model;
     ModelIO::LoadModel("../../Assets/Models/Character03/Parasite_L_Starkie.fbx", model);
     ModelIO::LoadMaterial("../../Assets/Models/Character03/Parasite_L_Starkie.fbx", model);
     mCharacter03 = CreateRenderGroup(model);
+
+    mTerrain.Initialize("../../Assets/Images/terrain/heightmap_512x512.raw", 20.0f);
+    const Mesh& m = mTerrain.GetMesh();
+    mGround.meshBuffer.Initialize(
+        nullptr,
+        static_cast<uint32_t>(sizeof(Vertex)),
+        static_cast<uint32_t>(m.vertices.size()),
+        m.indices.data(),
+        static_cast<uint32_t>(m.indices.size()));
+    mGround.meshBuffer.Update(m.vertices.data(), m.vertices.size());
+    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("terrain/dirt_seemless.jpg");
 
     // Effect
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/Standard.fx";
@@ -80,6 +87,14 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
     CameraControl(deltaTime, mCamera);
+
+    if (mOnTerrain)
+    {
+        Vector3 pos = mCamera.GetPosition();
+        float height = mTerrain.GetHeight(pos);
+        pos.y = height + 0.5f;
+        mCamera.SetPosition(pos);
+    }
 }
 
 void GameState::Render()
@@ -100,16 +115,6 @@ void GameState::Render()
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug Controls", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-        ImGui::Separator();
-        ImGui::Text("Render Target:");
-        //ImGui::Image(
-        //    .GetRawData(),
-        //    { 128, 128 },
-        //    { 0, 0 },
-        //    { 1 ,1 },
-        //    { 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1 });
-
         if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
         {
             if (ImGui::DragFloat3("Direction", &mDirectionalLight.direction.x, 0.01f))
@@ -120,6 +125,18 @@ void GameState::DebugUI()
             ImGui::ColorEdit4("Ambient##Light", &mDirectionalLight.ambient.r);
             ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
             ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
+        }
+
+        if (ImGui::CollapsingHeader("Terrain", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Checkbox("OnTerrain", &mOnTerrain);
+            float heightScale = mTerrain.GetHeightScale();
+            if (ImGui::DragFloat("HeightScale", &heightScale, 0.1f, 1.0f, 100.0f))
+            {
+                mTerrain.SetHeightScale(heightScale);
+                const Mesh& m = mTerrain.GetMesh();
+                mGround.meshBuffer.Update(m.vertices.data(), m.vertices.size());
+            }
         }
 
         mStandardEffect.DebugUI();

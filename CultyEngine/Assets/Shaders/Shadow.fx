@@ -7,21 +7,21 @@ cbuffer TransformBuffer : register(b0)
 struct VS_INPUT
 {
     float3 position : POSITIONT;
-    float3 normal : NORMAL;
-    float3 tangent : TANGENT;
+    float3 normal   : NORMAL;
+    float3 tangent  : TANGENT;
     float2 texCoord : TEXCOORD;
 };
 
 struct VS_OUTPUT
 {
-    float4 position : SV_Position;
-    float4 lightNDCPosition : ;
+    float4 position         : SV_Position;
+    float4 lightNDCPosition : TEXCOORD;
 };
 
 VS_OUTPUT VS(VS_INPUT input)
 {
     VS_OUTPUT output;
-    output.position = mul(float4(input.position, 1.0f), wvp);
+    output.position         = mul(float4(input.position, 1.0f), wvp);
     output.lightNDCPosition = mul(float4(input.position, 1.0f), wvp);
     return output;
 }
