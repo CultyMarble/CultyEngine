@@ -28,6 +28,6 @@ VS_OUTPUT VS(VS_INPUT input)
 
 float4 PS(VS_OUTPUT input) : SV_Target
 {
-    float depth = 1.0f - input.lightNDCPosition.z - input.lightNDCPosition.w;
+    float depth = 1.0f - (input.lightNDCPosition.z / input.lightNDCPosition.w);
     return float4(depth, 1.0f, 1.0f, 1.0f);
 }

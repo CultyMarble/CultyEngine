@@ -75,11 +75,11 @@ VS_OUTPUT VS(VS_INPUT input)
     output.texCoord         = input.texCoord;
     output.dirToLight       = -lightDirection;
     output.dirToView        = normalize(viewPosition - worldPosition.xyz);
+    
     if (useShadowMap)
-    {
         output.lightNDCPosition = mul(float4(localPosition, 1.0f), lwvp);
-    }
-    output.worldNormal = worldPosition;
+
+    output.worldPosition = worldPosition;
 
     return output;
 }

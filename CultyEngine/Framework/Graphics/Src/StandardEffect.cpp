@@ -41,10 +41,12 @@ void StandardEffect::Begin()
     mSampler.BindPS(0);
 
     mTransformBuffer.BindVS(0);
+
     mSettingsBuffer.BindVS(1);
     mSettingsBuffer.BindPS(1);
-    mLightBuffer.BindVS(2); // To Get infomation from .fx file
-    mLightBuffer.BindPS(2); // To Get infomation from .fx file
+
+    mLightBuffer.BindVS(2);
+    mLightBuffer.BindPS(2);
 
     mMaterialBuffer.BindPS(3);
 }
