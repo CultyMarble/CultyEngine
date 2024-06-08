@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "ConstantBuffer.h"
 #include "Colors.h"
+#include "CRTEffect.h"
 #include "DebugUI.h"
 #include "GaussianBlurEffect.h"
 #include "LightTypes.h"
