@@ -65,8 +65,9 @@ struct VS_OUTPUT
 
 VS_OUTPUT VS(VS_INPUT input)
 {
-    float3 localPosition = input.position;
     VS_OUTPUT output;
+    
+    float3 localPosition = input.position;
     if (useBumpMap)
     {
         float bumpColor = bumpMap.SampleLevel(textureSampler, input.texCoord, 0.0f).r;
@@ -119,10 +120,9 @@ float4 PS(VS_OUTPUT input) : SV_Target
         float base      = saturate(dot(r, view));
         float s         = pow(base, materialPower);
         float4 specular = s * lightSpecular * materialSpecular;
-
+        
         float4 diffuseMapColor  = (useDiffuseMap) ? diffuseMap.Sample(textureSampler, input.texCoord) : 1.0f;
         float4 specularMapColor = (useSpecularMap) ? specularMap.Sample(textureSampler, input.texCoord).r : 1.0f;
-        
         finalColor = (ambient + diffuse + emissive) * diffuseMapColor + (specular * specularMapColor);
         
         if (useShadowMap)
@@ -140,7 +140,6 @@ float4 PS(VS_OUTPUT input) : SV_Target
                     finalColor = (ambient + materialEmissive) * diffuseMapColor;
                 }
             }
-
         }
     }
     else

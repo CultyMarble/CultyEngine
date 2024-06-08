@@ -129,27 +129,19 @@ void StandardEffect::DebugUI()
     {
         bool useDiffuseMap = mSettingsData.useDiffuseMap > 0;
         if (ImGui::Checkbox("UseDiffuseMap", &useDiffuseMap))
-        {
             mSettingsData.useDiffuseMap = useDiffuseMap ? 1 : 0;
-        }
 
         bool useNormalMap = mSettingsData.useNormalMap > 0;
         if (ImGui::Checkbox("UseNormalMap", &useNormalMap))
-        {
             mSettingsData.useNormalMap = useNormalMap ? 1 : 0;
-        }
 
         bool useSpecularMap = mSettingsData.useSpecularMap > 0;
         if (ImGui::Checkbox("UseSpecularMap", &useSpecularMap))
-        {
             mSettingsData.useSpecularMap = useSpecularMap ? 1 : 0;
-        }
 
         bool useLighting = mSettingsData.useLighting > 0;
         if (ImGui::Checkbox("UseLight", &useLighting))
-        {
             mSettingsData.useLighting = useLighting ? 1 : 0;
-        }
 
         bool useBumpMap = mSettingsData.useBumpMap > 0;
         if (ImGui::Checkbox("UseBumpMap", &useBumpMap))
@@ -160,9 +152,8 @@ void StandardEffect::DebugUI()
 
         bool useShadowMap = mSettingsData.useShadowMap > 0;
         if (ImGui::Checkbox("UseShadowMap", &useShadowMap))
-        {
             mSettingsData.useShadowMap = useShadowMap ? 1 : 0;
-        }
-        ImGui::DragFloat("DepthBias", &mSettingsData.depthBias, 0.000001, 0.0f, 1.0f, "%.6");
+
+        ImGui::DragFloat("DepthBias", &mSettingsData.depthBias, 0.000001f, 0.0f, 1.0f, "%.6f");
     }
 }

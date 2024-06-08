@@ -63,6 +63,7 @@ void ShadowEffect::DebugUI()
 {
 	if (ImGui::CollapsingHeader("ShadowEffect", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		ImGui::DragFloat("Size##Shadow", &mSize, 1.0f, 1.0f, 1000.0f);
 		ImGui::Text("DepthMap");
 		ImGui::Image(
 			mDepthMapRenderTarget.GetRawData(),
@@ -71,7 +72,6 @@ void ShadowEffect::DebugUI()
 			{ 1, 1 },
 			{ 1, 1, 1, 1 },
 			{ 1, 1, 1, 1 });
-		ImGui::DragFloat("Size##Shadow", &mSize, 1.0f, 1.0f, 1000.0f);
 	}
 }
 

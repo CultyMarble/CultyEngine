@@ -35,17 +35,17 @@ namespace CultyEngine::Graphics
             MathC::Matrix4 wvp;
             MathC::Matrix4 lwvp;
             MathC::Matrix4 world;
-            MathC::Matrix4 viewPosition;
+            MathC::Vector3 viewPosition;
             float padding = 0.0f;
         };
 
         struct SettingsData
         {
-            int useNormalMap = 0;
-            int useSpecularMap = 0;
-            int useShadowMap = 0;
-            int useBlend = 0;
-            float depthBias = 0.00001f;
+            int useNormalMap = 1;
+            int useSpecularMap = 1;
+            int useShadowMap = 1;
+            int useBlend = 1;
+            float depthBias = 0.000001f;
             float blendHeight = 0.0f;
             float blendWidth = 0.0f;
             float padding = 0.0f;
@@ -68,5 +68,7 @@ namespace CultyEngine::Graphics
         SettingsData mSettingsData;
         const Camera* mCamera = nullptr;
         const Camera* mLightCamera = nullptr;
+        const DirectionalLight* mDirectionalLight = nullptr;
+        const Texture* mShadowMap = nullptr;
     };
 }

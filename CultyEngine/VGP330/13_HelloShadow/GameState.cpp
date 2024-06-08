@@ -104,19 +104,8 @@ void GameState::Render()
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug Controls", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-<<<<<<< Updated upstream
         ImGui::Separator();
         ImGui::Text("Render Target:");
-        //ImGui::Image(
-        //    .GetRawData(),
-        //    { 128, 128 },
-        //    { 0, 0 },
-        //    { 1 ,1 },
-        //    { 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1 });
-
-=======
->>>>>>> Stashed changes
         if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
         {
             if (ImGui::DragFloat3("Direction", &mDirectionalLight.direction.x, 0.01f))

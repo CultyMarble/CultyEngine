@@ -42,9 +42,9 @@ void Terrain::Initialize(const std::filesystem::path& fileName, float heightScal
 
 	const uint32_t cells = (mRows - 1) * (mColumns - 1);
 	mMesh.indices.reserve(cells * 6);
-	for (uint32_t z = 0; z < mRows; ++z)
+	for (uint32_t z = 0; z < mRows - 1; ++z)
 	{
-		for (uint32_t x = 0; x < mColumns; ++x)
+		for (uint32_t x = 0; x < mColumns - 1; ++x)
 		{
 			const uint32_t bl = x + (z * mColumns);
 			const uint32_t tl = x + ((z + 1) * mColumns);

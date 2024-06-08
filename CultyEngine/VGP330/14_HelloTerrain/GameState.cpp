@@ -55,20 +55,31 @@ void GameState::Initialize()
 
     mTerrain.Initialize("../../Assets/Images/terrain/heightmap_512x512.raw", 20.0f);
     const Mesh& m = mTerrain.GetMesh();
+
     mGround.meshBuffer.Initialize(
         nullptr,
         static_cast<uint32_t>(sizeof(Vertex)),
         static_cast<uint32_t>(m.vertices.size()),
         m.indices.data(),
         static_cast<uint32_t>(m.indices.size()));
+
     mGround.meshBuffer.Update(m.vertices.data(), m.vertices.size());
-    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("terrain/dirt_seemless.jpg");
+    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("terrain/grass_2048.jpg");
+    mGround.bumpMapID = TextureManager::Get()->LoadTexture("terrain/dirt_seamless.jpg");
 
     // Effect
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFilePath);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+    mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+    mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
+
+    mTerrainEffect.Initialize();
+    mTerrainEffect.SetCamera(mCamera);
+    mTerrainEffect.SetDirectionalLight(mDirectionalLight);
+    mTerrainEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+    mTerrainEffect.SetShadowMap(mShadowEffect.GetDepthMap());
 
     mShadowEffect.Initialize();
     mShadowEffect.SetDirectionalLight(mDirectionalLight);
@@ -77,6 +88,8 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     // Effect
+    mShadowEffect.Terminate();
+    mTerrainEffect.Terminate();
     mStandardEffect.Terminate();
 
     // Mesh Stuffs
@@ -102,13 +115,18 @@ void GameState::Render()
     SimpleDraw::AddGroundPlane(10.0f, Colors::White);
     SimpleDraw::Render(mCamera);
 
+    mShadowEffect.SetFocus(mCamera.GetPosition());
+
     mShadowEffect.Begin();
         DrawRenderGroup(mShadowEffect, mCharacter03);
     mShadowEffect.End();
 
+    mTerrainEffect.Begin();
+        mTerrainEffect.Render(mGround);
+    mTerrainEffect.End();
+
     mStandardEffect.Begin();
         DrawRenderGroup(mStandardEffect, mCharacter03);
-        mStandardEffect.Render(mGround);
     mStandardEffect.End();
 }
 
@@ -140,6 +158,7 @@ void GameState::DebugUI()
         }
 
         mStandardEffect.DebugUI();
+        mTerrainEffect.DebugUI();
         mShadowEffect.DebugUI();
 
     ImGui::End();

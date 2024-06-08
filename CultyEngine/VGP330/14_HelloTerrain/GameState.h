@@ -17,6 +17,7 @@ protected:
     // Effects
     CultyEngine::Graphics::StandardEffect mStandardEffect;
     CultyEngine::Graphics::ShadowEffect mShadowEffect;
+    CultyEngine::Graphics::TerrainEffect mTerrainEffect;
 
     // Objects
     CultyEngine::Graphics::Terrain mTerrain;

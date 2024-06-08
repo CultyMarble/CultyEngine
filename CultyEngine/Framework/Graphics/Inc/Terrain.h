@@ -19,6 +19,6 @@ namespace CultyEngine::Graphics
 		uint32_t mRows = 0;
 		uint32_t mColumns = 0;
 
-		float mHeightScale;
+		float mHeightScale = 1.0f;
 	};
 }
