@@ -34,7 +34,7 @@ namespace CultyEngine::Graphics
 
 		struct TransformData
 		{
-			MathC::Vector4 wvp;
+			MathC::Matrix4 wvp;
 		};
 
 		using TransformBuffer = TypedConstantBuffer<TransformData>;

@@ -9,6 +9,7 @@
 namespace CultyEngine::Graphics
 {
     class Camera;
+    class Texture;
     struct RenderObject;
 
     class StandardEffect
@@ -23,6 +24,7 @@ namespace CultyEngine::Graphics
         void Render(const RenderObject& renderObject);
 
         void SetCamera(const Camera& camera);
+        void SetLightCamera(const Camera& camera);
         void SetDirectionalLight(const DirectionalLight& directionalLight);
         void SetShadowMap(const Texture& shadowMap);
 
@@ -32,6 +34,7 @@ namespace CultyEngine::Graphics
         struct TransformData
         {
             MathC::Matrix4 wvp;
+            MathC::Matrix4 lwvp;
             MathC::Matrix4 world;
             MathC::Vector3 viewPosition;
             float padding = 0.0f;
@@ -45,7 +48,6 @@ namespace CultyEngine::Graphics
             int useLighting = 1;
             int useBumpMap = 1;
             int useShadowMap = 1;
-
             float bumpWeight = 1.0f;
             float depthBias = 0.0f;
         };
@@ -66,6 +68,8 @@ namespace CultyEngine::Graphics
 
         SettingsData mSettingsData;
         const Camera* mCamera = nullptr;
+        const Camera* mLightCamera = nullptr;
         const DirectionalLight* mDirectionalLight = nullptr;
+        const Texture* mShadowMap = nullptr;
     };
 }

@@ -6,7 +6,11 @@ cbuffer TransformBuffer : register(b0)
 
 struct VS_INPUT
 {
+<<<<<<< Updated upstream
     float3 position : POSITIONT;
+=======
+    float3 position : POSITION;
+>>>>>>> Stashed changes
     float3 normal   : NORMAL;
     float3 tangent  : TANGENT;
     float2 texCoord : TEXCOORD;

@@ -62,6 +62,8 @@ void GameState::Initialize()
     mStandardEffect.Initialize(shaderFilePath);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+    mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+    mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
 
     mShadowEffect.Initialize();
     mShadowEffect.SetDirectionalLight(mDirectionalLight);
@@ -70,6 +72,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     // Effect
+    mShadowEffect.Terminate();
     mStandardEffect.Terminate();
 
     // Mesh Stuffs
@@ -87,6 +90,7 @@ void GameState::Render()
     SimpleDraw::AddGroundPlane(10.0f, Colors::White);
     SimpleDraw::Render(mCamera);
 
+    mShadowEffect.SetFocus(mCamera.GetPosition());
     mShadowEffect.Begin();
         DrawRenderGroup(mShadowEffect, mCharacter03);
     mShadowEffect.End();
@@ -100,6 +104,7 @@ void GameState::Render()
 void GameState::DebugUI()
 {
     ImGui::Begin("Debug Controls", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+<<<<<<< Updated upstream
         ImGui::Separator();
         ImGui::Text("Render Target:");
         //ImGui::Image(
@@ -110,6 +115,8 @@ void GameState::DebugUI()
         //    { 1, 1, 1, 1 },
         //    { 1, 1, 1, 1 });
 
+=======
+>>>>>>> Stashed changes
         if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
         {
             if (ImGui::DragFloat3("Direction", &mDirectionalLight.direction.x, 0.01f))
