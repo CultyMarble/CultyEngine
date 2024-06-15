@@ -36,19 +36,22 @@ void CRTEffect::Begin()
     }
 
     PostProcessData data;
-    data.params0 = mAberrationSeperation;
-    data.params1 = mScanlineFrequency;
-    data.params2 = mScanlineAlpha;
-    data.params3 = mScanlineBrightness;
-    data.params4 = mScanlineOffsetY;
-    data.params5 = mBloomThreshold;
-    data.params6 = mBloomStrength;
-    data.params7 = mNoiseBrightness;
-    data.params8 = mNoiseAlpha;
-    data.params9 = mNoiseRandom;
-    data.params10 = mJitterThickness;
-    data.params11 = mJitterStrength;
-    data.params12 = mJitterRandom;
+    data.edgeDistortion = mEdgeDistortion;
+    data.abberationSeperation = mAberrationSeperation;
+    data.scanlineFrequency = mScanlineFrequency;
+    data.scanlineBrightness = mScanlineAlpha;
+    data.scanlineAlpha = mScanlineBrightness;
+    data.scanlineOffsetY = mScanlineOffsetY;
+    data.bloomThreshold = mBloomThreshold;
+    data.bloomStrength = mBloomStrength;
+    data.noiseStrength = mNoiseStrength;
+    data.noiseAlpha = mNoiseAlpha;
+    data.noiseRandom = mNoiseRandom;
+    data.jitterThickness = mJitterThickness;
+    data.jitterStrength = mJitterStrength;
+    data.jitterRandom = mJitterRandom;
+    data.breakFrequency = mBreakFrequency;
+    data.breakStrength = mBreakStrength;
 
     mPostProcessingBuffer.Update(data);
     mPostProcessingBuffer.BindPS(0);
@@ -74,6 +77,15 @@ void CRTEffect::Update(float deltaTime)
     mJitterRandom += deltaTime * (1.0f + (randVal * 5.0f));
     if (mJitterThickness > 100.0f)
         mJitterThickness = 0.0f;
+
+    mBreakFrequencyTick += deltaTime * (10.0f + (randVal * 25.0f));
+    if (mBreakFrequencyTick >= 1.0f)
+    {
+        mBreakFrequencyTick -= 1.0f;
+        mBreakFrequency += (10.0f + (randVal * 25.0f));
+        if (mBreakFrequency > 100.0f)
+            mBreakFrequency -= 100.0f;
+    }
 }
 
 void CRTEffect::Render(const RenderObject& renderObject)
@@ -85,20 +97,24 @@ void CRTEffect::DebugUI()
 {
     if (ImGui::CollapsingHeader("CRT Effect Config", ImGuiTreeNodeFlags_CollapsingHeader))
     {
+        ImGui::DragFloat("Edge Distortion", &mEdgeDistortion, 0.01f, 0.0f, 5.0f);
+
         ImGui::DragFloat("Aberration Seperation", &mAberrationSeperation, 0.001f, 0.0f, 1.0f);
 
-        ImGui::DragInt  ("Scanline Frequency",    &mScanlineFrequency,    1, 0, 1000);
-        ImGui::DragFloat("Scanline Brightness",   &mScanlineBrightness,   0.001f, 0.0f, 2.0f);
-        ImGui::DragFloat("Scanline Alpha",        &mScanlineAlpha,        0.001f, 0.0f, 1.0f);
+        ImGui::DragInt  ("Scanline Frequency",  &mScanlineFrequency,  1, 0, 1000);
+        ImGui::DragFloat("Scanline Brightness", &mScanlineBrightness, 0.001f, 0.0f, 2.0f);
+        ImGui::DragFloat("Scanline Alpha",      &mScanlineAlpha,      0.001f, 0.0f, 1.0f);
 
-        ImGui::DragFloat("Bloom Threshold", &mBloomThreshold,       0.001f, 0.0f, 1.0f);
-        ImGui::DragFloat("Bloom Strength",  &mBloomStrength,        0.01f, 0.0f, 10.0f);
+        ImGui::DragFloat("Bloom Threshold", &mBloomThreshold, 0.001f, 0.0f, 1.0f);
+        ImGui::DragFloat("Bloom Strength",  &mBloomStrength,  0.01f, 0.0f, 10.0f);
 
-        ImGui::DragFloat("Noise Brightness", &mNoiseBrightness, 0.01f, 0.0f, 10.0f);
+        ImGui::DragFloat("Noise Brightness", &mNoiseStrength, 0.01f, 0.0f, 10.0f);
         ImGui::DragFloat("Noise Alpha",      &mNoiseAlpha, 0.01f, 0.0f, 1.0f);
 
-        ImGui::DragFloat("Jitter Thickness",    &mJitterThickness, 0.5f, 0.0f, 5.0f);
-        ImGui::DragFloat("Jitter Strength", &mJitterStrength, 0.001f, 0.0f, 1.0f);
+        ImGui::DragFloat("Jitter Thickness", &mJitterThickness, 0.01f, 0.0f, 5.0f);
+        ImGui::DragFloat("Jitter Strength",  &mJitterStrength, 0.001f, 0.0f, 1.0f, "%.4f");
+
+        ImGui::DragFloat("Break Strength",  &mBreakStrength, 0.01f, 0.0f, 0.99f);
     }
 }
 

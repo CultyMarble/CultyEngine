@@ -1,19 +1,22 @@
 // This does Post Processing Effect
 cbuffer PostProcessingBuffer : register(b0)
-{
-    float params0;
-    float params1;
-    float params2;
-    float params3;
-    float params4;
-    float params5;
-    float params6;
-    float params7;
-    float params8;
-    float params9;
-    float params10;
-    float params11;
-    float params12;
+{    
+    float edgeDistortion;
+    float abberationSeperation;
+    float scanlineFrequency;
+    float scanlineBrightness;
+    float scanlineAlpha;
+    float scanlineOffsetY;
+    float bloomThreshold;
+    float bloomStrength;
+    float noiseStrength;
+    float noiseAlpha;
+    float noiseRandom;
+    float jitterThickness;
+    float jitterStrength;
+    float jitterRandom;
+    float breakFrequency;
+    float breakStrength;
 }
 
 Texture2D textureMap0 : register(t0);
@@ -50,46 +53,52 @@ float rand(float2 co)
 float4 PS(VS_INPUT input) : SV_Target
 {    
     float2 uv = input.texCoord;
+    float4 finalColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
-    // Apply vertical curvature for CRT effect (only top and bottom)
+    // Edges Curvature
     float2 center = float2(0.5, 0.5);
-    float distortionX = 0.4;
-    float distortionY = 0.2;
-    float xDistort = uv.x - center.x;
+    float2 uvDistort = uv - center;
     float yDistort = uv.y - center.y;
-    uv.x += distortionX * (xDistort * xDistort - 0.25);
-    uv.y += distortionY * (yDistort * yDistort - 0.25);
-
-    // Ensure UV coordinates are within valid range
-    uv = clamp(uv, 0.0, 1.0);
+    uvDistort *= 1.0 + edgeDistortion * (uvDistort.x * uvDistort.x + uvDistort.y * uvDistort.y);
+    uv = uvDistort + center;
     
-    // Horizontal Distortion
-    //uv.x += floor(sin(uv.y + params10)) * params11;
-    if (frac(sin((uv.y + params4) * params1 )) < params10)
+    // Check for UV wrapping
+    bool isWrapped = (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0);
+    
+    // Scan Line
+    float scanline = sin((uv.y + scanlineOffsetY) * scanlineFrequency) * scanlineBrightness + scanlineAlpha;
+    finalColor *= scanline;
+    
+    // Jitter Effect
+    if (frac(sin((uv.y + scanlineOffsetY) * scanlineFrequency)) < jitterThickness)
     {
-        float randomOffset = frac(sin(uv.y * params12) * 43758.5453f) * params11;
+        float randomOffset = frac(sin(uv.y * jitterRandom) * 43758.5453f) * jitterStrength;
         uv.x += randomOffset;
     }
     
-    // Chromatic Aberration
-    float3 Channel_R = textureMap0.Sample(textureSampler, uv + float2(params0, 0));
-    float3 Channel_G = textureMap0.Sample(textureSampler, uv);
-    float3 Channel_B = textureMap0.Sample(textureSampler, uv - float2(params0, 0));
-    float4 finalColor = float4(Channel_R.r, Channel_G.g, Channel_B.b, 1.0f);
+    // Break Effect
+    uv.x += floor(sin(uv.y + breakFrequency)) * breakStrength;
+    uv.x -= floor(sin(uv.y + breakFrequency + 0.01f)) * breakStrength;
     
-    // Scan Line
-    float scanline = sin((uv.y + params4) * params1) * params2 + params3;
-    finalColor *= scanline;
+    // Chromatic Aberration
+    float3 Channel_R = textureMap0.Sample(textureSampler, uv + float2(abberationSeperation, 0));
+    float3 Channel_G = textureMap0.Sample(textureSampler, uv);
+    float3 Channel_B = textureMap0.Sample(textureSampler, uv - float2(abberationSeperation, 0));
+    finalColor *= float4(Channel_R.r, Channel_G.g, Channel_B.b, 1.0f);
     
     // Simple Bloom
-    float4 bloom = (finalColor - params5) * params6;
+    float4 bloom = (finalColor - bloomThreshold) * bloomStrength;
     bloom = saturate(bloom);
     finalColor += bloom;
     
-    // Noise (additive)
-    float noise = (rand(uv * params9) - params7) * params8;
+    // Noise
+    float noise = (rand(uv * noiseRandom) - noiseStrength) * noiseAlpha;
     finalColor += noise;
     finalColor = saturate(finalColor);
+    
+    // Set color to black if UVs are wrapped
+    if (isWrapped)
+        finalColor *= float4(0.0f, 0.0f, 0.0f, 0.0f);
     
     return finalColor;
 }

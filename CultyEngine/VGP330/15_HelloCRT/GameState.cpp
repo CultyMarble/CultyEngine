@@ -38,8 +38,8 @@ namespace
 void GameState::Initialize()
 {
     // Camera
-    mCamera.SetPosition({ 0.0f, 2.0f, -3.0f });
-    mCamera.SetLookAt({ 0.0f, 0.0f, 3.0f });
+    mCamera.SetPosition({ 0.0f, 1.5f, -1.5f });
+    mCamera.SetLookAt({ 0.0f, 0.0f, 2.5f });
 
     // Light
     mDirectionalLight.direction = MathC::Normalize({1.0f, -1.0f, 1.0f});
@@ -50,7 +50,7 @@ void GameState::Initialize()
     // Objects
     Mesh groundMesh = MeshBuilder::CreateHorizontalPlane(4, 4, 1.0f);
     mGround.meshBuffer.Initialize(groundMesh);
-    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/paper.jpg");
+    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
 
     Model model;
     ModelIO::LoadModel("../../Assets/Models/Character02/Ch03_nonPBR.fbx", model);
@@ -109,7 +109,7 @@ void GameState::Render()
     SimpleDraw::AddGroundPlane(10.0f, Colors::White);
     SimpleDraw::Render(mCamera);
 
-    mRenderTarget.BeginRender();
+    mRenderTarget.BeginRender(Colors::Maroon);
         mStandardEffect.Begin();
             mStandardEffect.Render(mGround);
             DrawRenderGroup(mStandardEffect, mCharacter03);
