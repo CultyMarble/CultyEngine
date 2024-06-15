@@ -36,9 +36,19 @@ void CRTEffect::Begin()
     }
 
     PostProcessData data;
-    data.params0 = mAberrationValue;
-    data.params1 = mScanLine;
-    data.params2 = mUVOffsetY;
+    data.params0 = mAberrationSeperation;
+    data.params1 = mScanlineFrequency;
+    data.params2 = mScanlineAlpha;
+    data.params3 = mScanlineBrightness;
+    data.params4 = mScanlineOffsetY;
+    data.params5 = mBloomThreshold;
+    data.params6 = mBloomStrength;
+    data.params7 = mNoiseBrightness;
+    data.params8 = mNoiseAlpha;
+    data.params9 = mNoiseRandom;
+    data.params10 = mJitterThickness;
+    data.params11 = mJitterStrength;
+    data.params12 = mJitterRandom;
 
     mPostProcessingBuffer.Update(data);
     mPostProcessingBuffer.BindPS(0);
@@ -53,7 +63,17 @@ void CRTEffect::End()
 void CRTEffect::Update(float deltaTime)
 {
     float randVal = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-    mUVOffsetY -= deltaTime * (0.01f + (randVal * 0.03f));
+    mScanlineOffsetY -= deltaTime * (0.01f + (randVal * 0.03f));
+    if (mScanlineOffsetY <= -1.0)
+        mScanlineOffsetY = 0.0f;
+
+    mNoiseRandom += deltaTime * 5.0f;
+    if (mScanlineOffsetY > 100.0f)
+        mScanlineOffsetY = 0.0f;
+
+    mJitterRandom += deltaTime * (1.0f + (randVal * 5.0f));
+    if (mJitterThickness > 100.0f)
+        mJitterThickness = 0.0f;
 }
 
 void CRTEffect::Render(const RenderObject& renderObject)
@@ -63,10 +83,22 @@ void CRTEffect::Render(const RenderObject& renderObject)
 
 void CRTEffect::DebugUI()
 {
-    if (ImGui::CollapsingHeader("CRT_Effect", ImGuiTreeNodeFlags_DefaultOpen))
+    if (ImGui::CollapsingHeader("CRT Effect Config", ImGuiTreeNodeFlags_CollapsingHeader))
     {
-        ImGui::DragFloat("AberrationValue", &mAberrationValue, 0.001f, 0.0f, 1.0f);
-        ImGui::DragInt("ScanLine", &mScanLine, 1, 0, 1000);
+        ImGui::DragFloat("Aberration Seperation", &mAberrationSeperation, 0.001f, 0.0f, 1.0f);
+
+        ImGui::DragInt  ("Scanline Frequency",    &mScanlineFrequency,    1, 0, 1000);
+        ImGui::DragFloat("Scanline Brightness",   &mScanlineBrightness,   0.001f, 0.0f, 2.0f);
+        ImGui::DragFloat("Scanline Alpha",        &mScanlineAlpha,        0.001f, 0.0f, 1.0f);
+
+        ImGui::DragFloat("Bloom Threshold", &mBloomThreshold,       0.001f, 0.0f, 1.0f);
+        ImGui::DragFloat("Bloom Strength",  &mBloomStrength,        0.01f, 0.0f, 10.0f);
+
+        ImGui::DragFloat("Noise Brightness", &mNoiseBrightness, 0.01f, 0.0f, 10.0f);
+        ImGui::DragFloat("Noise Alpha",      &mNoiseAlpha, 0.01f, 0.0f, 1.0f);
+
+        ImGui::DragFloat("Jitter Thickness",    &mJitterThickness, 0.5f, 0.0f, 5.0f);
+        ImGui::DragFloat("Jitter Strength", &mJitterStrength, 0.001f, 0.0f, 1.0f);
     }
 }
 

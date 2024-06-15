@@ -127,7 +127,7 @@ void StandardEffect::SetShadowMap(const Texture& shadowMap)
 
 void StandardEffect::DebugUI()
 {
-    if (ImGui::CollapsingHeader("StandardEffect", ImGuiTreeNodeFlags_DefaultOpen))
+    if (ImGui::CollapsingHeader("StandardEffect", ImGuiTreeNodeFlags_CollapsingHeader))
     {
         bool useDiffuseMap = mSettingsData.useDiffuseMap > 0;
         if (ImGui::Checkbox("UseDiffuseMap", &useDiffuseMap))

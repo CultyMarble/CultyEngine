@@ -29,10 +29,25 @@ namespace CultyEngine::Graphics
 	private:
 		struct PostProcessData
 		{
-			float params0 = 0.0f;
-			float params1 = 0.0f;
-			float params2 = 0.0f;
-			float padding = 0.0f;
+			float params0 = 0.0f; // Abberation Seperation
+
+			float params1 = 0.0f; // Scanline Frequency
+			float params2 = 0.0f; // Scanline Brightness
+			float params3 = 0.0f; // Scanline Aplha
+			float params4 = 0.0f; // Scanline Speed
+
+			float params5 = 0.0f; // Bloom Threshold
+			float params6 = 0.0f; // Bloom Strength
+
+			float params7 = 0.0f; // Noise Brightness
+			float params8 = 0.0f; // Noise Alpha
+			float params9 = 0.0f; // Noise Random
+
+			float params10 = 0.0f; // Jitter Check
+			float params11 = 0.0f; // Jitter Strength
+			float params12 = 0.0f; // Jitter Random
+
+            float padding[3] = { 0.0f };
 		};
 
 		using PostProcessingBuffer = TypedConstantBuffer<PostProcessData>;
@@ -44,9 +59,22 @@ namespace CultyEngine::Graphics
 
 		std::array<const Texture*, 4> mTextures;
 
-		float mAberrationValue = 0.01f;
+		float mAberrationSeperation = 0.005f;
 		
-		int mScanLine = 500;
-		float mUVOffsetY = 0.0f;
+		int mScanlineFrequency = 400;
+        float mScanlineBrightness = 0.75f;
+        float mScanlineAlpha = 0.075f;
+		float mScanlineOffsetY = 0.0f;
+
+		float mBloomThreshold = 0.8f;
+		float mBloomStrength = 4.0f;
+
+        float mNoiseBrightness = 0.25f;
+        float mNoiseAlpha = 0.25f;
+        float mNoiseRandom = 0.0f;
+
+        float mJitterThickness = 0.5f;
+        float mJitterStrength = 0.002f;
+        float mJitterRandom = 10.0f;
 	};
 }

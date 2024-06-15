@@ -38,8 +38,8 @@ namespace
 void GameState::Initialize()
 {
     // Camera
-    mCamera.SetPosition({ 0.0f, 1.0f, -3.0f });
-    mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
+    mCamera.SetPosition({ 0.0f, 2.0f, -3.0f });
+    mCamera.SetLookAt({ 0.0f, 0.0f, 3.0f });
 
     // Light
     mDirectionalLight.direction = MathC::Normalize({1.0f, -1.0f, 1.0f});
@@ -53,8 +53,8 @@ void GameState::Initialize()
     mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/paper.jpg");
 
     Model model;
-    ModelIO::LoadModel("../../Assets/Models/Character03/Parasite_L_Starkie.fbx", model);
-    ModelIO::LoadMaterial("../../Assets/Models/Character03/Parasite_L_Starkie.fbx", model);
+    ModelIO::LoadModel("../../Assets/Models/Character02/Ch03_nonPBR.fbx", model);
+    ModelIO::LoadMaterial("../../Assets/Models/Character02/Ch03_nonPBR.fbx", model);
     mCharacter03 = CreateRenderGroup(model);
 
     MeshPX screenQuad = MeshBuilder::CreateScreenQuad();
