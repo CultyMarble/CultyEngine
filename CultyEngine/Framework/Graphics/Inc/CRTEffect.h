@@ -29,6 +29,8 @@ namespace CultyEngine::Graphics
 	private:
 		struct PostProcessData
 		{
+			float pixelationSize = 0.0f;
+
 			float edgeDistortion = 0.0f;
 
 			float abberationSeperation = 0.0f;
@@ -51,6 +53,11 @@ namespace CultyEngine::Graphics
 
 			float breakFrequency = 0.0f;
 			float breakStrength = 0.0f;
+
+			float VHSoverlayStrength = 0.0f;
+			float VHSoverlayWidth = 0.0f;
+
+			float padding = 0.0f;
 		};
 
 		using PostProcessingBuffer = TypedConstantBuffer<PostProcessData>;
@@ -62,28 +69,26 @@ namespace CultyEngine::Graphics
 
 		std::array<const Texture*, 4> mTextures;
 
+		float mTick = 0.0f;
+		float mPixelationSize = 450.0f;
 		float mEdgeDistortion = 0.5f;
-		
 		float mAberrationSeperation = 0.005f;
-		
 		int mScanlineFrequency = 400;
         float mScanlineBrightness = 0.75f;
         float mScanlineAlpha = 0.075f;
 		float mScanlineOffsetY = 0.0f;
-
-		float mBloomThreshold = 0.25f;
+		float mBloomThreshold = 0.1f;
 		float mBloomStrength = 0.5f;
-
         float mNoiseStrength = 0.25f;
         float mNoiseAlpha = 0.25f;
         float mNoiseRandom = 0.0f;
-
         float mJitterThickness = 0.5f;
         float mJitterStrength = 0.002f;
         float mJitterRandom = 10.0f;
-
 		float mBreakFrequency = 0.0f;
 		float mBreakFrequencyTick = 0.0f;
-		float mBreakStrength = 0.005f;
+		float mBreakStrength = 0.01f;
+		float mVHSOverlayStrength = 1.0f;
+		float mVHSOverlayWidth = 0.25f;
 	};
 }

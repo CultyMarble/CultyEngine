@@ -36,6 +36,7 @@ void CRTEffect::Begin()
     }
 
     PostProcessData data;
+    data.pixelationSize = mPixelationSize;
     data.edgeDistortion = mEdgeDistortion;
     data.abberationSeperation = mAberrationSeperation;
     data.scanlineFrequency = mScanlineFrequency;
@@ -52,6 +53,8 @@ void CRTEffect::Begin()
     data.jitterRandom = mJitterRandom;
     data.breakFrequency = mBreakFrequency;
     data.breakStrength = mBreakStrength;
+    data.VHSoverlayStrength = mVHSOverlayStrength;
+    data.VHSoverlayWidth = mVHSOverlayWidth;
 
     mPostProcessingBuffer.Update(data);
     mPostProcessingBuffer.BindPS(0);
@@ -66,17 +69,18 @@ void CRTEffect::End()
 void CRTEffect::Update(float deltaTime)
 {
     float randVal = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+
     mScanlineOffsetY -= deltaTime * (0.01f + (randVal * 0.03f));
-    if (mScanlineOffsetY <= -1.0)
-        mScanlineOffsetY = 0.0f;
+    if (mScanlineOffsetY < -1.0)
+        mScanlineOffsetY += 1.0f;
 
     mNoiseRandom += deltaTime * 5.0f;
     if (mScanlineOffsetY > 100.0f)
-        mScanlineOffsetY = 0.0f;
+        mScanlineOffsetY -= 100.0f;
 
     mJitterRandom += deltaTime * (1.0f + (randVal * 5.0f));
     if (mJitterThickness > 100.0f)
-        mJitterThickness = 0.0f;
+        mJitterThickness -= 100.0f;
 
     mBreakFrequencyTick += deltaTime * (10.0f + (randVal * 25.0f));
     if (mBreakFrequencyTick >= 1.0f)
@@ -95,8 +99,10 @@ void CRTEffect::Render(const RenderObject& renderObject)
 
 void CRTEffect::DebugUI()
 {
-    if (ImGui::CollapsingHeader("CRT Effect Config", ImGuiTreeNodeFlags_CollapsingHeader))
+    if (ImGui::CollapsingHeader("CRT Effect Config", ImGuiTreeNodeFlags_DefaultOpen))
     {
+        ImGui::DragFloat("Pixelation Size", &mPixelationSize, 10, 100, 1000);
+
         ImGui::DragFloat("Edge Distortion", &mEdgeDistortion, 0.01f, 0.0f, 5.0f);
 
         ImGui::DragFloat("Aberration Seperation", &mAberrationSeperation, 0.001f, 0.0f, 1.0f);
@@ -114,7 +120,7 @@ void CRTEffect::DebugUI()
         ImGui::DragFloat("Jitter Thickness", &mJitterThickness, 0.01f, 0.0f, 5.0f);
         ImGui::DragFloat("Jitter Strength",  &mJitterStrength, 0.001f, 0.0f, 1.0f, "%.4f");
 
-        ImGui::DragFloat("Break Strength",  &mBreakStrength, 0.01f, 0.0f, 0.99f);
+        ImGui::DragFloat("Break Strength",  &mBreakStrength, 0.01f, 0.0f, 1.0f);
     }
 }
 

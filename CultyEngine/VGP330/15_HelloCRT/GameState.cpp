@@ -72,8 +72,8 @@ void GameState::Initialize()
     mCRTEffect.SetTexture(&mCombinedTexture, 1);
 
     GraphicsSystem* gs = GraphicsSystem::Get();
-    const uint32_t screenWidth = gs->GetBackBufferWidth() / 2;
-    const uint32_t screenHeight = gs->GetBackBufferHeight() / 2;
+    const uint32_t screenWidth = gs->GetBackBufferWidth();
+    const uint32_t screenHeight = gs->GetBackBufferHeight();
     mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
 
     mCombinedTexture.Initialize("../../Assets/Images/water/water_spec.jpg");
