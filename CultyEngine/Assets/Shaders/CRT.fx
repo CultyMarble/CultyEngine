@@ -56,12 +56,21 @@ float4 PS(VS_INPUT input) : SV_Target
     float4 finalColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Edges Curvature
-    float2 center = float2(0.5, 0.5);
-    float2 uvDistort = uv - center;
-    float yDistort = uv.y - center.y;
+    float2 center = float2(0.5f, 0.5f);
+    float aspectRatio = 16.0f / 9.0f;
+
+    // Scale UVs to maintain aspect ratio and account for distortion
+    float2 scaledUV = (uv - center) * float2(aspectRatio, 1.0) + center;
+
+    float2 uvDistort = scaledUV - center;
+    float yDistort = scaledUV.y - center.y;
+    
     uvDistort *= 1.0 + edgeDistortion * (uvDistort.x * uvDistort.x + uvDistort.y * uvDistort.y);
     uv = uvDistort + center;
     
+    // Scale back to original UVs
+    uv = (uv - center) / float2(aspectRatio, 1.0) + center;
+
     // Check for UV wrapping
     bool isWrapped = (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0);
     
