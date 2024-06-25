@@ -1,10 +1,36 @@
 #include "Precompiled.h"
 #include "Window.h"
 
+extern bool gIsMinimized; // Declare the global flag
+
 LRESULT CALLBACK WindowMessageHandler(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_SIZE:
+    {
+        if (wParam == SIZE_MINIMIZED)
+        { // Handle minimization
+            gIsMinimized = true;
+        }
+        else if (wParam == SIZE_RESTORED || wParam == SIZE_MAXIMIZED)
+        { // Handle restoration
+            gIsMinimized = false;
+        }
+    }
+    break;
+    case WM_ACTIVATE:
+    {
+        if (LOWORD(wParam) != WA_INACTIVE)
+            gIsMinimized = false;
+    }
+    break;
+    case WM_SYSCOMMAND:
+    {
+        if (GET_SC_WPARAM(wParam) == SC_RESTORE)
+            ShowWindow(handle, SW_RESTORE);
+    }
+    break;
     case WM_DESTROY:
     {
         PostQuitMessage(0);

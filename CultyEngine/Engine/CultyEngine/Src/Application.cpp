@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ApplicationState.h"
 
+bool gIsMinimized = false; // Global flag to track minimization
+
 using namespace CultyEngine;
 using namespace CultyEngine::Core;
 using namespace CultyEngine::Graphics;
@@ -43,6 +45,12 @@ void Application::Run(const ApplicationConfig& config)
         {
             Quit();
             break;
+        }
+
+        if (gIsMinimized)
+        {
+            Sleep(100);
+            continue;
         }
 
         if (mNextState != nullptr)
