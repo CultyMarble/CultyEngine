@@ -1,6 +1,8 @@
 #pragma once
 #include "Common.h"
 
+#include "Animation.h"
+#include "AnimationBuilder.h"
 #include "GraphicsSystem.h"
 #include "BlendState.h"
 #include "Camera.h"
@@ -9,6 +11,7 @@
 #include "CRTEffect.h"
 #include "DebugUI.h"
 #include "GaussianBlurEffect.h"
+#include "Keyframe.h"
 #include "LightTypes.h"
 #include "Material.h"
 #include "MeshBuffer.h"
