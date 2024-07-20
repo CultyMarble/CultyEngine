@@ -48,6 +48,6 @@ namespace CultyEngine::MathC
         static Quaternion CreateFromRotationMatrix(const Matrix4& m) noexcept;
 
         static Quaternion Lerp(const Quaternion& q0, const Quaternion& q1, float t);
-        static Quaternion SLerp(const Quaternion& q0, const Quaternion& q1, float t);
+        static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
     };
 }

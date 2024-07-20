@@ -15,6 +15,8 @@ namespace CultyEngine::Graphics
 		const MathC::Quaternion& GetRotation(float time) const;
 		const MathC::Vector3& GetScale(float time) const;
 
+        friend class AnimationBuilder;
+
 		PositionKeys mPositionKeys;
 		RotationKeys mRotationKeys;
 		ScaleKeys mScaleKeys;

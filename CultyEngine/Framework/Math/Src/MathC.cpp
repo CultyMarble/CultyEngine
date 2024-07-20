@@ -135,7 +135,7 @@ namespace CultyEngine::MathC
     {
         return q0 * (1.0f - t) + (q1 * t);
     }
-    Quaternion Quaternion::SLerp(const Quaternion& q0, const Quaternion& q1, float t)
+    Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
     {
         float dot = q0.Dot(q1);
         float q1Scale = 1.0f;
