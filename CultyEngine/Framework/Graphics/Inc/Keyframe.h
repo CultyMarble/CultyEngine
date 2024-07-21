@@ -6,17 +6,17 @@ namespace CultyEngine::Graphics
 	enum class EaseType
 	{
 		Linear,
+		EaseInQuad,
+		EaseOutQuad,
+		EaseInOutQuad,
 	};
 
 	template<class T>
 	struct Keyframe
 	{
 		Keyframe() = default;
-		Keyframe(const T& k, float t, EaseType e  = EaseType::Linear)
-			: key(k), time(t), easeType(e)
-		{
-
-		}
+		Keyframe(const T& k, float t, EaseType e = EaseType::Linear)
+			: key(k), time(t), easeType(e) {}
 
 		T key = T();
 		float time = 0.0f;

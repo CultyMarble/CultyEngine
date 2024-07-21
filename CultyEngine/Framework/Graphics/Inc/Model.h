@@ -22,5 +22,8 @@ namespace CultyEngine::Graphics
 
         std::vector<MeshData> meshData;
         std::vector<MaterialData> materialData;
+
+        // Animation skeleton
+        std::unique_ptr<Skeleton> skeleton;
     };
 }

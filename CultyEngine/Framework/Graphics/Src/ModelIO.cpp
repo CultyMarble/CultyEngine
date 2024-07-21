@@ -164,3 +164,29 @@ bool ModelIO::LoadMaterial(std::filesystem::path filePath, Model& model)
     fclose(file);
     return true;
 }
+
+bool LoadSkeleton(std::filesystem::path filePath, Model& model)
+{
+    if (model.skeleton == nullptr || model.skeleton->bones.empty())
+    {
+        return false;
+    }
+    filePath.replace_extension("skeleton");
+    FILE* file = nullptr;
+    fopen_s(&file, filePath.u8string().c_str(), "w");
+    if (file == nullptr)
+        return false;
+
+    uint32_t boneCount = model.skeleton->bones.size();
+    fprintf_s(file, "BoneCount: %d\n", boneCount);
+    fprintf_s(file, "RootBone: %d\n", model.skeleton->root->index);
+    for (uint32_t i = 0; i < boneCount; ++i)
+    {
+        //const bone* bonedata = model.skeleton->bones[i].get();
+        //fprintf_s(file, "bonename: %s\n", bonedata->name.c_str());
+        //fprintf_s(file, "boneindex: %d\n", bonedata->index);
+        //fprintf_s(file, "boneparentindex: %d\n", bonedata->parentindex);
+
+        //uint32_t childcount = bonedata->children.size();
+    }
+}
