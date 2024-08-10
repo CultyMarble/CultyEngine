@@ -215,7 +215,59 @@ bool ModelIO::SaveSkeleton(std::filesystem::path filePath, const Model& model)
 
 bool ModelIO::LoadSkeleton(std::filesystem::path filePath, Model& model)
 {
+    filePath.replace_extension("skeleton");
+    FILE* file = nullptr;
+    fopen_s(&file, filePath.u8string().c_str(), "r");
 
+    if (file == nullptr)
+        return false;
 
-    return false;
+    auto ReadMatrix = [&file](auto& m) {
+        fscanf_s(file, "%f %f %f %f\n", &m._11, &m._12, &m._13, &m._14);
+        fscanf_s(file, "%f %f %f %f\n", &m._21, &m._22, &m._23, &m._24);
+        fscanf_s(file, "%f %f %f %f\n", &m._31, &m._32, &m._33, &m._34);
+        fscanf_s(file, "%f %f %f %f\n", &m._41, &m._42, &m._43, &m._44);
+        };
+
+    uint32_t boneCount = 0;
+    uint32_t rootIndex = 0;
+    fscanf_s(file, "BoneCount: %d\n", &boneCount);
+    model.skeleton = std::make_unique<Skeleton>();
+    model.skeleton->bones.resize(boneCount);
+    for (uint32_t i = 0; i < boneCount; ++i)
+    {
+        model.skeleton->bones[i] = std::make_unique<Bone>();
+    }
+    fscanf_s(file, "RootBone: %d\n", &rootIndex);
+    model.skeleton->root = model.skeleton->bones[rootIndex].get();
+    for (uint32_t i = 0; i < boneCount; ++i)
+    {
+        Bone* boneData = model.skeleton->bones[i].get();
+        char buffer[MAX_PATH];
+        fscanf_s(file, "BoneName: %s\n", &buffer, sizeof(buffer));
+        boneData->name = std::move(buffer);
+
+        fscanf_s(file, "BoneIndex: %d\n", &boneData->index);
+        fscanf_s(file, "BoneParentIndex: %d\n", &boneData->parentIndex);
+        if (boneData->parentIndex >= 0)
+        {
+            boneData->parent = model.skeleton->bones[boneData->parentIndex].get();
+        }
+
+        uint32_t childCount = 0;
+        fscanf_s(file, "BoneChildrenCount: %d\n", &childCount);
+        boneData->children.resize(childCount);
+        boneData->childrenIndices.resize(childCount);
+        for (uint32_t c = 0; c < childCount; ++c)
+        {
+            fscanf_s(file, "%d\n", &boneData->childrenIndices[c]);
+            boneData->children[c] = model.skeleton->bones[boneData->childrenIndices[c]].get();
+        }
+
+        ReadMatrix(boneData->toParentTransform);
+        ReadMatrix(boneData->offsetTransform);
+    }
+    fclose(file);
+
+    return true;
 }

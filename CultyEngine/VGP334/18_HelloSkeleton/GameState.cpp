@@ -71,9 +71,6 @@ void GameState::Render()
     {
         AnimationUtils::BoneTransforms boneTransforms;
         AnimationUtils::ComputeBoneTransforms(mModelID, boneTransforms);
-        boneTransforms[7]._41 -= 1;
-        boneTransforms[7]._42 += 1;
-        boneTransforms[7]._43 -= 1;
         AnimationUtils::DrawSkeleton(mModelID, boneTransforms);
     }
 
