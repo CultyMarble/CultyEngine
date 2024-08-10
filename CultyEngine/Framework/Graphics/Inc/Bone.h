@@ -8,7 +8,7 @@ namespace CultyEngine::Graphics
 		std::string name;
 		int index = -1;
 
-		Bone* parent = null;
+		Bone* parent = nullptr;
 		int parentIndex = -1;
 
 		std::vector<Bone*> children;

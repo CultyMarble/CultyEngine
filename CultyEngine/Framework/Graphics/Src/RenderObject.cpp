@@ -10,7 +10,13 @@ void RenderObject::Terminate()
 	meshBuffer.Terminate();
 }
 
-RenderGroup Graphics::CreateRenderGroup(const Model & model)
+RenderGroup Graphics::CreateRenderGroup(ModelID id)
+{
+    const Model* model = ModelManager::Get()->GetModel(id);
+    return CreateRenderGroup(*model);
+}
+
+RenderGroup Graphics::CreateRenderGroup(const Model& model)
 {
     auto TryLoadTexure = [](const auto& textureName)->TextureID
         {
@@ -36,7 +42,6 @@ RenderGroup Graphics::CreateRenderGroup(const Model & model)
             renderObject.specularMapID = TryLoadTexure(materialData.specularMapName);
         }
     }
-
     return renderGroup;
 }
 

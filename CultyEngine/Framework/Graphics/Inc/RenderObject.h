@@ -3,6 +3,7 @@
 #include "Material.h"
 #include "TextureManager.h"
 #include "Transform.h"
+#include "ModelManager.h"
 
 namespace CultyEngine::Graphics
 {
@@ -24,7 +25,10 @@ namespace CultyEngine::Graphics
     };
 
     using RenderGroup = std::vector<RenderObject>;
+
+    [[nodiscard]] RenderGroup CreateRenderGroup(ModelID id);
     [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model);
+
     void CleanupRenderGroup(RenderGroup& renderGroup);
 
     void SetRenderGroupPosition(RenderGroup& renderGroup, const MathC::Vector3& newPosition);

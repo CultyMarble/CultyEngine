@@ -30,11 +30,13 @@ bool ModelIO::SaveModel(std::filesystem::path filePath, const Model& model)
         fprintf_s(file, "VertexCount: %d\n", vertexCount);
         for (const Vertex& v : mesh.vertices)
         {
-            fprintf_s(file, "%f %f %f %f %f %f %f %f %f %f %f\n",
-                v.position.x, v.position.y, v.position.z,
-                v.normal.x, v.normal.y, v.normal.z,
-                v.tangent.x, v.tangent.y, v.tangent.z,
-                v.uvCoord.x, v.uvCoord.y);
+            fprintf_s(file, "%f %f %f %f %f %f %f %f %f %f %f %d %d %d %d %f %f %f %f\n",
+                v.position.x,   v.position.y,   v.position.z,
+                v.normal.x,     v.normal.y,     v.normal.z,
+                v.tangent.x,    v.tangent.y,    v.tangent.z,
+                v.uvCoord.x,    v.uvCoord.y,
+                v.boneIndices[0], v.boneIndices[1], v.boneIndices[2], v.boneIndices[3],
+                v.boneWeights[0], v.boneWeights[1], v.boneWeights[2], v.boneWeights[3]);
         }
 
         const uint32_t indexCount = static_cast<uint32_t>(mesh.indices.size());
@@ -72,11 +74,13 @@ bool ModelIO::LoadModel(std::filesystem::path filePath, Model& model)
         mesh.vertices.resize(vertexCount);
         for (Vertex& v : mesh.vertices)
         {
-            fscanf_s(file, "%f %f %f %f %f %f %f %f %f %f %f\n",
-                &v.position.x, &v.position.y, &v.position.z,
-                &v.normal.x, &v.normal.y, &v.normal.z,
-                &v.tangent.x, &v.tangent.y, &v.tangent.z,
-                &v.uvCoord.x, &v.uvCoord.y);
+            fscanf_s(file, "%f %f %f %f %f %f %f %f %f %f %f %d %d %d %d %f %f %f %f\n",
+                &v.position.x,  &v.position.y,  &v.position.z,
+                &v.normal.x,    &v.normal.y,    &v.normal.z,
+                &v.tangent.x,   &v.tangent.y,   &v.tangent.z,
+                &v.uvCoord.x,   &v.uvCoord.y,
+                &v.boneIndices[0], &v.boneIndices[1], &v.boneIndices[2], &v.boneIndices[3],
+                &v.boneWeights[0], &v.boneWeights[1], &v.boneWeights[2], &v.boneWeights[3]);
         }
 
         uint32_t indexCount = 0;
@@ -165,28 +169,53 @@ bool ModelIO::LoadMaterial(std::filesystem::path filePath, Model& model)
     return true;
 }
 
-bool LoadSkeleton(std::filesystem::path filePath, Model& model)
+bool ModelIO::SaveSkeleton(std::filesystem::path filePath, const Model& model)
 {
     if (model.skeleton == nullptr || model.skeleton->bones.empty())
-    {
         return false;
-    }
+
     filePath.replace_extension("skeleton");
     FILE* file = nullptr;
     fopen_s(&file, filePath.u8string().c_str(), "w");
+
     if (file == nullptr)
         return false;
+
+    auto WriteMatrix = [&file](auto& m) {
+        fprintf_s(file, "%f %f %f %f\n", m._11, m._12, m._13, m._14);
+        fprintf_s(file, "%f %f %f %f\n", m._21, m._22, m._23, m._24);
+        fprintf_s(file, "%f %f %f %f\n", m._31, m._32, m._33, m._34);
+        fprintf_s(file, "%f %f %f %f\n", m._41, m._42, m._43, m._44);
+        };
 
     uint32_t boneCount = model.skeleton->bones.size();
     fprintf_s(file, "BoneCount: %d\n", boneCount);
     fprintf_s(file, "RootBone: %d\n", model.skeleton->root->index);
     for (uint32_t i = 0; i < boneCount; ++i)
     {
-        //const bone* bonedata = model.skeleton->bones[i].get();
-        //fprintf_s(file, "bonename: %s\n", bonedata->name.c_str());
-        //fprintf_s(file, "boneindex: %d\n", bonedata->index);
-        //fprintf_s(file, "boneparentindex: %d\n", bonedata->parentindex);
+        const Bone* boneData = model.skeleton->bones[i].get();
+        fprintf_s(file, "BoneName: %s\n", boneData->name.c_str());
+        fprintf_s(file, "BoneIndex: %d\n", boneData->index);
+        fprintf_s(file, "BoneParentIndex: %d\n", boneData->parentIndex);
 
-        //uint32_t childcount = bonedata->children.size();
+        uint32_t childCount = boneData->children.size();
+        fprintf_s(file, "BoneChildrenCount: %d\n", childCount);
+        for (uint32_t c = 0; c < childCount; ++c)
+        {
+            fprintf_s(file, "%d\n", boneData->childrenIndices[c]);
+        }
+
+        WriteMatrix(boneData->toParentTransform);
+        WriteMatrix(boneData->offsetTransform);
     }
+    fclose(file);
+
+    return true;
+}
+
+bool ModelIO::LoadSkeleton(std::filesystem::path filePath, Model& model)
+{
+
+
+    return false;
 }

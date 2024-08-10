@@ -222,6 +222,11 @@ void SimpleDraw::AddFilledAABB(float minX, float minY, float minZ, float maxX, f
 
 void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const Color& color)
 {
+    AddSphere(slices, rings, radius, MathC::Vector3::Zero, color);
+}
+
+void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const MathC::Vector3& offset, const Color& color)
+{
     Vector3 v0 = Vector3::Zero;
     Vector3 v1 = Vector3::Zero;
 

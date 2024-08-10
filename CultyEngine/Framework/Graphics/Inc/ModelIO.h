@@ -12,7 +12,7 @@ namespace CultyEngine::Graphics
         bool SaveMaterial(std::filesystem::path filePath, const Model& model);
         bool LoadMaterial(std::filesystem::path filePath, Model& model);
 
-        bool SaveSkeleton(std::filesystem::path filePath, Model& model);
+        bool SaveSkeleton(std::filesystem::path filePath, const Model& model);
         bool LoadSkeleton(std::filesystem::path filePath, Model& model);
     }
 }

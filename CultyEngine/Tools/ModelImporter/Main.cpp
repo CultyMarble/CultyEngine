@@ -226,10 +226,10 @@ uint32_t GetBoneIndex(const aiBone* nodeBone, const BoneIndexLookup& boneIndexMa
     std::string boneName = nodeBone->mName.C_Str();
     auto iter = boneIndexMap.find(boneName);
     ASSERT(iter != boneIndexMap.end(), "ERROR: aiBone was not found in the index map!");
+    return iter->second;
 }
 
-void SetBoneOffsetTransform(const aiBone* nodeBone, 
-    Skeleton& skeleton, const BoneIndexLookup& boneIndexMap)
+void SetBoneOffsetTransform(const aiBone* nodeBone, Skeleton& skeleton, const BoneIndexLookup& boneIndexMap)
 {
     uint32_t boneIndex = GetBoneIndex(nodeBone, boneIndexMap);
     Bone* bone = skeleton.bones[boneIndex].get();
@@ -339,6 +339,29 @@ int main(int argc, char* argv[])
                     mesh.indices.push_back(assimpFace.mIndices[i]);
                 }
             }
+
+            if (assimpMesh->HasBones())
+            {
+                printf("Reading bone weights...\n");
+                std::vector<int> numWeightsAdded(mesh.vertices.size());
+                for (uint32_t b = 0; b < assimpMesh->mNumBones; ++b)
+                {
+                    const aiBone* bone = assimpMesh->mBones[b];
+                    uint32_t boneIndex = GetBoneIndex(bone, boneIndexLookup);
+                    for (uint32_t w = 0; w < bone->mNumWeights; ++w)
+                    {
+                        const aiVertexWeight& weight = bone->mWeights[w];
+                        Vertex& vertex = mesh.vertices[weight.mVertexId];
+                        int& count = numWeightsAdded[weight.mVertexId];
+                        if (count < Vertex::MaxBoneWeights)
+                        {
+                            vertex.boneIndices[count] = boneIndex;
+                            vertex.boneWeights[count] = weight.mWeight;
+                            ++count;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -378,24 +401,34 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::printf("Saving model...\n");
+    std::printf("Saving Model...\n");
     if (ModelIO::SaveModel(args.outputFileName, model))
     {
-        std::printf("Save model success...\n");
+        std::printf("Save Model success...\n");
     }
     else
     {
-        std::printf("Failed to save model data [%s]...\n", args.outputFileName.u8string().c_str());
+        std::printf("Failed to save Model data [%s]...\n", args.outputFileName.u8string().c_str());
     }
 
-    std::printf("Saving materials...\n");
+    std::printf("Saving Materials...\n");
     if (ModelIO::SaveMaterial(args.outputFileName, model))
     {
-        std::printf("Save materials success...\n");
+        std::printf("Save Materials success...\n");
     }
     else
     {
-        std::printf("Failed to save materials data...\n");
+        std::printf("Failed to save Materials data...\n");
+    }
+
+    std::printf("Saving Skeleton...\n");
+    if (ModelIO::SaveSkeleton(args.outputFileName, model))
+    {
+        std::printf("Save Skeleton success...\n");
+    }
+    else
+    {
+        std::printf("Failed to save Skeleton data...\n");
     }
 
     return EXIT_SUCCESS;

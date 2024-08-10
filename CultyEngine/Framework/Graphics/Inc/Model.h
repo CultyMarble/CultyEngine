@@ -1,6 +1,7 @@
 #pragma once
 #include "MeshTypes.h"
 #include "Material.h"
+#include "Skeleton.h"
 
 namespace CultyEngine::Graphics
 {
