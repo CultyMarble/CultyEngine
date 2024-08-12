@@ -10,13 +10,13 @@ void RenderObject::Terminate()
 	meshBuffer.Terminate();
 }
 
-RenderGroup Graphics::CreateRenderGroup(ModelID id)
+RenderGroup Graphics::CreateRenderGroup(ModelID id, const Animator* animator)
 {
     const Model* model = ModelManager::Get()->GetModel(id);
-    return CreateRenderGroup(*model, id);
+    return CreateRenderGroup(*model, id, animator);
 }
 
-RenderGroup Graphics::CreateRenderGroup(const Model& model, ModelID id)
+RenderGroup Graphics::CreateRenderGroup(const Model& model, ModelID id, const Animator* animator)
 {
     auto TryLoadTexure = [](const auto& textureName)->TextureID
         {
@@ -44,6 +44,7 @@ RenderGroup Graphics::CreateRenderGroup(const Model& model, ModelID id)
 
         renderObject.modelID = id;
         renderObject.skeleton = model.skeleton.get();
+        renderObject.animator = animator;
     }
     return renderGroup;
 }

@@ -12,13 +12,13 @@ namespace
         switch (easeType)
         {
         case EaseType::Linear:
-        break;
+            break;
         case EaseType::EaseInQuad:
             t = t * t;
-        break;
+            break;
         case EaseType::EaseOutQuad:
             t = t * (2.0f - t);
-        break;
+            break;
         case EaseType::EaseInOutQuad:
         {
             t *= 2.0f;

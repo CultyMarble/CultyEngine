@@ -8,6 +8,7 @@
 namespace CultyEngine::Graphics
 {
     struct Model;
+    class Animator;
 
     struct RenderObject
     {
@@ -25,12 +26,13 @@ namespace CultyEngine::Graphics
 
         ModelID modelID = 0;
         const Skeleton* skeleton = nullptr;
+        const Animator* animator = nullptr;
     };
 
     using RenderGroup = std::vector<RenderObject>;
 
-    [[nodiscard]] RenderGroup CreateRenderGroup(ModelID id);
-    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model, ModelID id = 0);
+    [[nodiscard]] RenderGroup CreateRenderGroup(ModelID id, const Animator* animator = nullptr);
+    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model, ModelID id = 0, const Animator* animator = nullptr);
 
     void CleanupRenderGroup(RenderGroup& renderGroup);
     void SetRenderGroupPosition(RenderGroup& renderGroup, const MathC::Vector3& newPosition);

@@ -1,8 +1,12 @@
 
-// Character Model
+// Model
 -scale 0.01 ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx
 -scale 0.01 ../../Assets/Models/Character02/Ch03_nonPBR.fbx ../../Assets/Models/Character02/Ch03_nonPBR.fbx
 -scale 0.01 ../../Assets/Models/Character03/Parasite_L_Starkie.fbx ../../Assets/Models/Character03/Parasite_L_Starkie.fbx
 
-// Animation
--scale 0.01 ../../Assets/Animation/Flair.fbx ../../Assets/Animation/Flair.fbx
+// Animation Character 02
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Bashful.fbx ../../Assets/Models/Character02/Animations/Bashful.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Bboy.fbx ../../Assets/Models/Character02/Animations/Bboy.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Capoeira.fbx ../../Assets/Models/Character02/Animations/Capoeira.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Flair.fbx ../../Assets/Models/Character02/Animations/Flair.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/SoulSpinCombo.fbx ../../Assets/Models/Character02/Animations/SoulSpinCombo.fbx

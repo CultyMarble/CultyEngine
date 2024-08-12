@@ -14,8 +14,10 @@ protected:
     CultyEngine::Graphics::DirectionalLight mDirectionalLight;
     CultyEngine::Graphics::Camera mCamera;
 
-    CultyEngine::Graphics::ModelID mModelID;
-    CultyEngine::Graphics::RenderGroup mCharacter;
+    CultyEngine::Graphics::ModelID mModelID01;
+    CultyEngine::Graphics::ModelID mModelID02;
+    CultyEngine::Graphics::RenderGroup mCharacter01;
+    CultyEngine::Graphics::RenderGroup mCharacter02;
 
     CultyEngine::Graphics::StandardEffect mStandardEffect;
 

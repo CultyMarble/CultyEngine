@@ -45,8 +45,13 @@ void GameState::Initialize()
     mDirectionalLight.diffuse = { 0.8f, 0.8f, 0.8f, 1.0f };
     mDirectionalLight.specular = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-    mModelID = ModelManager::Get()->LoadModelID("../../Assets/Models/Character03/Parasite_L_Starkie.model");
-    mCharacter = CreateRenderGroup(mModelID);
+    mModelID01 = ModelManager::Get()->LoadModelID("../../Assets/Models/Character03/Parasite_L_Starkie.fbx");
+    mCharacter01 = CreateRenderGroup(mModelID01);
+    SetRenderGroupPosition(mCharacter01, { -1.0f, 0.0f, 0.0f });
+
+    mModelID02 = ModelManager::Get()->LoadModelID("../../Assets/Models/Character02/Ch03_nonPBR.fbx");
+    mCharacter02 = CreateRenderGroup(mModelID02);
+    SetRenderGroupPosition(mCharacter02, { 1.0f, 0.0f, 0.0f });
 
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFilePath);
@@ -57,7 +62,8 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mStandardEffect.Terminate();
-    CleanupRenderGroup(mCharacter);
+    CleanupRenderGroup(mCharacter02);
+    CleanupRenderGroup(mCharacter01);
 }
 
 void GameState::Update(float deltaTime)
@@ -70,9 +76,11 @@ void GameState::Render()
     if (mDrawSkeleton)
     {
         AnimationUtils::BoneTransforms boneTransforms;
+        AnimationUtils::ComputeBoneTransforms(mModelID01, boneTransforms);
+        AnimationUtils::DrawSkeleton(mModelID01, boneTransforms);
 
-        AnimationUtils::ComputeBoneTransforms(mModelID, boneTransforms);
-        AnimationUtils::DrawSkeleton(mModelID, boneTransforms);
+        AnimationUtils::ComputeBoneTransforms(mModelID02, boneTransforms);
+        AnimationUtils::DrawSkeleton(mModelID02, boneTransforms);
     }
 
     SimpleDraw::AddGroundPlane(10.0f, Colors::White);
@@ -81,7 +89,8 @@ void GameState::Render()
     if (mDrawSkeleton == false)
     {
         mStandardEffect.Begin();
-            DrawRenderGroup(mStandardEffect, mCharacter);
+            DrawRenderGroup(mStandardEffect, mCharacter01);
+            DrawRenderGroup(mStandardEffect, mCharacter02);
         mStandardEffect.End();
     }
 }

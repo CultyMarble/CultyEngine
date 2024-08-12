@@ -22,6 +22,7 @@ namespace CultyEngine::Graphics
 
         ModelID GetModelID(const std::filesystem::path& filePath);
         ModelID LoadModelID(const std::filesystem::path& filePath);
+        void AddAnimation(ModelID id, const std::filesystem::path& filePath);
         const Model* GetModel(ModelID id) const;
 
     private:

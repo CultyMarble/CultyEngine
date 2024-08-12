@@ -60,9 +60,37 @@ void GameState::Initialize()
 
     mAnimationTime = 0.0f;
     mAnimation = AnimationBuilder()
-        .AddPositionKey({ 0.0f, 0.5f, 0.0f }, 0.0f)
-        .AddPositionKey({ 0.0f, 2.5f, 0.0f }, 2.0f, EaseType::EaseOutQuad)
-        .AddPositionKey({ 0.0f, 0.5f, 0.0f }, 4.0f, EaseType::EaseInQuad)
+
+        // Falling
+        .AddPositionKey({ 0.0f, 5.0f, 0.0f }, 0.0f)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 0.0f)
+        .AddRotationKey({ 0.0f, 0.0f, 0.0f , 1.0 }, 0.0f)
+
+        // Hit the ground
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 1.0f)
+        .AddPositionKey({ 0.0f, 1.0f, 0.0f }, 1.0f, EaseType::EaseInQuad)
+
+        // Swash down
+        .AddPositionKey({ 0.0f, 0.85f, 0.0f }, 1.05f, EaseType::EaseInQuad)
+        .AddPositionKey({ 0.0f, 0.75f, 0.0f }, 1.10f, EaseType::EaseInQuad)
+        .AddPositionKey({ 0.0f, 0.65f, 0.0f }, 1.15f, EaseType::EaseInQuad)
+
+        .AddPositionKey({ 0.0f, 0.7f, 0.0f }, 1.2f, EaseType::EaseInQuad)
+        .AddScaleKey({ 1.0f, 0.8f, 1.0f }, 1.2f)
+        .AddRotationKey({ 0.0f, 0.0f, -5.0f , 1.0 }, 0.0f)
+
+        .AddPositionKey({ 0.0f, 0.65f, 0.0f }, 1.25f, EaseType::EaseOutQuad)
+        .AddPositionKey({ 0.0f, 0.75f, 0.0f }, 1.30f, EaseType::EaseOutQuad)
+        .AddPositionKey({ 0.0f, 0.85f, 0.0f }, 1.35f, EaseType::EaseOutQuad)
+
+        // Pounce back
+        .AddPositionKey({ 0.0f, 1.0f, 0.0f }, 1.4f, EaseType::EaseOutQuad)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 1.4f)
+
+        .AddPositionKey({ 0.0f, 5.0f, 0.0f }, 2.0f, EaseType::EaseOutQuad)
+        .AddScaleKey({ 1.0f, 1.0f, 1.0f }, 2.0f)
+        .AddRotationKey({ 0.0, 0.0f, -6.0f , 1.0 }, 2.0f)
+
         .Build();
 }
 

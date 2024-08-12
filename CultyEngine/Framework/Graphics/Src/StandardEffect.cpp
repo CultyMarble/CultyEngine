@@ -104,7 +104,7 @@ void StandardEffect::Render(const RenderObject& renderObject)
     if (settingsData.useSkinning)
     {
         AnimationUtils::BoneTransforms boneTransforms;
-        AnimationUtils::ComputeBoneTransforms(renderObject.modelID, boneTransforms);
+        AnimationUtils::ComputeBoneTransforms(renderObject.modelID, boneTransforms, renderObject.animator);
         AnimationUtils::ApplyBoneOffsets(renderObject.modelID, boneTransforms);
 
         for (MathC::Matrix4& transform : boneTransforms)
