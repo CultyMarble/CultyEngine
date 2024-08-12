@@ -22,15 +22,17 @@ namespace CultyEngine::Graphics
         TextureID normalMapID;
         TextureID specularMapID;
         TextureID bumpMapID;
+
+        ModelID modelID = 0;
+        const Skeleton* skeleton = nullptr;
     };
 
     using RenderGroup = std::vector<RenderObject>;
 
     [[nodiscard]] RenderGroup CreateRenderGroup(ModelID id);
-    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model);
+    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model, ModelID id = 0);
 
     void CleanupRenderGroup(RenderGroup& renderGroup);
-
     void SetRenderGroupPosition(RenderGroup& renderGroup, const MathC::Vector3& newPosition);
 
     template<class Effect>

@@ -37,7 +37,7 @@ namespace
 
 void GameState::Initialize()
 {
-    mCamera.SetPosition({ 0.0f, 5.0f, -10.0f });
+    mCamera.SetPosition({ 0.0f, 2.0f, -2.0f });
     mCamera.SetLookAt({ 0.0f, 1.0f, 0.0f });
 
     mDirectionalLight.direction = MathC::Normalize({1.0f, -1.0f, 1.0f});
@@ -45,7 +45,7 @@ void GameState::Initialize()
     mDirectionalLight.diffuse = { 0.8f, 0.8f, 0.8f, 1.0f };
     mDirectionalLight.specular = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-    mModelID = ModelManager::Get()->LoadModelID("../../Assets/Models/Character02/Ch03_nonPBR.model");
+    mModelID = ModelManager::Get()->LoadModelID("../../Assets/Models/Character03/Parasite_L_Starkie.model");
     mCharacter = CreateRenderGroup(mModelID);
 
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/Standard.fx";
@@ -70,6 +70,7 @@ void GameState::Render()
     if (mDrawSkeleton)
     {
         AnimationUtils::BoneTransforms boneTransforms;
+
         AnimationUtils::ComputeBoneTransforms(mModelID, boneTransforms);
         AnimationUtils::DrawSkeleton(mModelID, boneTransforms);
     }

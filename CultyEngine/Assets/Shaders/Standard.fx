@@ -16,6 +16,7 @@ cbuffer SettingsBuffer : register(b1)
     bool useLighting;
     bool useBumpMap;
     bool useShadowMap;
+    bool useSkinning;
     float bumpWeight;
     float depthBias;
 }
@@ -37,6 +38,11 @@ cbuffer MaterialBuffer : register(b3)
     float materialPower;
 }
 
+cbuffer BoneTransformData : register(b4)
+{
+    matrix boneTransform[256];
+}
+
 Texture2D diffuseMap        : register(t0);
 Texture2D normalMap         : register(t1);
 Texture2D specularMap       : register(t2);
@@ -44,12 +50,35 @@ Texture2D bumpMap           : register(t3);
 Texture2D shadowMap         : register(t4);
 SamplerState textureSampler : register(s0);
 
+static matrix Identity = 
+{
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+};
+
+matrix GetBoneTransform(int4 indices, float4 weights)
+{
+    if (length(weights) <= 0.0f)
+        return Identity;
+
+    matrix transform = boneTransform[indices[0]] * weights[0];
+           transform += boneTransform[indices[1]] * weights[1];
+           transform += boneTransform[indices[2]] * weights[2];
+           transform += boneTransform[indices[3]] * weights[3];
+
+    return transform;
+}
+
 struct VS_INPUT
 {
     float3 position     : POSITION;
     float3 normal       : NORMAL;
     float3 tangent      : TANGENT;
     float2 texCoord     : TEXCOORD;
+    int4   blendIndices : BLENDINDICES;
+    float4 blendWeights : BLENDWEIGHT;
 };
 
 struct VS_OUTPUT
@@ -65,8 +94,19 @@ struct VS_OUTPUT
 
 VS_OUTPUT VS(VS_INPUT input)
 {
-    VS_OUTPUT output;
+    matrix toWorld = world;
+    matrix toNDC = wvp;
+    matrix toLightNDC = lwvp;
     
+    if (useSkinning)
+    {
+        matrix boneTransform = GetBoneTransform(input.blendIndices, input.blendWeights);
+        toWorld     = mul(boneTransform, toWorld);
+        toNDC       = mul(boneTransform, toNDC);
+        toLightNDC  = mul(boneTransform, toLightNDC);
+    }
+    
+    VS_OUTPUT output;
     float3 localPosition = input.position;
     if (useBumpMap)
     {
@@ -75,17 +115,16 @@ VS_OUTPUT VS(VS_INPUT input)
         localPosition += (input.normal * bumpValue * bumpWeight);
     }
 
-    float3 worldPosition    = mul(float4(localPosition, 1.0f), world).xyz;
-    output.position         = mul(float4(localPosition, 1.0f), wvp);
-    output.worldNormal      = mul(input.normal, (float3x3) world);
-    output.worldTangent     = mul(input.tangent, (float3x3) world);
+    float3 worldPosition    = mul(float4(localPosition, 1.0f), toWorld).xyz;
+    output.position         = mul(float4(localPosition, 1.0f), toNDC);
+    output.worldNormal      = mul(input.normal, (float3x3) toWorld);
+    output.worldTangent     = mul(input.tangent, (float3x3) toWorld);
     output.texCoord         = input.texCoord;
     output.dirToLight       = -lightDirection;
     output.dirToView        = normalize(viewPosition - worldPosition);
+    
     if (useShadowMap)
-    {
-        output.lightNDCPosition = mul(float4(localPosition, 1.0f), lwvp);
-    }
+        output.lightNDCPosition = mul(float4(localPosition, 1.0f), toLightNDC);
 
     return output;
 }

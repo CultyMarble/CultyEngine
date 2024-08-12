@@ -16,6 +16,7 @@ protected:
 
     CultyEngine::Graphics::ModelID mModelID;
     CultyEngine::Graphics::RenderGroup mCharacter;
+
     CultyEngine::Graphics::StandardEffect mStandardEffect;
 
     bool mDrawSkeleton{};

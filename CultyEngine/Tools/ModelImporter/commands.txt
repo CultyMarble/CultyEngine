@@ -1,3 +1,8 @@
+
+// Character Model
 -scale 0.01 ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx
 -scale 0.01 ../../Assets/Models/Character02/Ch03_nonPBR.fbx ../../Assets/Models/Character02/Ch03_nonPBR.fbx
 -scale 0.01 ../../Assets/Models/Character03/Parasite_L_Starkie.fbx ../../Assets/Models/Character03/Parasite_L_Starkie.fbx
+
+// Animation
+-scale 0.01 ../../Assets/Animation/Flair.fbx ../../Assets/Animation/Flair.fbx

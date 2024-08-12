@@ -13,10 +13,10 @@ void RenderObject::Terminate()
 RenderGroup Graphics::CreateRenderGroup(ModelID id)
 {
     const Model* model = ModelManager::Get()->GetModel(id);
-    return CreateRenderGroup(*model);
+    return CreateRenderGroup(*model, id);
 }
 
-RenderGroup Graphics::CreateRenderGroup(const Model& model)
+RenderGroup Graphics::CreateRenderGroup(const Model& model, ModelID id)
 {
     auto TryLoadTexure = [](const auto& textureName)->TextureID
         {
@@ -41,6 +41,9 @@ RenderGroup Graphics::CreateRenderGroup(const Model& model)
             renderObject.bumpMapID = TryLoadTexure(materialData.bumpMapName);
             renderObject.specularMapID = TryLoadTexure(materialData.specularMapName);
         }
+
+        renderObject.modelID = id;
+        renderObject.skeleton = model.skeleton.get();
     }
     return renderGroup;
 }

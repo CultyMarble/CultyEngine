@@ -2,6 +2,7 @@
 #include "MeshTypes.h"
 #include "Material.h"
 #include "Skeleton.h"
+#include "AnimationClip.h"
 
 namespace CultyEngine::Graphics
 {
@@ -26,5 +27,6 @@ namespace CultyEngine::Graphics
 
         // Animation skeleton
         std::unique_ptr<Skeleton> skeleton;
+        std::vector<AnimationClip> animationClips;
     };
 }
