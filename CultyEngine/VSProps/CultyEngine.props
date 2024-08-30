@@ -8,8 +8,12 @@
 	<ItemDefinitionGroup>
 		<ClCompile>
 			<AdditionalIncludeDirectories>
-				$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;%(AdditionalIncludeDirectories)
-			</AdditionalIncludeDirectories>
+                $(SolutionDir)Engine;
+                $(SolutionDir)Framework;
+                $(SolutionDir)External;
+                $(SolutionDir)External/Bullet;
+                %(AdditionalIncludeDirectories)
+            </AdditionalIncludeDirectories>
 		</ClCompile>
 	</ItemDefinitionGroup>
 	<ItemGroup />

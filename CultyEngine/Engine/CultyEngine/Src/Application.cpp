@@ -8,6 +8,7 @@ using namespace CultyEngine;
 using namespace CultyEngine::Core;
 using namespace CultyEngine::Graphics;
 using namespace CultyEngine::Input;
+using namespace CultyEngine::Physics;
 
 void Application::Run(const ApplicationConfig& config)
 {
@@ -31,6 +32,9 @@ void Application::Run(const ApplicationConfig& config)
     SimpleDraw::StaticInitialize(config.maxVertexCount);
     TextureManager::StaticInitialize("../../Assets/Images/");
     ModelManager::StaticInitialize();
+
+    PhysicsWorld::Settings settings;
+    PhysicsWorld::StaticInitialize(settings);
 
     ASSERT(mCurrentState != nullptr, "Application: need an application state!");
     mCurrentState->Initialize();
@@ -62,10 +66,14 @@ void Application::Run(const ApplicationConfig& config)
         }
 
         float deltaTime = TimeUtils::GetDeltaTime();
-        mCurrentState->Update(deltaTime);
+        if (deltaTime < 0.5f)
+        {
+            PhysicsWorld::Get()->Update(deltaTime);
+            mCurrentState->Update(deltaTime);
+        }
 
         // Render
-        Graphics::GraphicsSystem* gs = Graphics::GraphicsSystem::Get();
+        GraphicsSystem* gs = GraphicsSystem::Get();
         gs->BeginRender();
             mCurrentState->Render();
             DebugUI::BeginRender();
@@ -77,6 +85,7 @@ void Application::Run(const ApplicationConfig& config)
     // Clean Up
     mCurrentState->Terminate();
 
+    PhysicsWorld::StaticTerminate();
     ModelManager::StaticTerminate();
     TextureManager::StaticTerminate();
     SimpleDraw::StaticTerminate();
