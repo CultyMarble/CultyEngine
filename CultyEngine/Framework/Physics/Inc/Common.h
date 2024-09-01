@@ -1,13 +1,19 @@
 #pragma once
 
-// Framework
+// framework headers
 #include <Math/Inc/MathC.h>
 #include <Core/Inc/Core.h>
 #include <Graphics/Inc/Graphics.h>
 
-// Bullet Files
+// bullet files
 #include <Bullet/btBulletCollisionCommon.h>
 #include <Bullet/btBulletDynamicsCommon.h>
+#include <Bullet/BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include <Bullet/BulletSoftBody/btSoftBodyHelpers.h>
+#include <Bullet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
+#include <Bullet/BulletSoftBody/btSoftBodySolvers.h>
+
+#define USE_SOFT_BODY
 
 // Helper Function
 template<class T>

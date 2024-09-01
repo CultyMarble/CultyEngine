@@ -13,12 +13,13 @@ public:
 protected:
     CultyEngine::Graphics::DirectionalLight mDirectionalLight;
     CultyEngine::Graphics::Camera mCamera;
-
     CultyEngine::Graphics::StandardEffect mStandardEffect;
 
     CultyEngine::Graphics::RenderObject mGround;
-    CultyEngine::Graphics::RenderObject mBall;
+    CultyEngine::Physics::CollisionShape mGroundShape;
+    CultyEngine::Physics::RigidBody mGroundRB;
 
+    CultyEngine::Graphics::RenderObject mBall;
     CultyEngine::Physics::CollisionShape mBallShape;
     CultyEngine::Physics::RigidBody mBallRB;
 };

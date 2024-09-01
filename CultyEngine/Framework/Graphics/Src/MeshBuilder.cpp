@@ -596,3 +596,23 @@ MeshPX MeshBuilder::CreateScreenQuad()
 
     return meshPX;
 }
+
+Mesh MeshBuilder::CreateSpriteQuad(float width, float height)
+{
+    Mesh mesh;
+
+    const float hw = width * 0.5f;
+    const float hh = height * 0.5f;
+
+    mesh.vertices.push_back({ {-hw, -hh, 0.0f}, -MathC::Vector3::ZAxis, MathC::Vector3::XAxis, {0.0f, 1.0f } });
+    mesh.vertices.push_back({ {-hw,  hh, 0.0f}, -MathC::Vector3::ZAxis, MathC::Vector3::XAxis, {0.0f, 0.0f } });
+    mesh.vertices.push_back({ { hw,  hh, 0.0f}, -MathC::Vector3::ZAxis, MathC::Vector3::XAxis, {1.0f, 0.0f } });
+    mesh.vertices.push_back({ { hw, -hh, 0.0f}, -MathC::Vector3::ZAxis, MathC::Vector3::XAxis, {1.0f, 1.0f } });
+
+    mesh.indices = {
+        0, 1, 2,
+        0, 2, 3
+    };
+
+    return mesh;
+}

@@ -38,5 +38,8 @@ namespace CultyEngine::Graphics
 
         // Screen Stuff
         static MeshPX CreateScreenQuad();
+
+        // Sprite Quad
+        static Mesh CreateSpriteQuad(float width, float height);
     };
 }

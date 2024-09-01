@@ -254,6 +254,7 @@ int main(int argc, char* argv[])
 
     const Arguments& args = argOpt.value();
     Assimp::Importer importer;
+    importer.SetPropertyBool(AI_CONFIG_IMPORT_FBX_PRESERVE_PIVOTS, false);
     const uint32_t flags = aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded;
     const aiScene* scene = importer.ReadFile(args.inputFileName.u8string().c_str(), flags);
     if (scene == nullptr)

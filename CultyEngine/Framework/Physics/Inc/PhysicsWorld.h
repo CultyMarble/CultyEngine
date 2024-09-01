@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PhysicsDebugDrawer.h"
+
 namespace CultyEngine::Physics
 {
     class PhysicsObject;
@@ -35,12 +37,21 @@ namespace CultyEngine::Physics
         PhysicsObjects mPhysicsObjects;
 
         Settings mSettings;
+        PhysicsDebugDrawer mDebugDrawer;
 
         // bullet objects
         btBroadphaseInterface* mInterface = nullptr;
         btCollisionDispatcher* mDispatcher = nullptr;
         btDefaultCollisionConfiguration* mCollisionConfiguration = nullptr;
-        btDiscreteDynamicsWorld* mDynamicsWorld = nullptr;
         btSequentialImpulseConstraintSolver* mSolver = nullptr;
+
+        friend class SoftBody;
+#ifdef USE_SOFT_BODY
+        btSoftRigidDynamicsWorld* mDynamicsWorld = nullptr;
+        btSoftBodyWorldInfo& GetSoftBodyWorldInfo() { return mDynamicsWorld->getWorldInfo(); }
+#else
+        btDiscreteDynamicsWorld* mDynamicsWorld = nullptr;
+        btSoftBodyWorldInfo& GetSoftBodyWorldInfo() { return btSoftBodyWorldInfo(); }
+#endif
     };
 }
