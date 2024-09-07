@@ -35,11 +35,19 @@ AnimationBuilder& AnimationBuilder::AddScaleKey(const MathC::Vector3& scale, flo
     return *this;
 }
 
+AnimationBuilder& AnimationBuilder::AddEventKey(AnimationCallback cb, float time)
+{
+    PushKey(mWorkingCopy.mEventKeys, cb, time, EaseType::Linear);
+    mWorkingCopy.mDuration = MathC::Max(mWorkingCopy.mDuration, time);
+    return *this;
+}
+
 Animation CultyEngine::Graphics::AnimationBuilder::Build()
 {
-    ASSERT(mWorkingCopy.mPositionKeys.empty() == false ||
-           mWorkingCopy.mRotationKeys.empty() == false ||
-           mWorkingCopy.mScaleKeys.empty() == false,
+    ASSERT(mWorkingCopy.mPositionKeys.empty() == false  ||
+           mWorkingCopy.mRotationKeys.empty() == false  ||
+           mWorkingCopy.mScaleKeys.empty() == false     ||
+           mWorkingCopy.mEventKeys.empty() == false,
         "AnimationBuilder: No Animation Keys were Added!");
 
     return std::move(mWorkingCopy);

@@ -10,6 +10,8 @@ namespace CultyEngine::Graphics
 		Transform GetTransform(float time) const;
 		float GetDuration() const;
 
+        void PlayEvents(float prevTime, float curTime);
+
 	private:
 		const MathC::Vector3& GetPosition(float time) const;
 		const MathC::Quaternion& GetRotation(float time) const;
@@ -21,6 +23,7 @@ namespace CultyEngine::Graphics
 		PositionKeys mPositionKeys;
 		RotationKeys mRotationKeys;
 		ScaleKeys mScaleKeys;
+        EventKeys mEventKeys;
 		float mDuration;
 	};
 }

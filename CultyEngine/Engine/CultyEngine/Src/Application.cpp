@@ -1,14 +1,16 @@
 #include "Precompiled.h"
 #include "Application.h"
 #include "ApplicationState.h"
-
-bool gIsMinimized = false; // Global flag to track minimization
+#include "EventManager.h"
 
 using namespace CultyEngine;
 using namespace CultyEngine::Core;
 using namespace CultyEngine::Graphics;
 using namespace CultyEngine::Input;
 using namespace CultyEngine::Physics;
+using namespace CultyEngine::Audio;
+
+bool gIsMinimized = false;
 
 void Application::Run(const ApplicationConfig& config)
 {
@@ -23,15 +25,16 @@ void Application::Run(const ApplicationConfig& config)
     );
 
     ASSERT(myWindow.IsActive(), "Failed to create a Window!");
-
     auto wHandle = myWindow.GetWindowHandle();
-
-    Graphics::GraphicsSystem::StaticInitialize(wHandle, false);
-    Input::InputSystem::StaticInitialize(wHandle);
+    GraphicsSystem::StaticInitialize(wHandle, false);
+    InputSystem::StaticInitialize(wHandle);
     DebugUI::StaticInitialize(wHandle, false, true);
     SimpleDraw::StaticInitialize(config.maxVertexCount);
     TextureManager::StaticInitialize("../../Assets/Images/");
     ModelManager::StaticInitialize();
+    AudioSystem::StaticInitialize();
+    SoundEffectManager::StaticInitialize("../../Assets/Sounds");
+    EventManager::StaticInitialize();
 
     PhysicsWorld::Settings settings;
     PhysicsWorld::StaticInitialize(settings);
@@ -65,6 +68,8 @@ void Application::Run(const ApplicationConfig& config)
             mCurrentState->Initialize();
         }
 
+        AudioSystem::Get()->Update();
+
         float deltaTime = TimeUtils::GetDeltaTime();
         if (deltaTime < 0.5f)
         {
@@ -85,6 +90,9 @@ void Application::Run(const ApplicationConfig& config)
     // Clean Up
     mCurrentState->Terminate();
 
+    EventManager::StaticTerminate();
+    SoundEffectManager::StaticTerminate();
+    AudioSystem::StaticTerminate();
     PhysicsWorld::StaticTerminate();
     ModelManager::StaticTerminate();
     TextureManager::StaticTerminate();
