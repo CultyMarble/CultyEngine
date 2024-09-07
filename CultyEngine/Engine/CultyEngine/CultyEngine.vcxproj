@@ -141,11 +141,14 @@
     <ClInclude Include="Inc\ApplicationState.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\CultyEngine.h" />
+    <ClInclude Include="Inc\Event.h" />
+    <ClInclude Include="Inc\EventManager.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Application.cpp" />
     <ClCompile Include="Src\CultyEngine.cpp" />
+    <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
