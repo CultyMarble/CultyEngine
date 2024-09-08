@@ -140,13 +140,13 @@
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\SoundEffectManager.h" />
     <ClInclude Include="Src\Precompiled.h" />
-    <ClInclude Include="Src\SoundEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AudioSystem.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\SoundEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\External\DirectXTK\Audio\DirectXTKAudio_Desktop_2022_Win8.vcxproj">

@@ -24,15 +24,15 @@
     <ClInclude Include="Inc\SoundEffectManager.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Src\SoundEffectManager.cpp">
-      <Filter>Src</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\AudioSystem.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SoundEffectManager.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
