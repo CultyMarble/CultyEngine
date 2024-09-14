@@ -117,6 +117,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Framework\Audio\Au
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "23_HelloSoundEvents", "VGP334\23_HelloSoundEvents\23_HelloSoundEvents.vcxproj", "{E4672E46-520F-4F76-9C28-6E858DBA063B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24_HelloAnimationFinalProject", "VGP334\24_HelloAnimationFinalProject\24_HelloAnimationFinalProject.vcxproj", "{A6E40571-217C-4A86-AB51-A5E58E7D38BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -405,6 +407,14 @@ Global
 		{E4672E46-520F-4F76-9C28-6E858DBA063B}.Release|x64.Build.0 = Release|x64
 		{E4672E46-520F-4F76-9C28-6E858DBA063B}.Release|x86.ActiveCfg = Release|Win32
 		{E4672E46-520F-4F76-9C28-6E858DBA063B}.Release|x86.Build.0 = Release|Win32
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Debug|x64.ActiveCfg = Debug|x64
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Debug|x64.Build.0 = Debug|x64
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Debug|x86.ActiveCfg = Debug|Win32
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Debug|x86.Build.0 = Debug|Win32
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Release|x64.ActiveCfg = Release|x64
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Release|x64.Build.0 = Release|x64
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Release|x86.ActiveCfg = Release|Win32
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -447,6 +457,7 @@ Global
 		{4F150A30-CECB-49D1-8283-6A3F57438CF5} = {26A004DD-B802-4109-9F0B-D669000875BF}
 		{B24FC8E5-7585-4BEB-94BF-4E1C920BAA60} = {D1A585D4-C5A9-450F-9FF7-23C490A1F2ED}
 		{E4672E46-520F-4F76-9C28-6E858DBA063B} = {DCE825F9-B72B-4B68-B016-7CFFB77CC5C8}
+		{A6E40571-217C-4A86-AB51-A5E58E7D38BF} = {DCE825F9-B72B-4B68-B016-7CFFB77CC5C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {033DDF7C-49D3-4D78-851F-7A065F9F78EE}

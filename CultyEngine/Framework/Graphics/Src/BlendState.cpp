@@ -45,7 +45,7 @@ void BlendState::ClearState()
 {
 	auto context = GraphicsSystem::Get()->GetContext();
 	context->OMSetBlendState(nullptr, nullptr, UINT_MAX);
-    //context->OMSetDepthStencilState(nullptr, 0);
+    context->OMSetDepthStencilState(nullptr, 0);
 }
 
 BlendState::~BlendState()
@@ -69,24 +69,24 @@ void BlendState::Initialize(BlendMode mode)
 	HRESULT hr = device->CreateBlendState(&desc, &mBlendState);
 	ASSERT(SUCCEEDED(hr), "BlendState: Failed to create blend state!");
 
-    //D3D11_DEPTH_STENCIL_DESC dsDesc{};
-    //dsDesc.DepthEnable = true;
-    //dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-    //dsDesc.DepthFunc = D3D11_COMPARISON_EQUAL;
+    D3D11_DEPTH_STENCIL_DESC dsDesc{};
+    dsDesc.DepthEnable = true;
+    dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsDesc.DepthFunc = D3D11_COMPARISON_NOT_EQUAL;
 
-    //hr = device->CreateDepthStencilState(&dsDesc, &mDepthStencilState);
-    //ASSERT(SUCCEEDED(hr), "BlendState: failed to create depth stencil state");
+    hr = device->CreateDepthStencilState(&dsDesc, &mDepthStencilState);
+    ASSERT(SUCCEEDED(hr), "BlendState: failed to create depth stencil state");
 }
 
 void BlendState::Terminate()
 {
 	SafeRelease(mBlendState);
-    //SafeRelease(mDepthStencilState);
+    SafeRelease(mDepthStencilState);
 }
 
 void BlendState::Set()
 {
 	auto context = GraphicsSystem::Get()->GetContext();
 	context->OMSetBlendState(mBlendState, nullptr, UINT_MAX);
-	//context->OMSetDepthStencilState(mDepthStencilState, 0);
+	context->OMSetDepthStencilState(mDepthStencilState, 0);
 }
