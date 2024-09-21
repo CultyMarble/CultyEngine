@@ -18,6 +18,8 @@ protected:
     CultyEngine::Graphics::Camera mCamera;
     CultyEngine::Graphics::StandardEffect mStandardEffect;
 
+    CultyEngine::Graphics::RenderObject mGround;
+
     CultyEngine::Graphics::ModelID mModelID_01;
     CultyEngine::Graphics::RenderGroup mCharacter_01;
     CultyEngine::Graphics::Animator mCharacterAnimator_01;
@@ -27,6 +29,20 @@ protected:
     CultyEngine::Graphics::RenderGroup mCharacter_02;
     CultyEngine::Graphics::Animator mCharacterAnimator_02;
     CultyEngine::Graphics::Animation mEventAnimation_02;
+
+    CultyEngine::Graphics::ModelID mModelID_03;
+    CultyEngine::Graphics::RenderGroup mCharacter_03;
+    CultyEngine::Graphics::Animator mCharacterAnimator_03;
+    CultyEngine::Graphics::Animation mEventAnimation_03;
+    CultyEngine::MathC::Vector3 mTransform_00 = { 0.0f, 0.0f, 2.0f };
+    CultyEngine::MathC::Vector3 mTransform_01 = { 0.5f, 0.0f, 3.0f };
+    CultyEngine::MathC::Vector3 mTransform_02 = { 1.0f, 0.0f, 2.0f };
+    CultyEngine::MathC::Vector3 mTransform_03 = { 1.5f, 0.0f, 3.5f };
+    CultyEngine::MathC::Vector3 mTransform_04 = { 2.0f, 0.0f, 2.0f };
+    CultyEngine::MathC::Vector3 mTransform_05 = { -0.5f, 0.0f, 2.3f };
+    CultyEngine::MathC::Vector3 mTransform_06 = { -1.0f, 0.0f, 2.7f };
+    CultyEngine::MathC::Vector3 mTransform_07 = { -1.5f, 0.0f, 1.9f };
+    CultyEngine::MathC::Vector3 mTransform_08 = { -2.0f, 0.0f, 3.2f };
 
     CultyEngine::ListenerID mSpaceEventID = 0;
     CultyEngine::ListenerID mAnimEventID = 0;

@@ -3,7 +3,7 @@
 -scale 0.01 ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx
 -scale 0.01 ../../Assets/Models/Character02/Ch03_nonPBR.fbx ../../Assets/Models/Character02/Ch03_nonPBR.fbx
 -scale 0.01 ../../Assets/Models/Character03/Parasite_L_Starkie.fbx ../../Assets/Models/Character03/Parasite_L_Starkie.fbx
--scale 0.01 ../../Assets/Models/Char04/Ch36_nonPBR.fbx ../../Assets/Models/Char04/Ch36_nonPBR.fbx
+-scale 0.01 ../../Assets/Models/Char04/character.fbx ../../Assets/Models/Char04/character.fbx
 
 // Animation Character 02
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/ArmsHipHopDance.fbx ../../Assets/Models/Character02/Animations/ArmsHipHopDance.fbx
@@ -30,8 +30,5 @@
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/20_AnnoyedHeadShake.fbx ../../Assets/Models/Character03/Anims/20_AnnoyedHeadShake.fbx
 
 // Animation Char 04
+-scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Defeat.fbx ../../Assets/Models/Char04/Anims/Defeat.fbx
 -scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Cheering.fbx ../../Assets/Models/Char04/Anims/Cheering.fbx
--scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/CheeringShake.fbx ../../Assets/Models/Char04/Anims/CheeringShake.fbx
--scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Clapping.fbx ../../Assets/Models/Char04/Anims/Clapping.fbx
--scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Excited.fbx ../../Assets/Models/Char04/Anims/Excited.fbx
--scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Happy.fbx ../../Assets/Models/Char04/Anims/Happy.fbx

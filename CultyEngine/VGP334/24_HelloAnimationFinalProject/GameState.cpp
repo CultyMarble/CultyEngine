@@ -39,8 +39,8 @@ namespace
 
 void GameState::Initialize()
 {
-    mCamera.SetPosition({ 0.0f, 3.0f, -5.0f });
-    mCamera.SetLookAt({ 0.0f, 1.0f, 0.0f });
+    mCamera.SetPosition({ -0.35f, 2.7f, -3.5f });
+    mCamera.SetLookAt({ 0.5f, 1.0f, 0.5f });
 
     mDirectionalLight.direction = MathC::Normalize({1.0f, -1.0f, 1.0f});
     mDirectionalLight.ambient = { 0.5f, 0.5f, 0.5f, 1.0f };
@@ -51,6 +51,10 @@ void GameState::Initialize()
     mStandardEffect.Initialize(shaderFilePath);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+
+    Mesh ground = MeshBuilder::CreateHorizontalPlane(100, 100, 1.0f);
+    mGround.meshBuffer.Initialize(ground);
+    mGround.diffuseMapID = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
 
     mModelID_01 = ModelManager::Get()->LoadModelID("../../Assets/Models/Character02/Ch03_nonPBR.fbx");
     ModelManager::Get()->AddAnimation(mModelID_01, "../../Assets/Models/Character02/Animations/Bashful.fbx");
@@ -74,6 +78,12 @@ void GameState::Initialize()
     ModelManager::Get()->AddAnimation(mModelID_02, "../../Assets/Models/Character03/Anims/20_AnnoyedHeadShake.fbx");    //9
     mCharacter_02 = CreateRenderGroup(mModelID_02, &mCharacterAnimator_02);
     mCharacterAnimator_02.Initialize(mModelID_02);
+
+    mModelID_03 = ModelManager::Get()->LoadModelID("../../Assets/Models/Char04/character.fbx");
+    ModelManager::Get()->AddAnimation(mModelID_03, "../../Assets/Models/Char04/Anims/Defeat.fbx");      //0
+    ModelManager::Get()->AddAnimation(mModelID_03, "../../Assets/Models/Char04/Anims/Cheering.fbx");    //1
+    mCharacter_03 = CreateRenderGroup(mModelID_03, &mCharacterAnimator_03);
+    mCharacterAnimator_03.Initialize(mModelID_03);
 
     SoundEffectManager* sem = SoundEffectManager::Get();
     mEventSoundIDs.push_back(sem->Load("crowdShouting.wav"));
@@ -106,6 +116,9 @@ void GameState::Initialize()
     AnimationCallback cb_char02_anim08 = [&]() {mCharacterAnimator_02.PlayAnimation(8, true); };
     AnimationCallback cb_char02_anim09 = [&]() {mCharacterAnimator_02.PlayAnimation(9, true); };
 
+    AnimationCallback cb_char03_anim00 = [&]() {mCharacterAnimator_03.PlayAnimation(0, true); };
+    AnimationCallback cb_char03_anim01 = [&]() {mCharacterAnimator_03.PlayAnimation(1, true); };
+
     mEventAnimationTime = 0.0f;
     mEventAnimation_01 = AnimationBuilder()
         // Time: 00:00
@@ -127,12 +140,8 @@ void GameState::Initialize()
         .AddEventKey(cb_sound_crowdShoutingStop, 24.9f)
         .AddEventKey(cb_char01_anim04, 24.99f)
         // Time: 25:00
-        // Time: 30:00
-        // Time: 35:00
-        // Time: 40:00
         // Time: 45:00
         .AddPositionKey({0.0f, 0.0f, 0.0f}, 45.0f)
-        //.AddEventKey(std::bind(&GameState::OnEvent2, this), 2.0f)
         .Build();
 
     mEventAnimation_02 = AnimationBuilder()
@@ -140,7 +149,6 @@ void GameState::Initialize()
         .AddPositionKey({ 0.0f, 0.0f, 10.0f }, 0.0f)
         .AddEventKey(cb_char02_anim09, 0.01f)
         // Time: 05:00
-        // Time: 10:00
         // Time: 15:00
         .AddPositionKey({ 0.0f, 0.0f, 10.0f }, 23.0f)
         // Time: 20:00
@@ -163,7 +171,11 @@ void GameState::Initialize()
         // Time: 45:00
         .AddPositionKey({ 0.0f, 0.0f, 0.0f }, 45.0f)
         .AddEventKey(cb_sound_crowdShoutingStop, 45.0f)
+        .Build();
 
+    mEventAnimation_03 = AnimationBuilder()
+        .AddEventKey(cb_char03_anim00, 0.01f)
+        .AddEventKey(cb_char03_anim01, 25.5f)
         .Build();
 
     mParticleEffect.Initialize();
@@ -172,7 +184,6 @@ void GameState::Initialize()
     ParticleSystemInfo info;
     info.maxParticles = 200;
     info.particleTextureID = TextureManager::Get()->LoadTexture("../Images/white.jpg");
-    info.spawnPosition = { -0.75, 0.0, 0.0 };
     info.spawnDirection = MathC::Vector3::YAxis;
     info.spawnDelay = 0.1f;
     info.spawnLifeTime = 999999999.0f;
@@ -195,6 +206,7 @@ void GameState::Initialize()
     info.minEndScale = { 0.05f, 0.05f, 0.05f };
     info.maxEndScale = { 0.1f, 0.1f, 0.1f };
 
+    info.spawnPosition = { -0.75, 0.0, 0.0 };
     mParticleSystem_01.Initialize(info);
     mParticleSystem_01.SetCamera(mCamera);
 
@@ -209,8 +221,12 @@ void GameState::Terminate()
     mParticleSystem_01.Terminate();
     mParticleEffect.Terminate();
 
+    CleanupRenderGroup(mCharacter_03);
     CleanupRenderGroup(mCharacter_02);
     CleanupRenderGroup(mCharacter_01);
+
+    mGround.Terminate();
+
     mStandardEffect.Terminate();
 }
 
@@ -236,6 +252,9 @@ void GameState::Update(float deltaTime)
 
     mCharacterAnimator_02.Update(deltaTime);
     mEventAnimation_02.PlayEvents(prevTime, mEventAnimationTime);
+
+    mCharacterAnimator_03.Update(deltaTime);
+    mEventAnimation_03.PlayEvents(prevTime, mEventAnimationTime);
 }
 
 void GameState::Render()
@@ -255,12 +274,30 @@ void GameState::Render()
         mParticleEffect.End();
     }
 
-    SimpleDraw::AddGroundPlane(10.0f, Colors::White);
     SimpleDraw::Render(mCamera);
 
     mStandardEffect.Begin();
+        mStandardEffect.Render(mGround);
         DrawRenderGroup(mStandardEffect, mCharacter_01);
         DrawRenderGroup(mStandardEffect, mCharacter_02);
+
+        SetRenderGroupPosition(mCharacter_03, mTransform_01);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_02);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_03);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_04);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_05);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_06);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_07);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+        SetRenderGroupPosition(mCharacter_03, mTransform_08);
+        DrawRenderGroup(mStandardEffect, mCharacter_03);
+
     mStandardEffect.End();
 }
 
