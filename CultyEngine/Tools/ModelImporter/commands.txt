@@ -3,10 +3,35 @@
 -scale 0.01 ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx ../../Assets/Models/Character01/Paladin_J_Nordstrom.fbx
 -scale 0.01 ../../Assets/Models/Character02/Ch03_nonPBR.fbx ../../Assets/Models/Character02/Ch03_nonPBR.fbx
 -scale 0.01 ../../Assets/Models/Character03/Parasite_L_Starkie.fbx ../../Assets/Models/Character03/Parasite_L_Starkie.fbx
+-scale 0.01 ../../Assets/Models/Char04/Ch36_nonPBR.fbx ../../Assets/Models/Char04/Ch36_nonPBR.fbx
 
 // Animation Character 02
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/ArmsHipHopDance.fbx ../../Assets/Models/Character02/Animations/ArmsHipHopDance.fbx
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Bashful.fbx ../../Assets/Models/Character02/Animations/Bashful.fbx
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Bboy.fbx ../../Assets/Models/Character02/Animations/Bboy.fbx
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Capoeira.fbx ../../Assets/Models/Character02/Animations/Capoeira.fbx
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/Flair.fbx ../../Assets/Models/Character02/Animations/Flair.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/SambaDancing.fbx ../../Assets/Models/Character02/Animations/SambaDancing.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/SnakeHipHopDance.fbx ../../Assets/Models/Character02/Animations/SnakeHipHopDance.fbx
 -scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/SoulSpinCombo.fbx ../../Assets/Models/Character02/Animations/SoulSpinCombo.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/YmcaDance.fbx ../../Assets/Models/Character02/Animations/YmcaDance.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character02/Animations/KnockedOut.fbx ../../Assets/Models/Character02/Animations/KnockedOut.fbx
+
+// Animation Character 03
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/00_FlyingPunchCombo.fbx ../../Assets/Models/Character03/Anims/00_FlyingPunchCombo.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/04_BboyHipHopMove.fbx ../../Assets/Models/Character03/Anims/04_BboyHipHopMove.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/05_DancingRunningMan.fbx ../../Assets/Models/Character03/Anims/05_DancingRunningMan.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/10_BreakdanceReady.fbx ../../Assets/Models/Character03/Anims/10_BreakdanceReady.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/11_BreakdanceUprock_01.fbx ../../Assets/Models/Character03/Anims/11_BreakdanceUprock_01.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/12_BreakdanceUprock_02.fbx ../../Assets/Models/Character03/Anims/12_BreakdanceUprock_02.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/17_FlairStart.fbx ../../Assets/Models/Character03/Anims/17_FlairStart.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/18_FlairIn.fbx ../../Assets/Models/Character03/Anims/18_FlairIn.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/19_FlairEnd.fbx ../../Assets/Models/Character03/Anims/19_FlairEnd.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Character03/Anims/20_AnnoyedHeadShake.fbx ../../Assets/Models/Character03/Anims/20_AnnoyedHeadShake.fbx
+
+// Animation Char 04
+-scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Cheering.fbx ../../Assets/Models/Char04/Anims/Cheering.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/CheeringShake.fbx ../../Assets/Models/Char04/Anims/CheeringShake.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Clapping.fbx ../../Assets/Models/Char04/Anims/Clapping.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Excited.fbx ../../Assets/Models/Char04/Anims/Excited.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/Char04/Anims/Happy.fbx ../../Assets/Models/Char04/Anims/Happy.fbx

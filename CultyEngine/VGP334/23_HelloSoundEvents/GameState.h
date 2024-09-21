@@ -20,16 +20,16 @@ protected:
     CultyEngine::Graphics::DirectionalLight mDirectionalLight;
     CultyEngine::Graphics::Camera mCamera;
 
-    CultyEngine::Graphics::ModelID mModelID;
-    CultyEngine::Graphics::RenderGroup mCharacter;
-    CultyEngine::Graphics::Animator mCharacterAnimator;
+    CultyEngine::Graphics::ModelID mModelID_01;
+    CultyEngine::Graphics::RenderGroup mCharacter_01;
+    CultyEngine::Graphics::Animator mCharacterAnimator_01;
     CultyEngine::Graphics::StandardEffect mStandardEffect;
 
     CultyEngine::ListenerID mSpaceEventID = 0;
     CultyEngine::ListenerID mAnimEventID = 0;
 
     std::vector<CultyEngine::Audio::SoundId> mEventSoundIDs;
-    CultyEngine::Graphics::Animation mEventAnimation;
+    CultyEngine::Graphics::Animation mEventAnimation_01;
     float mEventAnimationTime = 0.0f;
 
     int mAnimationIndex = -1;

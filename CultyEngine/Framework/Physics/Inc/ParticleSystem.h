@@ -5,7 +5,7 @@ namespace CultyEngine::Physics
 {
     struct ParticleSystemInfo
     {
-        int maxParticles = 100;
+        int maxParticles = 10000;
         Graphics::TextureID particleTextureID = 0;
         MathC::Vector3 spawnPosition = MathC::Vector3::Zero;
         MathC::Vector3 spawnDirection = MathC::Vector3::YAxis;

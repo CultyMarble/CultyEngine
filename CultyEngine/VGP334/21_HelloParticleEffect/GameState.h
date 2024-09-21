@@ -14,5 +14,5 @@ protected:
     CultyEngine::Graphics::DirectionalLight mDirectionalLight;
     CultyEngine::Graphics::Camera mCamera;
     CultyEngine::Graphics::ParticleSystemEffect mParticleEffect;
-    CultyEngine::Physics::ParticleSystem mParticleSystem;
+    CultyEngine::Physics::ParticleSystem mParticleSystem_01;
 };

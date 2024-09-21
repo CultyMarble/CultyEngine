@@ -45,15 +45,15 @@ void GameState::Initialize()
     mDirectionalLight.diffuse = { 0.8f, 0.8f, 0.8f, 1.0f };
     mDirectionalLight.specular = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-    mModelID = ModelManager::Get()->LoadModelID("../../Assets/Models/Character02/Ch03_nonPBR.fbx");
-    ModelManager::Get()->AddAnimation(mModelID, "../../Assets/Models/Character02/Animations/Bashful.fbx");
-    ModelManager::Get()->AddAnimation(mModelID, "../../Assets/Models/Character02/Animations/Bboy.fbx");
-    ModelManager::Get()->AddAnimation(mModelID, "../../Assets/Models/Character02/Animations/Capoeira.fbx");
-    ModelManager::Get()->AddAnimation(mModelID, "../../Assets/Models/Character02/Animations/Flair.fbx");
-    ModelManager::Get()->AddAnimation(mModelID, "../../Assets/Models/Character02/Animations/SoulSpinCombo.fbx");
-    mCharacter = CreateRenderGroup(mModelID, &mCharacterAnimator);
-    mCharacterAnimator.Initialize(mModelID);
-    SetRenderGroupPosition(mCharacter, { 0.0f, 0.5f, 0.0f });
+    mModelID_01 = ModelManager::Get()->LoadModelID("../../Assets/Models/Character02/Ch03_nonPBR.fbx");
+    ModelManager::Get()->AddAnimation(mModelID_01, "../../Assets/Models/Character02/Animations/Bashful.fbx");
+    ModelManager::Get()->AddAnimation(mModelID_01, "../../Assets/Models/Character02/Animations/Bboy.fbx");
+    ModelManager::Get()->AddAnimation(mModelID_01, "../../Assets/Models/Character02/Animations/Capoeira.fbx");
+    ModelManager::Get()->AddAnimation(mModelID_01, "../../Assets/Models/Character02/Animations/Flair.fbx");
+    ModelManager::Get()->AddAnimation(mModelID_01, "../../Assets/Models/Character02/Animations/SoulSpinCombo.fbx");
+    mCharacter_01 = CreateRenderGroup(mModelID_01, &mCharacterAnimator_01);
+    mCharacterAnimator_01.Initialize(mModelID_01);
+    SetRenderGroupPosition(mCharacter_01, { 0.0f, 0.5f, 0.0f });
 
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/Standard.fx";
     mStandardEffect.Initialize(shaderFilePath);
@@ -64,14 +64,14 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
     mStandardEffect.Terminate();
-    CleanupRenderGroup(mCharacter);
+    CleanupRenderGroup(mCharacter_01);
 }
 
 void GameState::Update(float deltaTime)
 {
     CameraControl(deltaTime, mCamera);
 
-    mCharacterAnimator.Update(deltaTime);
+    mCharacterAnimator_01.Update(deltaTime);
 }
 
 void GameState::Render()
@@ -80,8 +80,8 @@ void GameState::Render()
     {
         AnimationUtils::BoneTransforms boneTransforms;
 
-        AnimationUtils::ComputeBoneTransforms(mModelID, boneTransforms, &mCharacterAnimator);
-        AnimationUtils::DrawSkeleton(mModelID, boneTransforms);
+        AnimationUtils::ComputeBoneTransforms(mModelID_01, boneTransforms, &mCharacterAnimator_01);
+        AnimationUtils::DrawSkeleton(mModelID_01, boneTransforms);
     }
 
     SimpleDraw::AddGroundPlane(10.0f, Colors::White);
@@ -90,7 +90,7 @@ void GameState::Render()
     if (mDrawSkeleton == false)
     {
         mStandardEffect.Begin();
-            DrawRenderGroup(mStandardEffect, mCharacter);
+            DrawRenderGroup(mStandardEffect, mCharacter_01);
         mStandardEffect.End();
     }
 }
@@ -110,8 +110,8 @@ void GameState::DebugUI()
 
         ImGui::Checkbox("DrawSkeleton", &mDrawSkeleton);
 
-        if (ImGui::DragInt("Animation", &mAnimationIndex, 1, -1, mCharacterAnimator.GetAnimationCount() - 1))
-            mCharacterAnimator.PlayAnimation(mAnimationIndex, true);
+        if (ImGui::DragInt("Animation", &mAnimationIndex, 1, -1, mCharacterAnimator_01.GetAnimationCount() - 1))
+            mCharacterAnimator_01.PlayAnimation(mAnimationIndex, true);
 
         mStandardEffect.DebugUI();
     ImGui::End();

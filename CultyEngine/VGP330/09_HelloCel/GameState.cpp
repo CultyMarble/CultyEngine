@@ -49,12 +49,12 @@ void GameState::Initialize()
     TextureManager* tm = TextureManager::Get();
     mMesh = MeshBuilder::CreateSphere(100, 100, 1.0f);
 
-    mCharacter.meshBuffer.Initialize(mMesh);
-    mCharacter.diffuseMapID = tm->LoadTexture("planets/earth/earth.jpg");
-    mCharacter.normalMapID = tm->LoadTexture("planets/earth/earth_normal.jpg");
-    mCharacter.specularMapID = tm->LoadTexture("planets/earth/earth_spec.jpg");
-    mCharacter.bumpMapID = tm->LoadTexture("planets/earth/earth_bump.jpg");
-    mCharacter.transform.position.x = 0.0f;
+    mCharacter_01.meshBuffer.Initialize(mMesh);
+    mCharacter_01.diffuseMapID = tm->LoadTexture("planets/earth/earth.jpg");
+    mCharacter_01.normalMapID = tm->LoadTexture("planets/earth/earth_normal.jpg");
+    mCharacter_01.specularMapID = tm->LoadTexture("planets/earth/earth_spec.jpg");
+    mCharacter_01.bumpMapID = tm->LoadTexture("planets/earth/earth_bump.jpg");
+    mCharacter_01.transform.position.x = 0.0f;
 
     std::filesystem::path shaderFilePath = L"../../Assets/Shaders/CelEffect.fx";
     mStandardEffect.Initialize(shaderFilePath);
@@ -66,7 +66,7 @@ void GameState::Terminate()
 {
     mStandardEffect.Terminate();
 
-    mCharacter.Terminate();
+    mCharacter_01.Terminate();
 }
 
 void GameState::Update(float deltaTime)
@@ -80,7 +80,7 @@ void GameState::Render()
     SimpleDraw::Render(mCamera);
 
     mStandardEffect.Begin();
-        mStandardEffect.Render(mCharacter);
+        mStandardEffect.Render(mCharacter_01);
     mStandardEffect.End();
 }
 
@@ -101,12 +101,12 @@ void GameState::DebugUI()
 
         if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_CollapsingHeader))
         {
-            ImGui::ColorEdit4("Ambient##Material", &mCharacter.material.ambient.r);
-            ImGui::ColorEdit4("Diffuse##Material", &mCharacter.material.diffuse.r);
-            ImGui::ColorEdit4("Specular##Material", &mCharacter.material.specular.r);
-            ImGui::ColorEdit4("Emissive##Material", &mCharacter.material.emissive.r);
+            ImGui::ColorEdit4("Ambient##Material", &mCharacter_01.material.ambient.r);
+            ImGui::ColorEdit4("Diffuse##Material", &mCharacter_01.material.diffuse.r);
+            ImGui::ColorEdit4("Specular##Material", &mCharacter_01.material.specular.r);
+            ImGui::ColorEdit4("Emissive##Material", &mCharacter_01.material.emissive.r);
 
-            ImGui::DragFloat("SpecularPower##Material", &mCharacter.material.power, 1.0f, 1.0f, 500.0f);
+            ImGui::DragFloat("SpecularPower##Material", &mCharacter_01.material.power, 1.0f, 1.0f, 500.0f);
         }
         mStandardEffect.DebugUI();
     ImGui::End();

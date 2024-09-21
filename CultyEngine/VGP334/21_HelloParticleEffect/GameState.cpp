@@ -50,7 +50,6 @@ void GameState::Initialize()
     mParticleEffect.SetCamera(mCamera);
 
     ParticleSystemInfo info;
-
     info.maxParticles = 100;
     info.particleTextureID = TextureManager::Get()->LoadTexture("../Images/white.jpg");
     info.spawnPosition = MathC::Vector3::Zero;
@@ -76,13 +75,13 @@ void GameState::Initialize()
     info.minEndScale = { 0.05f, 0.05f, 0.05f };
     info.maxEndScale = { 0.1f, 0.1f, 0.1f };
 
-    mParticleSystem.Initialize(info);
-    mParticleSystem.SetCamera(mCamera);
+    mParticleSystem_01.Initialize(info);
+    mParticleSystem_01.SetCamera(mCamera);
 }
 
 void GameState::Terminate()
 {
-    mParticleSystem.Terminate();
+    mParticleSystem_01.Terminate();
     mParticleEffect.Terminate();
 }
 
@@ -92,7 +91,7 @@ void GameState::Update(float deltaTime)
 
     auto input = Input::InputSystem::Get();
 
-    mParticleSystem.Update(deltaTime);
+    mParticleSystem_01.Update(deltaTime);
 }
 
 void GameState::Render()
@@ -101,7 +100,7 @@ void GameState::Render()
     SimpleDraw::Render(mCamera);
 
     mParticleEffect.Begin();
-        mParticleSystem.Render(mParticleEffect);
+        mParticleSystem_01.Render(mParticleEffect);
     mParticleEffect.End();
 }
 
@@ -109,7 +108,7 @@ void GameState::DebugUI()
 {
     ImGui::Begin("Debug Controls", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
         mParticleEffect.DebugUI();
-        mParticleSystem.DebugUI();
+        mParticleSystem_01.DebugUI();
         Physics::PhysicsWorld::Get()->DebugUI();
     ImGui::End();
 
