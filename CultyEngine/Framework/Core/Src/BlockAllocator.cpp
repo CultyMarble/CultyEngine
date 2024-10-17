@@ -7,7 +7,7 @@ using namespace CultyEngine;
 using namespace CultyEngine::Core;
 
 BlockAllocator::BlockAllocator(const char* name, size_t blockSize, size_t capacity)
-	: mName(name), mBlockSize(blockSize), mCapacity(capacity)
+	: mName(name), mBlockSize(blockSize), mCapacity(capacity), mFreeBlocks(capacity)
 {
 	ASSERT(blockSize > 0, "BlockAllocator: %s invalid block size", mName.c_str());
 	ASSERT(capacity > 0, "BlockAllocator: %s invalid capacity", mName.c_str());
@@ -24,12 +24,12 @@ BlockAllocator::BlockAllocator(const char* name, size_t blockSize, size_t capaci
 
 BlockAllocator::~BlockAllocator()
 {
-	ASSERT(mBlockAllocatedTotal == mBlockFreed, "BlockAllocator: %s not all blocks are freed", mName.c_str());
+	ASSERT(mBlocksAllocatedTotal == mBlocksFreed, "BlockAllocator: %s not all blocks are freed", mName.c_str());
 	std::free(mData);
 	mData = nullptr;
 
 	LOG("%s destructed, Allocated: %zu, Freed: %zu, Highest: %zu",
-		mName.c_str(), mBlockAllocatedCurrent, mBlockFreed, mBlockHighest);
+		mName.c_str(), mBlocksAllocatedCurrent, mBlocksFreed, mBlocksHighest);
 }
 
 void* BlockAllocator::Allocate()
@@ -43,12 +43,12 @@ void* BlockAllocator::Allocate()
 	void* freeBlock = mFreeBlocks.back();
 	mFreeBlocks.pop_back();
 
-	++mBlockAllocatedTotal;
-	++mBlockAllocatedCurrent;
-	mBlockHighest = std::max(mBlockHighest, mBlockAllocatedCurrent);
+	++mBlocksAllocatedTotal;
+	++mBlocksAllocatedCurrent;
+	mBlocksHighest = std::max(mBlocksHighest, mBlocksAllocatedCurrent);
 
 	LOG("%s allocated blocks at %p, Allocated: %zu, Highest: %zu",
-		mName.c_str(), freeBlock, mBlockAllocatedCurrent, mBlockHighest);
+		mName.c_str(), freeBlock, mBlocksAllocatedCurrent, mBlocksHighest);
 
 	return freeBlock;
 }
@@ -66,7 +66,7 @@ void BlockAllocator::Free(void* ptr)
 		"BlockAllocator: %s invalid address being freed!", mName.c_str());
 
 	LOG("%s free %p", mName.c_str(), ptr);
-	--mBlockAllocatedCurrent;
-	++mBlockFreed;
+	--mBlocksAllocatedCurrent;
+	++mBlocksFreed;
 	mFreeBlocks.emplace_back(ptr);
 }

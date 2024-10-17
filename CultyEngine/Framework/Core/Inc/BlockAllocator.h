@@ -19,14 +19,14 @@ namespace CultyEngine::Core
 
 	private:
 		std::string mName;
-		std::vector<void> mFreeBlocks;
+		std::vector<void*> mFreeBlocks;
 
 		void* mData = nullptr;
 		size_t mBlockSize = 0;
 		size_t mCapacity = 0;
-		size_t mBlockAllocatedCurrent = 0;
-		size_t mBlockAllocatedTotal = 0;
-		size_t mBlockFreed = 0;
-		size_t mBlockHighest = 0;
+		size_t mBlocksAllocatedCurrent = 0;
+		size_t mBlocksAllocatedTotal = 0;
+		size_t mBlocksFreed = 0;
+		size_t mBlocksHighest = 0;
 	};
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "BlockAllocator.h"
 
 namespace CultyEngine::Core
@@ -8,8 +7,10 @@ namespace CultyEngine::Core
 	class TypedAllocator : private BlockAllocator
 	{
 	public:
-		TypedAllocator(const char* name, size_t capacity)
-			: BlockAllocator(name, sizeof(DataType), capacity) {}
+        TypedAllocator(const char* name, size_t capacity)
+            : BlockAllocator(name, sizeof(DataType), capacity)
+        {
+        }
 
 		template<class... Args>
 		DataType* New(Args&&... args)
@@ -24,7 +25,7 @@ namespace CultyEngine::Core
 			if (ptr == nullptr)
 				return;
 
-			ptr->DataType();
+			ptr->~DataType();
 			Free(ptr);
 		}
 	};
