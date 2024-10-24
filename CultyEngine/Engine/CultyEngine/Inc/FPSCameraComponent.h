@@ -14,6 +14,9 @@ namespace CultyEngine
         void Terminate() override;
         void Update(float deltaTime) override;
 
+        virtual void Serialize(rapidjson::Document& doc, rapidjson::Value& value) override;
+        virtual void Deserialize(const rapidjson::Value& value) override;
+
     private:
         CameraComponent* mCameraComponent = nullptr;
         float mShiftSpeed = 10.0f;

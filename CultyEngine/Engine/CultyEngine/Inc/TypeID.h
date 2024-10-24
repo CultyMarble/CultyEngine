@@ -8,6 +8,7 @@ namespace CultyEngine
         Transform,  // transform component for location data
         Camera,     // contain a Camera for viewing
         FPSCamera,  // move Camera with FPS controller
+        Mesh,       // create a mesh for render object
         Count
     };
 
@@ -15,6 +16,7 @@ namespace CultyEngine
     {
         Invalid,
         Camera,
+        Render,
         Count
     };
 }
