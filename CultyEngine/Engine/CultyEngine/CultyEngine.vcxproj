@@ -140,35 +140,35 @@
   <ItemGroup>
     <ClInclude Include="Inc\Application.h" />
     <ClInclude Include="Inc\ApplicationState.h" />
-    <ClInclude Include="Inc\CameraComponent.h" />
-    <ClInclude Include="Inc\CameraService.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Component.h" />
+    <ClInclude Include="Inc\ComponentCamera.h" />
+    <ClInclude Include="Inc\ComponentCameraFPS.h" />
     <ClInclude Include="Inc\ComponentMesh.h" />
     <ClInclude Include="Inc\ComponentRenderObject.h" />
+    <ClInclude Include="Inc\ComponentTransform.h" />
     <ClInclude Include="Inc\CultyEngine.h" />
     <ClInclude Include="Inc\Event.h" />
     <ClInclude Include="Inc\EventManager.h" />
-    <ClInclude Include="Inc\FPSCameraComponent.h" />
     <ClInclude Include="Inc\GameObject.h" />
     <ClInclude Include="Inc\GameObjectFactory.h" />
     <ClInclude Include="Inc\GameWorld.h" />
     <ClInclude Include="Inc\SaveUtil.h" />
     <ClInclude Include="Inc\Service.h" />
+    <ClInclude Include="Inc\ServiceCamera.h" />
     <ClInclude Include="Inc\ServiceRender.h" />
-    <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeID.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Application.cpp" />
-    <ClCompile Include="Src\CameraComponent.cpp" />
-    <ClCompile Include="Src\CameraService.cpp" />
+    <ClCompile Include="Src\ComponentCamera.cpp" />
+    <ClCompile Include="Src\ComponentCameraFPS.cpp" />
     <ClCompile Include="Src\ComponentMesh.cpp" />
     <ClCompile Include="Src\ComponentRenderObject.cpp" />
+    <ClCompile Include="Src\ComponentTransform.cpp" />
     <ClCompile Include="Src\CultyEngine.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
-    <ClCompile Include="Src\FPSCameraComponent.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\GameObjectFactory.cpp" />
     <ClCompile Include="Src\GameWorld.cpp" />
@@ -176,8 +176,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Src\SaveUtil.cpp" />
+    <ClCompile Include="Src\ServiceCamera.cpp" />
     <ClCompile Include="Src\ServiceRender.cpp" />
-    <ClCompile Include="Src\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Audio\Audio.vcxproj">
@@ -203,11 +203,4 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-  </Target>
 </Project>

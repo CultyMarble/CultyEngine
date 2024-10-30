@@ -3,7 +3,7 @@
 
 namespace CultyEngine
 {
-    class TransformComponent final : public Component, public Graphics::Transform
+    class ComponentTransform final : public Component, public Graphics::Transform
     {
     public:
         SET_TYPE_ID(ComponentID::Transform);

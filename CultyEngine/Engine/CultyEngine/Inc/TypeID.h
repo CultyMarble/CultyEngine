@@ -5,10 +5,10 @@ namespace CultyEngine
     enum class ComponentID
     {
         Invalid,    // default value
-        Transform,  // transform component for location data
         Camera,     // contain a Camera for viewing
-        FPSCamera,  // move Camera with FPS controller
+        CameraFPS,  // move Camera with FPS controller
         Mesh,       // create a mesh for render object
+        Transform,  // transform component for location data
         Count
     };
 

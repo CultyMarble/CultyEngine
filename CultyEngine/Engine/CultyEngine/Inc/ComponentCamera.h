@@ -3,24 +3,22 @@
 
 namespace CultyEngine
 {
-    class CameraComponent;
-
-    class FPSCameraComponent final : public Component
+    class ComponentCamera final : public Component
     {
     public:
-        SET_TYPE_ID(ComponentID::FPSCamera);
+        SET_TYPE_ID(ComponentID::Camera);
 
         void Initialize() override;
         void Terminate() override;
-        void Update(float deltaTime) override;
+        void DebugUI() override;
 
         virtual void Serialize(rapidjson::Document& doc, rapidjson::Value& value) override;
         virtual void Deserialize(const rapidjson::Value& value) override;
 
+        Graphics::Camera& GetCamera();
+        const Graphics::Camera& GetCamera() const;
+
     private:
-        CameraComponent* mCameraComponent = nullptr;
-        float mShiftSpeed = 10.0f;
-        float mMoveSpeed = 1.0f;
-        float mTurnSpeed = 0.1f;
+        Graphics::Camera mCamera;
     };
 }

@@ -1,10 +1,10 @@
 {
-  "Component": {
-    "CameraComponent": {
+    "Component": {
+        "ComponentCamera": {
 
-    },
-    "FPSCameraComponent": {
+        },
+        "ComponentCameraFPS": {
 
+        }
     }
-  }
 }

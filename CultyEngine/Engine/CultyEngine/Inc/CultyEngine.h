@@ -16,7 +16,7 @@
 
 // Services
 #include "Service.h"
-#include "CameraService.h"
+#include "ServiceCamera.h"
 #include "ServiceRender.h"
 
 // Game Object
@@ -25,10 +25,11 @@
 // Components
 #include "TypeID.h"
 #include "Component.h"
-#include "CameraComponent.h"
-#include "FPSCameraComponent.h"
-#include "TransformComponent.h"
+#include "ComponentCamera.h"
+#include "ComponentCameraFPS.h"
+#include "ComponentMesh.h"
 #include "ComponentRenderObject.h"
+#include "ComponentTransform.h"
 
 namespace CultyEngine
 {

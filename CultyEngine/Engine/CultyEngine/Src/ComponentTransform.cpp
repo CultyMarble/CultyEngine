@@ -1,11 +1,11 @@
 #include "Precompiled.h"
-#include "TransformComponent.h"
+#include "ComponentTransform.h"
 #include "SaveUtil.h"
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 
-void TransformComponent::DebugUI()
+void ComponentTransform::DebugUI()
 {
     ImGui::DragFloat3("Position", &position.x, 0.01f, -100.0f, 100.0f);
     ImGui::DragFloat4("Rotation", &rotation.x, 0.001f);
@@ -14,16 +14,16 @@ void TransformComponent::DebugUI()
     SimpleDraw::AddTransform(GetMatrix4());
 }
 
-void TransformComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
+void ComponentTransform::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
 {
     rapidjson::Value componentValue(rapidjson::kObjectType);
     SaveUtil::SaveVector3("Position", position, doc, componentValue);
     SaveUtil::SaveQuaternion("Rotation", rotation, doc, componentValue);
     SaveUtil::SaveVector3("Scale", scale, doc, componentValue);
-    value.AddMember("TransformComponent", componentValue, doc.GetAllocator());
+    value.AddMember("ComponentTransform", componentValue, doc.GetAllocator());
 }
 
-void TransformComponent::Deserialize(const rapidjson::Value& value)
+void ComponentTransform::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("Position"))
     {

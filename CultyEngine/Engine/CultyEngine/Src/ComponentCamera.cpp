@@ -1,27 +1,27 @@
 #include "Precompiled.h"
-#include "CameraComponent.h"
+#include "ComponentCamera.h"
 
 #include "GameWorld.h"
-#include "CameraService.h"
+#include "ServiceCamera.h"
 
 #include "SaveUtil.h"
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 
-void CameraComponent::Initialize()
+void ComponentCamera::Initialize()
 {
-    CameraService* cameraService = GetOwner().GetWorld().GetService<CameraService>();
+    ServiceCamera* cameraService = GetOwner().GetWorld().GetService<ServiceCamera>();
     cameraService->Register(this);
 }
 
-void CameraComponent::Terminate()
+void ComponentCamera::Terminate()
 {
-    CameraService* cameraService = GetOwner().GetWorld().GetService<CameraService>();
+    ServiceCamera* cameraService = GetOwner().GetWorld().GetService<ServiceCamera>();
     cameraService->Unregister(this);
 }
 
-void CameraComponent::DebugUI()
+void ComponentCamera::DebugUI()
 {
     Vector3 pos = mCamera.GetPosition();
     if (ImGui::DragFloat3("Position", &pos.x, 0.1f))
@@ -31,7 +31,7 @@ void CameraComponent::DebugUI()
     SimpleDraw::AddTransform(matTrans);
 }
 
-void CameraComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
+void ComponentCamera::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
 {
     rapidjson::Value componentValue(rapidjson::kObjectType);
     SaveUtil::SaveVector3("Position", mCamera.GetPosition(), doc, componentValue);
@@ -39,7 +39,7 @@ void CameraComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& valu
     value.AddMember("CameraComponent", componentValue, doc.GetAllocator());
 }
 
-void CameraComponent::Deserialize(const rapidjson::Value& value)
+void ComponentCamera::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("Position"))
     {
@@ -49,6 +49,7 @@ void CameraComponent::Deserialize(const rapidjson::Value& value)
         float z = pos[2].GetFloat();
         mCamera.SetPosition({ x,y,z });
     }
+
     if (value.HasMember("LookAt"))
     {
         const auto& pos = value["LookAt"].GetArray();
@@ -59,12 +60,12 @@ void CameraComponent::Deserialize(const rapidjson::Value& value)
     }
 }
 
-Camera& CameraComponent::GetCamera()
+Camera& ComponentCamera::GetCamera()
 {
     return mCamera;
 }
 
-const Camera& CameraComponent::GetCamera() const
+const Camera& ComponentCamera::GetCamera() const
 {
     return mCamera;
 }

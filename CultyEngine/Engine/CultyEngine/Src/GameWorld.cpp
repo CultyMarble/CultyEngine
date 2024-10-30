@@ -52,18 +52,16 @@ void GameWorld::DebugUI()
         service->DebugUI();
 }
 
-GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem::path& templatePath = "")
+GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem::path& templatePath)
 {
     auto& newGameObject = mGameObjects.emplace_back(std::make_unique<GameObject>());
     newGameObject->SetName(name);
     newGameObject->mWorld = this;
-
     if (templatePath.empty() == false)
     {
         GameObjectFactory::Make(templatePath, *newGameObject);
         newGameObject->Initialize();
         newGameObject->mTemplateFilePath = templatePath;
     }
-
     return newGameObject.get();
 }

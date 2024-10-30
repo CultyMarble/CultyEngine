@@ -5,16 +5,16 @@ using namespace CultyEngine::Graphics;
 
 void GameState::Initialize()
 {
-    mGameWorld.AddService<CameraService>();
+    mGameWorld.AddService<ServiceCamera>();
     mGameWorld.Initialize();
 
     GameObject* camera = mGameWorld.CreateGameObject("FPSCamera");
-    camera->AddComponent<CameraComponent>();
-    camera->AddComponent<FPSCameraComponent>();
+    camera->AddComponent<ComponentCamera>();
+    camera->AddComponent<ComponentFPSCamera>();
     camera->Initialize();
 
     GameObject* gameObject = mGameWorld.CreateGameObject("Object0");
-    gameObject->AddComponent<TransformComponent>();
+    gameObject->AddComponent<ComponentTransform>();
     gameObject->Initialize();
 }
 

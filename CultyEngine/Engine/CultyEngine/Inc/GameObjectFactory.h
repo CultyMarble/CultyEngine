@@ -1,11 +1,11 @@
 #pragma once
 
-namespace
+namespace CultyEngine
 {
-	class GameObject;
+    class GameObject;
 
-	namespace GameObjectFactory
-	{
-		void Make(const std::filesystem::path& templatePath, GameObject& gameObject);
-	}
+    namespace GameObjectFactory
+    {
+        void Make(const std::filesystem::path& templatePath, GameObject& gameObject);
+    }
 }

@@ -1,36 +1,36 @@
 #include "Precompiled.h"
-#include "CameraService.h"
+#include "ServiceCamera.h"
 
-#include "CameraComponent.h"
+#include "ComponentCamera.h"
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 
-void CameraService::DebugUI()
+void ServiceCamera::DebugUI()
 {
     SimpleDraw::Render(GetMain());
 }
 
-const Camera& CultyEngine::CameraService::GetMain() const
+const Camera& CultyEngine::ServiceCamera::GetMain() const
 {
     ASSERT(mMainCamera != nullptr, "CameraService: has no main camera");
     return mMainCamera->GetCamera();
 }
 
-void CameraService::SetMainCamera(uint32_t index)
+void ServiceCamera::SetMainCamera(uint32_t index)
 {
     if (index < mCameraEntries.size())
         mMainCamera = mCameraEntries[index];
 }
 
-void CameraService::Register(const CameraComponent* cameraComponent)
+void ServiceCamera::Register(const ComponentCamera* cameraComponent)
 {
     mCameraEntries.push_back(cameraComponent);
     if (mMainCamera == nullptr)
         mMainCamera = cameraComponent;
 }
 
-void CameraService::Unregister(const CameraComponent* cameraComponent)
+void ServiceCamera::Unregister(const ComponentCamera* cameraComponent)
 {
     auto iter = std::find(mCameraEntries.begin(), mCameraEntries.end(), cameraComponent);
     if (iter != mCameraEntries.end());

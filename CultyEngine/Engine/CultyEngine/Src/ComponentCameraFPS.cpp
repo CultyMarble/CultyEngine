@@ -1,8 +1,8 @@
 #include "Precompiled.h"
-#include "FPSCameraComponent.h"
+#include "ComponentCameraFPS.h"
 
 #include "GameObject.h"
-#include "CameraComponent.h"
+#include "ComponentCamera.h"
 
 #include "SaveUtil.h"
 
@@ -10,18 +10,18 @@ using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
 using namespace CultyEngine::Input;
 
-void FPSCameraComponent::Initialize()
+void ComponentCameraFPS::Initialize()
 {
-    mCameraComponent = GetOwner().GetComponent<CameraComponent>();
-    ASSERT(mCameraComponent != nullptr, "FPSCameraComponent: Camera not found");
+    mCameraComponent = GetOwner().GetComponent<ComponentCamera>();
+    ASSERT(mCameraComponent != nullptr, "ComponentFPSCamera: Camera not found");
 }
 
-void FPSCameraComponent::Terminate()
+void ComponentCameraFPS::Terminate()
 {
     mCameraComponent = nullptr;
 }
 
-void FPSCameraComponent::Update(float deltaTime)
+void ComponentCameraFPS::Update(float deltaTime)
 {
     Camera& camera = mCameraComponent->GetCamera();
     auto input = Input::InputSystem::Get();
@@ -50,27 +50,23 @@ void FPSCameraComponent::Update(float deltaTime)
     }
 }
 
-void FPSCameraComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
+void ComponentCameraFPS::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
 {
     rapidjson::Value componentValue(rapidjson::kObjectType);
     SaveUtil::SaveFloat("MoveSpeed", mMoveSpeed, doc, componentValue);
     SaveUtil::SaveFloat("ShiftSpeed", mShiftSpeed, doc, componentValue);
     SaveUtil::SaveFloat("TurnSpeed", mTurnSpeed, doc, componentValue);
-    value.AddMember("FPSCameraComponent", componentValue, doc.GetAllocator());
+    value.AddMember("ComponentCameraFPS", componentValue, doc.GetAllocator());
 }
 
-void FPSCameraComponent::Deserialize(const rapidjson::Value& value)
+void ComponentCameraFPS::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("MoveSpeed"))
-    {
         mMoveSpeed = value["MoveSpeed"].GetFloat();
-    }
+
     if (value.HasMember("ShiftSpeed"))
-    {
         mShiftSpeed = value["ShiftSpeed"].GetFloat();
-    }
+
     if (value.HasMember("TurnSpeed"))
-    {
         mTurnSpeed = value["TurnSpeed"].GetFloat();
-    }
 }

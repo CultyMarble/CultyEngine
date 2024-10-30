@@ -99,6 +99,11 @@ MeshPC MeshBuilder::CreatePyramidPC(float size)
     return mesh;
 }
 
+Mesh MeshBuilder::CreateCube(float size)
+{
+    return Mesh();
+}
+
 MeshPC MeshBuilder::CreateCubePC(float size)
 {
     srand(time(nullptr));
@@ -213,6 +218,11 @@ MeshPX MeshBuilder::CreateVerticalPlanePX(uint32_t numRows, uint32_t numCols, fl
     CreatePlaneIndices(mesh.indices, numRows, numCols);
 
     return mesh;
+}
+
+Mesh MeshBuilder::CreateVerticalPlane(uint32_t numRows, uint32_t numCols, float spacing)
+{
+    return Mesh();
 }
 
 MeshPC MeshBuilder::CreateHorizontalPlanePC(uint32_t numRows, uint32_t numCols, float spacing)
