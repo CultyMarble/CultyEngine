@@ -6,6 +6,7 @@
 #include "ComponentCamera.h"
 #include "ComponentCameraFPS.h"
 #include "ComponentMesh.h"
+#include "ComponentModel.h"
 #include "ComponentTransform.h"
 
 using namespace CultyEngine;
@@ -26,6 +27,10 @@ namespace
         else if (componentName == "ComponentMesh")
         {
             newComponent = gameObject.AddComponent<ComponentMesh>();
+        }
+        else if (componentName == "ComponentModel")
+        {
+            newComponent = gameObject.AddComponent<ComponentModel>();
         }
         else if (componentName == "ComponentTransform")
         {
@@ -52,6 +57,10 @@ namespace
         else if (componentName == "ComponentMesh")
         {
             newComponent = gameObject.GetComponent<ComponentMesh>();
+        }
+        else if (componentName == "ComponentModel")
+        {
+            newComponent = gameObject.GetComponent<ComponentModel>();
         }
         else if (componentName == "ComponentTransform")
         {

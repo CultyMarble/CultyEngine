@@ -87,6 +87,9 @@
     <ClInclude Include="Inc\GameObjectHandle.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\ComponentModel.h">
+      <Filter>Inc\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="Src\ServiceRender.cpp">
       <Filter>Src\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ComponentModel.cpp">
+      <Filter>Src\Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

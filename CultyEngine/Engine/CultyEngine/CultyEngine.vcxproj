@@ -145,6 +145,7 @@
     <ClInclude Include="Inc\ComponentCamera.h" />
     <ClInclude Include="Inc\ComponentCameraFPS.h" />
     <ClInclude Include="Inc\ComponentMesh.h" />
+    <ClInclude Include="Inc\ComponentModel.h" />
     <ClInclude Include="Inc\ComponentRenderObject.h" />
     <ClInclude Include="Inc\ComponentTransform.h" />
     <ClInclude Include="Inc\CultyEngine.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Src\ComponentCamera.cpp" />
     <ClCompile Include="Src\ComponentCameraFPS.cpp" />
     <ClCompile Include="Src\ComponentMesh.cpp" />
+    <ClCompile Include="Src\ComponentModel.cpp" />
     <ClCompile Include="Src\ComponentRenderObject.cpp" />
     <ClCompile Include="Src\ComponentTransform.cpp" />
     <ClCompile Include="Src\CultyEngine.cpp" />

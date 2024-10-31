@@ -28,6 +28,7 @@
 #include "ComponentCamera.h"
 #include "ComponentCameraFPS.h"
 #include "ComponentMesh.h"
+#include "ComponentModel.h"
 #include "ComponentRenderObject.h"
 #include "ComponentTransform.h"
 
