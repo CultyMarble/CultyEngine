@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "GameObject.h"
+#include "GameWorld.h"
 
 using namespace CultyEngine;
 
@@ -43,6 +44,9 @@ void GameObject::DebugUI()
         if (mTemplateFilePath.empty() == false)
             if (ImGui::Button("Save"))
                 Save();
+
+        if (ImGui::Button("Delete"))
+            mWorld->DestroyGameObject(mHandle);
     }
     ImGui::PopID();
 }

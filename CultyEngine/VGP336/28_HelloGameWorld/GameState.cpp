@@ -5,12 +5,7 @@ using namespace CultyEngine::Graphics;
 
 void GameState::Initialize()
 {
-    mGameWorld.AddService<ServiceCamera>();
-    mGameWorld.AddService<ServiceRender>();
-    mGameWorld.Initialize();
-
-    mGameWorld.CreateGameObject("Object0", "../../Assets/Templates/test_object.json", true);
-    mGameWorld.CreateGameObject("FPSCamera", "../../Assets/Templates/fps_camera.json", true);
+    mGameWorld.LoadLevel(L"../../Assets/Templates/Levels/test_level.json");
 }
 
 void GameState::Terminate()

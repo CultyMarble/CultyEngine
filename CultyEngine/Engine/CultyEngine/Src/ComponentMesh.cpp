@@ -8,8 +8,11 @@ void ComponentMesh::Deserialize(const rapidjson::Value& value)
 {
     ComponentRenderObject::Deserialize(value);
 
-    Model::MeshData& meshData = mModel.meshData.emplace_back();
-    Model::MaterialData& matData = mModel.materialData.emplace_back();
+    ASSERT(value.HasMember("Shape") || mModel.meshData.empty() == false, "MeshComponent: either needs shape data or have data already");
+
+    Model::MeshData& meshData = value.HasMember("Shape") ? mModel.meshData.emplace_back() : mModel.meshData.back();
+    Model::MaterialData& matData = value.HasMember("Shape") ? mModel.materialData.emplace_back() : mModel.materialData.back();
+
     if (value.HasMember("Shape"))
     {
         const auto& shapeData = value["Shape"].GetObj();
@@ -58,10 +61,6 @@ void ComponentMesh::Deserialize(const rapidjson::Value& value)
         {
             ASSERT(false, "MeshComponent: must specify a shape type");
         }
-    }
-    else
-    {
-        ASSERT(false, "MeshComponent: must have shape data");
     }
 
     if (value.HasMember("Material"))

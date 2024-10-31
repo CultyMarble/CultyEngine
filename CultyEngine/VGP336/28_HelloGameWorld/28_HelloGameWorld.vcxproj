@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,34 +19,34 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{02bfea78-10fa-4ec2-a0f1-ea72f3ee0ed2}</ProjectGuid>
-    <RootNamespace>CultyEngine</RootNamespace>
+    <ProjectGuid>{1b249f1a-4a97-45f9-94fb-3b217b4dcd73}</ProjectGuid>
+    <RootNamespace>My28HelloGameWorld</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -60,31 +59,30 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\VSProps\EngineLib.props" />
+    <Import Project="..\..\VSProps\CultyEngine.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\VSProps\EngineLib.props" />
+    <Import Project="..\..\VSProps\CultyEngine.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\VSProps\EngineLib.props" />
+    <Import Project="..\..\VSProps\CultyEngine.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\VSProps\EngineLib.props" />
+    <Import Project="..\..\VSProps\CultyEngine.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -94,12 +92,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -109,14 +106,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;%(AdditionalIncludeDirectories)
-			</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -126,82 +120,29 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Inc\Application.h" />
-    <ClInclude Include="Inc\ApplicationState.h" />
-    <ClInclude Include="Inc\Common.h" />
-    <ClInclude Include="Inc\Component.h" />
-    <ClInclude Include="Inc\ComponentCamera.h" />
-    <ClInclude Include="Inc\ComponentCameraFPS.h" />
-    <ClInclude Include="Inc\ComponentMesh.h" />
-    <ClInclude Include="Inc\ComponentRenderObject.h" />
-    <ClInclude Include="Inc\ComponentTransform.h" />
-    <ClInclude Include="Inc\CultyEngine.h" />
-    <ClInclude Include="Inc\Event.h" />
-    <ClInclude Include="Inc\EventManager.h" />
-    <ClInclude Include="Inc\GameObject.h" />
-    <ClInclude Include="Inc\GameObjectFactory.h" />
-    <ClInclude Include="Inc\GameObjectHandle.h" />
-    <ClInclude Include="Inc\GameWorld.h" />
-    <ClInclude Include="Inc\SaveUtil.h" />
-    <ClInclude Include="Inc\Service.h" />
-    <ClInclude Include="Inc\ServiceCamera.h" />
-    <ClInclude Include="Inc\ServiceRender.h" />
-    <ClInclude Include="Inc\TypeID.h" />
-    <ClInclude Include="Src\Precompiled.h" />
+    <ProjectReference Include="..\..\Engine\CultyEngine\CultyEngine.vcxproj">
+      <Project>{02bfea78-10fa-4ec2-a0f1-ea72f3ee0ed2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Application.cpp" />
-    <ClCompile Include="Src\ComponentCamera.cpp" />
-    <ClCompile Include="Src\ComponentCameraFPS.cpp" />
-    <ClCompile Include="Src\ComponentMesh.cpp" />
-    <ClCompile Include="Src\ComponentRenderObject.cpp" />
-    <ClCompile Include="Src\ComponentTransform.cpp" />
-    <ClCompile Include="Src\CultyEngine.cpp" />
-    <ClCompile Include="Src\EventManager.cpp" />
-    <ClCompile Include="Src\GameObject.cpp" />
-    <ClCompile Include="Src\GameObjectFactory.cpp" />
-    <ClCompile Include="Src\GameWorld.cpp" />
-    <ClCompile Include="Src\Precompiled.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Src\SaveUtil.cpp" />
-    <ClCompile Include="Src\ServiceCamera.cpp" />
-    <ClCompile Include="Src\ServiceRender.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Audio\Audio.vcxproj">
-      <Project>{b24fc8e5-7585-4beb-94bf-4e1c920baa60}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Core\Core.vcxproj">
-      <Project>{c653aab0-57df-4e8b-a6bf-5d34ee4f0b86}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Graphics\Graphics.vcxproj">
-      <Project>{47e30421-6f12-447a-a6e9-ba27cb2e727c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Input\Input.vcxproj">
-      <Project>{3629f01a-6fed-42eb-b308-e9f7f1346eaf}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Math\Math.vcxproj">
-      <Project>{4f2373c9-7e2d-4fc2-8479-adcb7f797b77}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Physics\Physics.vcxproj">
-      <Project>{899acd7f-2c52-4b57-a62d-f506c597a094}</Project>
-    </ProjectReference>
+    <ClInclude Include="GameState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
 </Project>

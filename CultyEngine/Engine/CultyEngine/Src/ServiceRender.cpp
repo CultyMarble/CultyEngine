@@ -64,7 +64,7 @@ void ServiceRender::Render()
     mStandardEffect.Begin();
     for (Entry& entry : mRenderEntries)
     {
-        DrawRenderGroup(mShadowEffect, entry.renderGroup);
+        DrawRenderGroup(mStandardEffect, entry.renderGroup);
     }
     mStandardEffect.End();
 }

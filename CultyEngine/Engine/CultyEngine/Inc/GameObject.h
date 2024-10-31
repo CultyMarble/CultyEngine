@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "GameObjectHandle.h"
 
 namespace CultyEngine
 {
@@ -21,6 +22,7 @@ namespace CultyEngine
 
         GameWorld& GetWorld() { return *mWorld; }
         const GameWorld& GetWorld() const { return *mWorld; }
+        const GameObjectHandle& GetHandle() { return mHandle; }
 
         template<class ComponentType>
         ComponentType* AddComponent()
@@ -79,6 +81,7 @@ namespace CultyEngine
 
         friend class GameWorld;
         std::filesystem::path mTemplateFilePath = "";
+        GameObjectHandle mHandle;
         GameWorld* mWorld = nullptr;
     };
 }

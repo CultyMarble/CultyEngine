@@ -133,6 +133,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "27_HelloGameObjectFactory", "VGP336\27_HelloGameObjectFactory\27_HelloGameObjectFactory.vcxproj", "{3F89FFF9-7FB6-47E2-B120-B69DFFEFFE81}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{53CE12CE-ADC5-4FFB-9E93-3C5426C659A0}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Levels\test_level.json = Assets\Templates\Levels\test_level.json
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "28_HelloGameWorld", "VGP336\28_HelloGameWorld\28_HelloGameWorld.vcxproj", "{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -453,6 +460,14 @@ Global
 		{3F89FFF9-7FB6-47E2-B120-B69DFFEFFE81}.Release|x64.Build.0 = Release|x64
 		{3F89FFF9-7FB6-47E2-B120-B69DFFEFFE81}.Release|x86.ActiveCfg = Release|Win32
 		{3F89FFF9-7FB6-47E2-B120-B69DFFEFFE81}.Release|x86.Build.0 = Release|Win32
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Debug|x64.ActiveCfg = Debug|x64
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Debug|x64.Build.0 = Debug|x64
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Debug|x86.ActiveCfg = Debug|Win32
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Debug|x86.Build.0 = Debug|Win32
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Release|x64.ActiveCfg = Release|x64
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Release|x64.Build.0 = Release|x64
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Release|x86.ActiveCfg = Release|Win32
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -500,6 +515,8 @@ Global
 		{1D998B58-DA59-43C8-BC57-A11252EC6E8A} = {878D1975-821D-466B-96E6-7AB22E49F50C}
 		{01EBF1A6-2815-4CD9-A0B4-01B4F9D18372} = {A76A9AC1-EE6E-402E-8558-7B2898B3F630}
 		{3F89FFF9-7FB6-47E2-B120-B69DFFEFFE81} = {878D1975-821D-466B-96E6-7AB22E49F50C}
+		{53CE12CE-ADC5-4FFB-9E93-3C5426C659A0} = {01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}
+		{1B249F1A-4A97-45F9-94FB-3B217B4DCD73} = {878D1975-821D-466B-96E6-7AB22E49F50C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {033DDF7C-49D3-4D78-851F-7A065F9F78EE}
