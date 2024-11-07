@@ -8,10 +8,10 @@ void ComponentMesh::Deserialize(const rapidjson::Value& value)
 {
     ComponentRenderObject::Deserialize(value);
 
-    ASSERT(value.HasMember("Shape") || mModel.meshData.empty() == false, "MeshComponent: either needs shape data or have data already");
+    ASSERT(value.HasMember("Shape") || !mModel.meshData.empty(), "MeshComponent: either needs shape data or have data already");
 
-    Model::MeshData& meshData = value.HasMember("Shape") ? mModel.meshData.emplace_back() : mModel.meshData.back();
-    Model::MaterialData& matData = value.HasMember("Shape") ? mModel.materialData.emplace_back() : mModel.materialData.back();
+    Model::MeshData& meshData = (value.HasMember("Shape")) ? mModel.meshData.emplace_back() : mModel.meshData.back();
+    Model::MaterialData& matData = (value.HasMember("Shape")) ? mModel.materialData.emplace_back() : mModel.materialData.back();
 
     if (value.HasMember("Shape"))
     {

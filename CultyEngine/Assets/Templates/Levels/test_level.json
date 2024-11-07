@@ -1,38 +1,37 @@
 {
-  "Capacity": 100,
-  "Services": {
-    "ServiceCamera": {
-    },
-    "ServiceRender": {
-    }
-  },
-
-  "GameObjects": {
-    "Camera": {
-      "Template": "../../Assets/Templates/fps_camera.json"
-    },
-    "Object0": {
-      "Template": "../../Assets/Templates/test_object.json",
-      "Components": {
-        "ComponentTransform": {
-          "Position": [ 2.0, 0.0, 0.0 ]
-        }
-      }
-    },
-    "Object1": {
-      "Template": "../../Assets/Templates/test_object.json",
-      "Components": {
-        "ComponentTransform": {
-          "Position": [ -2.0, 0.0, 0.0 ]
+    "Capacity": 100,
+    "Services": {
+        "ServiceCamera": {
         },
-        "MeshComponent": {
-          "Material": {
-            "Ambient": [ 1.0, 0.0, 0.0, 1.0 ],
-            "Diffuse": [ 1.0, 0.0, 0.0, 1.0 ],
-            "Specular": [ 1.0, 0.0, 0.0, 1.0 ]
-          }
+        "ServiceRender": {
         }
-      }
+    },
+
+    "GameObjects": {
+        "Camera": {
+            "Template": "../../Assets/Templates/fps_camera.json",
+            "Components": {
+                "ComponentCamera": {
+                    "Position": [ 0.0, 1.0, -5.0 ],
+                    "LookAt": [ 0.0, 1.0, 0.0 ]
+                }
+            }
+        },
+        "Object0": {
+            "Template": "../../Assets/Templates/test_object.json",
+            "Components": {
+                "ComponentTransform": {
+                    "Position": [ 2.0, 0.0, 0.0 ]
+                }
+            }
+        },
+        "Object1": {
+            "Template": "../../Assets/Templates/test_model.json",
+            "Components": {
+                "ComponentTransform": {
+                    "Position": [ 0.0, 0.0, 0.0 ]
+                }
+            }
+        }
     }
-  }
 }

@@ -2,6 +2,7 @@
 #include "ServiceRender.h"
 
 #include "ServiceCamera.h"
+#include "ComponentAnimator.h"
 #include "ComponentRenderObject.h"
 #include "ComponentTransform.h"
 
@@ -94,9 +95,14 @@ void ServiceRender::Register(const ComponentRenderObject* componentRenderObject)
     entry.componentRender = componentRenderObject;
     entry.componentTransform = componentRenderObject->GetOwner().GetComponent<ComponentTransform>();
 
+    const ComponentAnimator* componentAnimator = componentRenderObject->GetOwner().GetComponent<ComponentAnimator>();
+    const Animator* animator = nullptr;
+    if (componentAnimator != nullptr)
+        animator = &componentAnimator->GetAnimator();
+
     if (componentRenderObject->GetModelID() > 0)
     {
-        entry.renderGroup = CreateRenderGroup(componentRenderObject->GetModelID());
+        entry.renderGroup = CreateRenderGroup(componentRenderObject->GetModelID(), animator);
     }
     else
     {

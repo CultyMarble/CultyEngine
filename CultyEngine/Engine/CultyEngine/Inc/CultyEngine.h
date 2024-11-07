@@ -25,6 +25,7 @@
 // Components
 #include "TypeID.h"
 #include "Component.h"
+#include "ComponentAnimator.h"
 #include "ComponentCamera.h"
 #include "ComponentCameraFPS.h"
 #include "ComponentMesh.h"

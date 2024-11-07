@@ -1,0 +1,20 @@
+{
+    "Components": {
+        "ComponentTransform": {
+            "Position": [ 0.0, 0.0, 0.0 ],
+            "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
+            "Scale": [ 1.0, 1.0, 1.0 ]
+        },
+        "ComponentModel": {
+            "FileName": "../../Assets/Models/Character02/Ch03_nonPBR.model",
+            "Animations": [
+                "../../Assets/Models/Animations/ArmsHipHopDance.animset",
+                "../../Assets/Models/Animations/Bboy.animset",
+                "../../Assets/Models/Animations/SnakeHipHopDance.animset"
+            ],
+            "CastShadow":  false
+        },
+        "ComponentAnimator": {
+        }
+    }
+}

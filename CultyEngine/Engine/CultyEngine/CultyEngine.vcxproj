@@ -142,6 +142,7 @@
     <ClInclude Include="Inc\ApplicationState.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Component.h" />
+    <ClInclude Include="Inc\ComponentAnimator.h" />
     <ClInclude Include="Inc\ComponentCamera.h" />
     <ClInclude Include="Inc\ComponentCameraFPS.h" />
     <ClInclude Include="Inc\ComponentMesh.h" />
@@ -164,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Application.cpp" />
+    <ClCompile Include="Src\ComponentAnimator.cpp" />
     <ClCompile Include="Src\ComponentCamera.cpp" />
     <ClCompile Include="Src\ComponentCameraFPS.cpp" />
     <ClCompile Include="Src\ComponentMesh.cpp" />

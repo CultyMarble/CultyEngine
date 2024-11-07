@@ -41,7 +41,7 @@ void GameObject::DebugUI()
         for (auto& component : mComponents)
             component->DebugUI();
 
-        if (mTemplateFilePath.empty() == false)
+        if (!mTemplateFilePath.empty())
             if (ImGui::Button("Save"))
                 Save();
 

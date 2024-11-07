@@ -3,6 +3,7 @@
 #include "GameObject.h"
 
 #include "Component.h"
+#include "ComponentAnimator.h"
 #include "ComponentCamera.h"
 #include "ComponentCameraFPS.h"
 #include "ComponentMesh.h"
@@ -16,7 +17,12 @@ namespace
     Component* AddComponent(const std::string& componentName, GameObject& gameObject)
     {
         Component* newComponent = nullptr;
-        if (componentName == "ComponentCamera")
+
+        if (componentName == "ComponentAnimator")
+        {
+            newComponent = gameObject.AddComponent<ComponentAnimator>();
+        }
+        else if (componentName == "ComponentCamera")
         {
             newComponent = gameObject.AddComponent<ComponentCamera>();
         }
@@ -46,7 +52,12 @@ namespace
     Component* GetComponent(const std::string& componentName, GameObject& gameObject)
     {
         Component* newComponent = nullptr;
-        if (componentName == "ComponentCamera")
+
+        if (componentName == "ComponentAnimator")
+        {
+            newComponent = gameObject.GetComponent<ComponentAnimator>();
+        }
+        else if (componentName == "ComponentCamera")
         {
             newComponent = gameObject.GetComponent<ComponentCamera>();
         }
@@ -99,16 +110,15 @@ void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObje
 
 void GameObjectFactory::OverrideDeserialize(const rapidjson::Value& value, GameObject& gameObject)
 {
-    if (value.HasMember("Component"))
+    if (value.HasMember("Components") == false)
+        return;
+
+    auto components = value["Components"].GetObj();
+    for (auto& component : components)
     {
-        auto components = value["Components"].GetObj();
-        for (auto& component : components)
-        {
-            Component* ownedComponent = GetComponent(component.name.GetString(), gameObject);
-            if (ownedComponent != nullptr)
-            {
-                ownedComponent->Deserialize(component.value);
-            }
-        }
+        Component* ownedComponent = GetComponent(component.name.GetString(), gameObject);
+
+        if (ownedComponent != nullptr)
+            ownedComponent->Deserialize(component.value);
     }
 }

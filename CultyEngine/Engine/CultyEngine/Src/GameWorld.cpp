@@ -27,16 +27,18 @@ void GameWorld::Terminate()
 {
     for (Slot& slot : mGameObjectSlots)
     {
-        if (slot.gameObject != nullptr)
-        {
-            slot.gameObject->Terminate();
-            slot.gameObject.reset();
-        }
+        if (slot.gameObject == nullptr)
+            continue;
+
+        slot.gameObject->Terminate();
+        slot.gameObject.reset();
     }
-    mGameObjects.clear();
 
     for (auto& service : mServices)
+    {
         service->Terminate();
+        service.reset();
+    }
     mServices.clear();
 }
 
@@ -70,6 +72,9 @@ void GameWorld::DebugUI()
 
     for (auto& service : mServices)
         service->DebugUI();
+
+    if (ImGui::Button("Save"))
+        SaveLevel();
 }
 
 void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
@@ -77,7 +82,7 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
     mLevelFileName = levelFile;
     FILE* file = nullptr;
     auto err = fopen_s(&file, levelFile.u8string().c_str(), "r");
-    ASSERT(err = 0 && file != nullptr, "GameWorld: failed to load level %s", levelFile.u8string().c_str());
+    ASSERT(err == 0 && file != nullptr, "GameWorld: failed to load level %s", levelFile.u8string().c_str());
 
     char readBuffer[65536];
     rapidjson::FileReadStream readStream(file, readBuffer, sizeof(readBuffer));
@@ -95,7 +100,7 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
         {
             newService = AddService<ServiceCamera>();
         }
-        if (serviceName == "ServiceRender")
+        else if (serviceName == "ServiceRender")
         {
             newService = AddService<ServiceRender>();
         }
@@ -115,7 +120,7 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
         std::string name = gameObject.name.GetString();
         std::string templateName = gameObject.value["Template"].GetString();
         GameObject* obj = CreateGameObject(name, templateName);
-        GameObjectFactory::OverrideDeserialize(gameObject.value, );
+        GameObjectFactory::OverrideDeserialize(gameObject.value, *obj);
         obj->Initialize();
     }
 }
@@ -123,43 +128,38 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
 void GameWorld::SaveLevel(std::filesystem::path saveFile)
 {
     if (saveFile == "")
-    {
         saveFile = mLevelFileName;
-    }
+
     if (saveFile == "")
-    {
         return;
-    }
 
     rapidjson::Document doc;
     doc.SetObject();
 
     SaveUtil::SaveInt("Capacity", mGameObjectSlots.size(), doc, doc);
 
-    rapidjson::Value components(rapidjson::kObjectType);
+    rapidjson::Value services(rapidjson::kObjectType);
     for (auto& service : mServices)
-        service->Serialize(doc, components);
+        service->Serialize(doc, services);
+    doc.AddMember("Services", services, doc.GetAllocator());
 
-    doc.AddMember("Components", components, doc.GetAllocator());
-
-    rapidjson::Value gameObject(rapidjson::kObjectType);
-
+    rapidjson::Value gameObjects(rapidjson::kObjectType);
     for (auto& slot : mGameObjectSlots)
     {
-        if (slot.gameObject != nullptr)
-        {
-            rapidjson::Value gameObject(rapidjson::kObjectType);
-            SaveUtil::SaveString("Template", slot.gameObject->mTemplateFilePath.u8string().c_str(), doc, gameObject);
-            // go through all of the components
-            // check to see what is different than the original
-            // save the differences
+        if (slot.gameObject == nullptr)
+            return;
 
-            rapidjson::GenericStringRef<char> str(slot.gameObject->mName.c_str());
-            gameObject.AddMember(str, gameObject, doc.GetAllocator());
-        }
+        rapidjson::Value gameObject(rapidjson::kObjectType);
+        SaveUtil::SaveString("Template", slot.gameObject->mTemplateFilePath.u8string().c_str(), doc, gameObject);
+        // Go through all of the components
+        // Check to see what is different than the original
+        // Save the differences
+
+        rapidjson::GenericStringRef<char> str(slot.gameObject->mName.c_str());
+        gameObjects.AddMember(str, gameObject, doc.GetAllocator());
     }
+    doc.AddMember("GameObjects", gameObjects, doc.GetAllocator());
 
-    // parented objects
     FILE* file = nullptr;
     auto err = fopen_s(&file, saveFile.u8string().c_str(), "w");
     ASSERT(err == 0, "GameObject: failed to open template file %s", saveFile.u8string().c_str());
@@ -167,7 +167,6 @@ void GameWorld::SaveLevel(std::filesystem::path saveFile)
     char writeBuffer[65536];
     rapidjson::FileWriteStream writeStream(file, writeBuffer, sizeof(writeBuffer));
     rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(writeStream);
-
     writer.SetFormatOptions(rapidjson::PrettyFormatOptions::kFormatSingleLineArray);
     doc.Accept(writer);
     fclose(file);
@@ -179,7 +178,7 @@ GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem:
 
     if (mFreeSlots.empty())
     {
-        ASSERT(mInitialized, "GameWorld: no free slots available");
+        ASSERT(false, "GameWorld: no free slots available");
         return nullptr;
     }
 
@@ -191,9 +190,10 @@ GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem:
     newGameObject = std::make_unique<GameObject>();
     newGameObject->SetName(name);
     newGameObject->mWorld = this;
-    newGameObject->mHandle->mIndex = freeSlot;
-    newGameObject->mHandle->mGeneration = slot.generation;
-    if (templatePath.empty() == false)
+    newGameObject->mHandle.mIndex = freeSlot;
+    newGameObject->mHandle.mGeneration = slot.generation;
+
+    if (!templatePath.empty())
     {
         GameObjectFactory::Make(templatePath, *newGameObject);
         newGameObject->mTemplateFilePath = templatePath;
@@ -205,20 +205,22 @@ GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem:
 
 void GameWorld::DestroyGameObject(const GameObjectHandle& handle)
 {
+    if (!IsValid(handle))
+        return;
 
-
+    Slot& slot = mGameObjectSlots[handle.mIndex];
+    slot.generation++;
+    mToBeDestroyed.push_back(handle.mIndex);
 }
 
 bool GameWorld::IsValid(const GameObjectHandle& handle)
 {
-    if (handle.mIndex < 0 || handle.mIndex >= mGameObjects.size())
-    {
+    if (handle.mIndex < 0 || handle.mIndex >= mGameObjectSlots.size())
         return false;
-    }
+
     if (mGameObjectSlots[handle.mIndex].generation != handle.mGeneration)
-    {
         return false;
-    }
+
     return true;
 }
 
@@ -228,7 +230,7 @@ void GameWorld::ProcessDestroyList()
     {
         Slot& slot = mGameObjectSlots[index];
         GameObject* gameObject = slot.gameObject.get();
-        ASSERT(IsValid(gameObject->GetHandle()) == false, "");
+        ASSERT(!IsValid(gameObject->GetHandle()), "GameWorld: object is still alive");
 
         gameObject->Terminate();
         slot.gameObject.reset();
