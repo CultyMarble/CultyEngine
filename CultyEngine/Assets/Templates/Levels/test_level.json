@@ -28,6 +28,9 @@
                 }
             }
         },
+        "Ground": {
+            "Template": "../../Assets/Templates/ground.json"
+        },
         "Object0": {
             "Template": "../../Assets/Templates/test_object.json",
             "Components": {
