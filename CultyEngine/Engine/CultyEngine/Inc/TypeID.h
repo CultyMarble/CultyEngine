@@ -10,6 +10,9 @@ namespace CultyEngine
         CameraFPS,  // move Camera with FPS controller
         Mesh,       // creates a mesh for render object
         Model,      // creates a model render object
+        Rigidbody,  // physics object that gets added to the physics world
+        SoundBank,  // adds an array of sound effects to an object
+        SoundEffect,// adds a single sound effect to an object
         Transform,  // transform component for location data
         Count
     };
@@ -19,6 +22,7 @@ namespace CultyEngine
         Invalid,
         Camera,
         Render,
+        Physics,
         Count
     };
 }

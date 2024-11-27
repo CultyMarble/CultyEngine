@@ -12,9 +12,33 @@
                 "../../Assets/Models/Animations/Bboy.animset",
                 "../../Assets/Models/Animations/SnakeHipHopDance.animset"
             ],
-            "CastShadow":  false
+            "CastShadow": false
         },
         "ComponentAnimator": {
+
+        },
+        "ComponentSoundBank": {
+            "SoundEffects": {
+                "Shoot": {
+                    "FileName": "../../Assets/Sounds/photongun1.wav",
+                    "Looping": false
+                },
+                "Punch": {
+                    "FileName": "../../Assets/Sounds/punch.wav",
+                    "Looping": false
+                },
+                "Spark": {
+                    "FileName": "../../Assets/Sounds/megamanx_spark_mandrill.wav",
+                    "Looping": true
+                }
+            }
+        },
+        "ComponentCustomDebugDraw": {
+            "Slices": 30,
+            "Rings": 30,
+            "Radius": 1,
+            "Position": [ 0.0, 1.0, 0.0 ],
+            "Color": [ 1.0, 0.0, 0.0, 1.0 ]
         }
     }
 }

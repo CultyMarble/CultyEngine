@@ -25,6 +25,17 @@
                 "SpecularMap": "../../Assets/Images/planets/earth/earth_spec.jpg",
                 "BumpMap": "../../Assets/Images/planets/earth/earth_bump.jpg"
             }
+        },
+        "ComponentRigidbody": {
+            "Mass": 10.0,
+            "ColliderData": {
+                "Shape": "Sphere",
+                "Radius": 1.0
+            }
+        },
+        "ComponentSoundEffect": {
+            "FileName": "../../Assets/Sounds/explosion.wav",
+            "Looping": false
         }
     }
 }

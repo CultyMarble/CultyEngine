@@ -1,10 +1,40 @@
 #include "GameState.h"
 
+#include "ComponentCustomDebugDraw.h"
+#include "ServiceCustomDebugDraw.h"
+
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
+using namespace CultyEngine::Input;
+using namespace CultyEngine::Audio;
+
+Component* CustomComponentMake(const std::string& componentName, GameObject& gameObject)
+{
+    if (componentName == "ComponentCustomDebugDraw")
+        return gameObject.AddComponent<ComponentCustomDebugDraw>();
+
+    return nullptr;
+}
+Component* CustomComponentGet(const std::string& componentName, GameObject& gameObject)
+{
+    if (componentName == "ComponentCustomDebugDraw")
+        return gameObject.GetComponent<ComponentCustomDebugDraw>();
+
+    return nullptr;
+}
+Service* CustomServiceMake(const std::string& serviceName, GameWorld& gameworld)
+{
+    if (serviceName == "ServiceCustomDebugDraw")
+        return gameworld.AddService<ServiceCustomDebugDraw>();
+
+    return nullptr;
+}
 
 void GameState::Initialize()
 {
+    GameObjectFactory::SetCustomMake(CustomComponentMake);
+    GameObjectFactory::SetCustomGet(CustomComponentGet);
+    GameWorld::SetCustomService(CustomServiceMake);
     mGameWorld.LoadLevel(L"../../Assets/Templates/Levels/test_level.json");
 }
 

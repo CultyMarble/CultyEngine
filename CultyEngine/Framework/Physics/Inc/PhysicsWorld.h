@@ -29,6 +29,9 @@ namespace CultyEngine::Physics
         void Update(float deltaTime);
         void DebugUI();
 
+        const Settings& GetSettings() const { return mSettings; }
+        void UpdateSettings(const Settings& settings) { mSettings = settings; }
+
         void Register(PhysicsObject* physicsObject);
         void Unregister(PhysicsObject* physicsObject);
 

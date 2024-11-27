@@ -8,12 +8,18 @@
 #include "ComponentCameraFPS.h"
 #include "ComponentMesh.h"
 #include "ComponentModel.h"
+#include "ComponentRigidbody.h"
+#include "ComponentSoundBank.h"
+#include "ComponentSoundEffect.h"
 #include "ComponentTransform.h"
 
 using namespace CultyEngine;
 
 namespace
 {
+    CustomMake TryMake;
+    CustomMake TryGet;
+
     Component* AddComponent(const std::string& componentName, GameObject& gameObject)
     {
         Component* newComponent = nullptr;
@@ -38,14 +44,28 @@ namespace
         {
             newComponent = gameObject.AddComponent<ComponentModel>();
         }
+        else if (componentName == "ComponentRigidbody")
+        {
+            newComponent = gameObject.AddComponent<ComponentRigidbody>();
+        }
+        else if (componentName == "ComponentSoundBank")
+        {
+            newComponent = gameObject.AddComponent<ComponentSoundBank>();
+        }
+        else if (componentName == "ComponentSoundEffect")
+        {
+            newComponent = gameObject.AddComponent<ComponentSoundEffect>();
+        }
         else if (componentName == "ComponentTransform")
         {
             newComponent = gameObject.AddComponent<ComponentTransform>();
         }
         else
         {
-            ASSERT(false, "GameObjectFactory: unrecognized component %s", componentName.c_str());
+            newComponent = TryMake(componentName, gameObject);
+            ASSERT(newComponent != nullptr, "GameObjectFactory: unrecognized component %s", componentName.c_str());
         }
+
         return newComponent;
     }
 
@@ -73,16 +93,40 @@ namespace
         {
             newComponent = gameObject.GetComponent<ComponentModel>();
         }
+        else if (componentName == "ComponentRigidbody")
+        {
+            newComponent = gameObject.GetComponent<ComponentRigidbody>();
+        }
+        else if (componentName == "ComponentSoundBank")
+        {
+            newComponent = gameObject.GetComponent<ComponentSoundBank>();
+        }
+        else if (componentName == "ComponentSoundEffect")
+        {
+            newComponent = gameObject.GetComponent<ComponentSoundEffect>();
+        }
         else if (componentName == "ComponentTransform")
         {
             newComponent = gameObject.GetComponent<ComponentTransform>();
         }
         else
         {
-            ASSERT(false, "GameObjectFactory: unrecognized component %s", componentName.c_str());
+            newComponent = TryGet(componentName, gameObject);
+            ASSERT(newComponent != nullptr, "GameObjectFactory: unrecognized component %s", componentName.c_str());
         }
+
         return newComponent;
     }
+}
+
+void GameObjectFactory::SetCustomMake(CustomMake customMake)
+{
+    TryMake = customMake;
+}
+
+void GameObjectFactory::SetCustomGet(CustomGet customGet)
+{
+    TryGet = customGet;
 }
 
 void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObject& gameObject)

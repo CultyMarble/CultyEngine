@@ -3,11 +3,22 @@
 #include "GameObjectFactory.h"
 
 #include "ServiceCamera.h";
+#include "ServicePhysics.h"
 #include "ServiceRender.h";
 
 #include "SaveUtil.h"
 
 using namespace CultyEngine;
+
+namespace
+{
+    CustomService TryService;
+}
+
+void GameWorld::SetCustomService(CustomService customService)
+{
+    TryService = customService;
+}
 
 void GameWorld::Initialize(uint32_t capacity)
 {
@@ -100,13 +111,18 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
         {
             newService = AddService<ServiceCamera>();
         }
+        else if (serviceName == "ServicePhysics")
+        {
+            newService = AddService<ServicePhysics>();
+        }
         else if (serviceName == "ServiceRender")
         {
             newService = AddService<ServiceRender>();
         }
         else
         {
-            ASSERT(false, "GameWorld: Invalid service name %s", serviceName.c_str());
+            newService = TryService(serviceName, *this);
+            ASSERT(newService != nullptr, "GameWorld: Invalid service name %s", serviceName.c_str());
         }
         newService->Deserialize(service.value);
     }

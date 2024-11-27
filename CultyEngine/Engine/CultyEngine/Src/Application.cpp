@@ -73,7 +73,9 @@ void Application::Run(const ApplicationConfig& config)
         float deltaTime = TimeUtils::GetDeltaTime();
         if (deltaTime < 0.5f)
         {
+#ifndef USE_SERVICE_PHYSICS
             PhysicsWorld::Get()->Update(deltaTime);
+#endif // !USE_SERVICE_PHYSICS
             mCurrentState->Update(deltaTime);
         }
 

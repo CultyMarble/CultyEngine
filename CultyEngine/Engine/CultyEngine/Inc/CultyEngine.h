@@ -14,16 +14,16 @@
 // Game World
 #include "GameWorld.h"
 
-// Services
-#include "Service.h"
-#include "ServiceCamera.h"
-#include "ServiceRender.h"
-
 // Game Object
 #include "GameObject.h"
 
+// Services
+#include "Service.h"
+#include "ServiceCamera.h"
+#include "ServicePhysics.h"
+#include "ServiceRender.h"
+
 // Components
-#include "TypeID.h"
 #include "Component.h"
 #include "ComponentAnimator.h"
 #include "ComponentCamera.h"
@@ -31,7 +31,13 @@
 #include "ComponentMesh.h"
 #include "ComponentModel.h"
 #include "ComponentRenderObject.h"
+#include "ComponentRigidbody.h"
+#include "ComponentSoundBank.h"
+#include "ComponentSoundEffect.h"
 #include "ComponentTransform.h"
+
+// Misc
+#include "TypeID.h"
 
 namespace CultyEngine
 {

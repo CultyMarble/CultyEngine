@@ -3,8 +3,13 @@
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="ComponentCustomDebugDraw.cpp" />
+    <ClCompile Include="ServiceCustomDebugDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="CustomTypeID.h" />
+    <ClInclude Include="ComponentCustomDebugDraw.h" />
+    <ClInclude Include="ServiceCustomDebugDraw.h" />
   </ItemGroup>
 </Project>

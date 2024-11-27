@@ -21,7 +21,9 @@ void RigidBody::Initialize(CultyEngine::Graphics::Transform& graphicsTransform, 
 
     mMotionState = new btDefaultMotionState(ConvertTobtTransform(graphicsTransform));
     mRigidBody = new btRigidBody(mass, mMotionState, shape.GetCollisionShape());
+#ifndef USE_SERVICE_PHYSICS
     PhysicsWorld::Get()->Register(this);
+#endif // !USE_SERVICE_PHYSICS
 }
 
 void RigidBody::Terminate()

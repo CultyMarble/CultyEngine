@@ -148,6 +148,9 @@
     <ClInclude Include="Inc\ComponentMesh.h" />
     <ClInclude Include="Inc\ComponentModel.h" />
     <ClInclude Include="Inc\ComponentRenderObject.h" />
+    <ClInclude Include="Inc\ComponentRigidbody.h" />
+    <ClInclude Include="Inc\ComponentSoundBank.h" />
+    <ClInclude Include="Inc\ComponentSoundEffect.h" />
     <ClInclude Include="Inc\ComponentTransform.h" />
     <ClInclude Include="Inc\CultyEngine.h" />
     <ClInclude Include="Inc\Event.h" />
@@ -159,6 +162,7 @@
     <ClInclude Include="Inc\SaveUtil.h" />
     <ClInclude Include="Inc\Service.h" />
     <ClInclude Include="Inc\ServiceCamera.h" />
+    <ClInclude Include="Inc\ServicePhysics.h" />
     <ClInclude Include="Inc\ServiceRender.h" />
     <ClInclude Include="Inc\TypeID.h" />
     <ClInclude Include="Src\Precompiled.h" />
@@ -171,6 +175,9 @@
     <ClCompile Include="Src\ComponentMesh.cpp" />
     <ClCompile Include="Src\ComponentModel.cpp" />
     <ClCompile Include="Src\ComponentRenderObject.cpp" />
+    <ClCompile Include="Src\ComponentRigidbody.cpp" />
+    <ClCompile Include="Src\ComponentSoundBank.cpp" />
+    <ClCompile Include="Src\ComponentSoundEffect.cpp" />
     <ClCompile Include="Src\ComponentTransform.cpp" />
     <ClCompile Include="Src\CultyEngine.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
@@ -182,6 +189,7 @@
     </ClCompile>
     <ClCompile Include="Src\SaveUtil.cpp" />
     <ClCompile Include="Src\ServiceCamera.cpp" />
+    <ClCompile Include="Src\ServicePhysics.cpp" />
     <ClCompile Include="Src\ServiceRender.cpp" />
   </ItemGroup>
   <ItemGroup>
