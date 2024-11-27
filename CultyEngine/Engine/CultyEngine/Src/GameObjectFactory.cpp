@@ -12,6 +12,8 @@
 #include "ComponentSoundBank.h"
 #include "ComponentSoundEffect.h"
 #include "ComponentTransform.h"
+#include "ComponentUISprite.h"
+#include "ComponentUIText.h"
 
 using namespace CultyEngine;
 
@@ -59,6 +61,14 @@ namespace
         else if (componentName == "ComponentTransform")
         {
             newComponent = gameObject.AddComponent<ComponentTransform>();
+        }
+        else if (componentName == "ComponentUISprite")
+        {
+            newComponent = gameObject.AddComponent<ComponentUISprite>();
+        }
+        else if (componentName == "ComponentUIText")
+        {
+            newComponent = gameObject.AddComponent<ComponentUIText>();
         }
         else
         {
@@ -109,12 +119,19 @@ namespace
         {
             newComponent = gameObject.GetComponent<ComponentTransform>();
         }
+        else if (componentName == "ComponentUISprite")
+        {
+            newComponent = gameObject.GetComponent<ComponentUISprite>();
+        }
+        else if (componentName == "ComponentUIText")
+        {
+            newComponent = gameObject.GetComponent<ComponentUIText>();
+        }
         else
         {
             newComponent = TryGet(componentName, gameObject);
             ASSERT(newComponent != nullptr, "GameObjectFactory: unrecognized component %s", componentName.c_str());
         }
-
         return newComponent;
     }
 }

@@ -14,6 +14,9 @@ namespace CultyEngine
         SoundBank,  // adds an array of sound effects to an object
         SoundEffect,// adds a single sound effect to an object
         Transform,  // transform component for location data
+        UIButton,   // adds a button to UI
+        UISprite,   // adds a sprite to UI
+        UIText,     // adds a text UI component
         Count
     };
 
@@ -23,6 +26,7 @@ namespace CultyEngine
         Camera,
         Render,
         Physics,
+        UIRender,
         Count
     };
 }

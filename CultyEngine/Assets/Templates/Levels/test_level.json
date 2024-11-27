@@ -15,6 +15,9 @@
         },
         "ServiceCustomDebugDraw": {
 
+        },
+        "ServiceUIRender": {
+
         }
     },
 
@@ -44,6 +47,24 @@
             "Components": {
                 "ComponentTransform": {
                     "Position": [ 0.0, 0.0, 0.0 ]
+                }
+            }
+        },
+        "BarBackground": {
+            "Template": "../../Assets/Templates/UI/BarBackground.json",
+            "Components": {
+                "ComponentUISprite": {
+                    "Position": [ 10.0, 10.0 ],
+                    "Pivot": "TopLeft"
+                }
+            }
+        },
+        "BarFull": {
+            "Template": "../../Assets/Templates/UI/BarFull.json",
+            "Components": {
+                "ComponentUISprite": {
+                    "Position": [ 10.0, 10.0 ],
+                    "Pivot": "TopLeft"
                 }
             }
         }

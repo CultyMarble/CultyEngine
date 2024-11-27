@@ -105,6 +105,18 @@
     <ClInclude Include="Inc\ComponentSoundBank.h">
       <Filter>Inc\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\ServiceUIRender.h">
+      <Filter>Inc\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ComponentUI.h">
+      <Filter>Inc\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ComponentUIText.h">
+      <Filter>Inc\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ComponentUISprite.h">
+      <Filter>Inc\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -168,6 +180,15 @@
       <Filter>Src\Component</Filter>
     </ClCompile>
     <ClCompile Include="Src\ComponentSoundBank.cpp">
+      <Filter>Src\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ServiceUIRender.cpp">
+      <Filter>Src\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ComponentUIText.cpp">
+      <Filter>Src\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ComponentUISprite.cpp">
       <Filter>Src\Component</Filter>
     </ClCompile>
   </ItemGroup>

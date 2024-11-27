@@ -152,6 +152,9 @@
     <ClInclude Include="Inc\ComponentSoundBank.h" />
     <ClInclude Include="Inc\ComponentSoundEffect.h" />
     <ClInclude Include="Inc\ComponentTransform.h" />
+    <ClInclude Include="Inc\ComponentUI.h" />
+    <ClInclude Include="Inc\ComponentUISprite.h" />
+    <ClInclude Include="Inc\ComponentUIText.h" />
     <ClInclude Include="Inc\CultyEngine.h" />
     <ClInclude Include="Inc\Event.h" />
     <ClInclude Include="Inc\EventManager.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="Inc\ServiceCamera.h" />
     <ClInclude Include="Inc\ServicePhysics.h" />
     <ClInclude Include="Inc\ServiceRender.h" />
+    <ClInclude Include="Inc\ServiceUIRender.h" />
     <ClInclude Include="Inc\TypeID.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
@@ -179,6 +183,8 @@
     <ClCompile Include="Src\ComponentSoundBank.cpp" />
     <ClCompile Include="Src\ComponentSoundEffect.cpp" />
     <ClCompile Include="Src\ComponentTransform.cpp" />
+    <ClCompile Include="Src\ComponentUISprite.cpp" />
+    <ClCompile Include="Src\ComponentUIText.cpp" />
     <ClCompile Include="Src\CultyEngine.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
@@ -191,6 +197,7 @@
     <ClCompile Include="Src\ServiceCamera.cpp" />
     <ClCompile Include="Src\ServicePhysics.cpp" />
     <ClCompile Include="Src\ServiceRender.cpp" />
+    <ClCompile Include="Src\ServiceUIRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Audio\Audio.vcxproj">

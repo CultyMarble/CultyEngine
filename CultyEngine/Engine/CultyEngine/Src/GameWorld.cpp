@@ -5,6 +5,7 @@
 #include "ServiceCamera.h";
 #include "ServicePhysics.h"
 #include "ServiceRender.h";
+#include "ServiceUIRender.h"
 
 #include "SaveUtil.h"
 
@@ -118,6 +119,10 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
         else if (serviceName == "ServiceRender")
         {
             newService = AddService<ServiceRender>();
+        }
+        else if (serviceName == "ServiceUIRender")
+        {
+            newService = AddService<ServiceUIRender>();
         }
         else
         {
