@@ -10,7 +10,7 @@ void GameState::Initialize()
 
     GameObject* camera = mGameWorld.CreateGameObject("FPSCamera");
     camera->AddComponent<ComponentCamera>();
-    camera->AddComponent<ComponentFPSCamera>();
+    camera->AddComponent<ComponentCameraFPS>();
     camera->Initialize();
 
     GameObject* gameObject = mGameWorld.CreateGameObject("Object0");
