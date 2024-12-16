@@ -126,13 +126,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "26_HelloGameObject", "VGP336\26_HelloGameObject\26_HelloGameObject.vcxproj", "{1D998B58-DA59-43C8-BC57-A11252EC6E8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}"
-	ProjectSection(SolutionItems) = preProject
-		Assets\Templates\fps_camera.json = Assets\Templates\fps_camera.json
-		Assets\Templates\ground.json = Assets\Templates\ground.json
-		Assets\Templates\test_carry_obj.json = Assets\Templates\test_carry_obj.json
-		Assets\Templates\test_model.json = Assets\Templates\test_model.json
-		Assets\Templates\test_object.json = Assets\Templates\test_object.json
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "27_HelloGameObjectFactory", "VGP336\27_HelloGameObjectFactory\27_HelloGameObjectFactory.vcxproj", "{3F89FFF9-7FB6-47E2-B120-B69DFFEFFE81}"
 EndProject
@@ -154,6 +147,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{B437381E-F266-
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "29_HelloDiva", "VGP336\29_HelloDiva\29_HelloDiva.vcxproj", "{40232229-DB14-4FE4-8FE6-A5C072DABA8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectDiva", "ProjectDiva", "{76DDE9CE-FB20-46AD-B863-095A3D74EDA9}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\ProjectDiva\gameplay_level.json = Assets\Templates\ProjectDiva\gameplay_level.json
+		Assets\Templates\ProjectDiva\gameplay_ui.json = Assets\Templates\ProjectDiva\gameplay_ui.json
+		Assets\Templates\ProjectDiva\note_o.json = Assets\Templates\ProjectDiva\note_o.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C4729186-E392-4F70-BFB4-B218F128ADD6}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Test\fps_camera.json = Assets\Templates\Test\fps_camera.json
+		Assets\Templates\Test\ground.json = Assets\Templates\Test\ground.json
+		Assets\Templates\Test\test_carry_obj.json = Assets\Templates\Test\test_carry_obj.json
+		Assets\Templates\Test\test_model.json = Assets\Templates\Test\test_model.json
+		Assets\Templates\Test\test_object.json = Assets\Templates\Test\test_object.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -551,6 +560,8 @@ Global
 		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {26A004DD-B802-4109-9F0B-D669000875BF}
 		{B437381E-F266-4C97-ACA8-E7504D4A7BE4} = {01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}
 		{40232229-DB14-4FE4-8FE6-A5C072DABA8F} = {878D1975-821D-466B-96E6-7AB22E49F50C}
+		{76DDE9CE-FB20-46AD-B863-095A3D74EDA9} = {01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}
+		{C4729186-E392-4F70-BFB4-B218F128ADD6} = {01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {033DDF7C-49D3-4D78-851F-7A065F9F78EE}

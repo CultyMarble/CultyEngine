@@ -131,16 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ComponentCustomDebugDraw.cpp" />
+    <ClCompile Include="ComponentNoteMovement.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="ServiceCustomDebugDraw.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ComponentCustomDebugDraw.h" />
+    <ClInclude Include="ComponentNoteMovement.h" />
     <ClInclude Include="CustomTypeID.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="ServiceCustomDebugDraw.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Engine\CultyEngine\CultyEngine.vcxproj">

@@ -1,0 +1,25 @@
+{
+    "Capacity": 100,
+
+    "Services": {
+        "ServiceCamera": {
+        },
+        "ServiceUIRender": {
+        }
+    },
+
+    "GameObjects": {
+        "Camera": {
+            "Template": "../../Assets/Templates/Test/fps_camera.json",
+            "Components": {
+                "ComponentCamera": {
+                    "Position": [ 0.0, 10.0, 0.0 ],
+                    "LookAt": [ 0.0, 0.0, 0.0 ]
+                }
+            }
+        },
+        "GameplayUI": {
+            "Template": "../../Assets/Templates/ProjectDiva/gameplay_ui.json"
+        }
+    }
+}

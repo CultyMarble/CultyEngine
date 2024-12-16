@@ -1,7 +1,5 @@
 #include "GameState.h"
-
-#include "ComponentCustomDebugDraw.h"
-#include "ServiceCustomDebugDraw.h"
+#include "ComponentNoteMovement.h"
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
@@ -10,22 +8,16 @@ using namespace CultyEngine::Audio;
 
 Component* CustomComponentMake(const std::string& componentName, GameObject& gameObject)
 {
-    if (componentName == "ComponentCustomDebugDraw")
-        return gameObject.AddComponent<ComponentCustomDebugDraw>();
+    if (componentName == "ComponentNoteMovement")
+        return gameObject.AddComponent<ComponentNoteMovement>();
 
     return nullptr;
 }
+
 Component* CustomComponentGet(const std::string& componentName, GameObject& gameObject)
 {
-    if (componentName == "ComponentCustomDebugDraw")
-        return gameObject.GetComponent<ComponentCustomDebugDraw>();
-
-    return nullptr;
-}
-Service* CustomServiceMake(const std::string& serviceName, GameWorld& gameworld)
-{
-    if (serviceName == "ServiceCustomDebugDraw")
-        return gameworld.AddService<ServiceCustomDebugDraw>();
+    if (componentName == "ComponentNoteMovement")
+        return gameObject.GetComponent<ComponentNoteMovement>();
 
     return nullptr;
 }
@@ -34,8 +26,8 @@ void GameState::Initialize()
 {
     GameObjectFactory::SetCustomMake(CustomComponentMake);
     GameObjectFactory::SetCustomGet(CustomComponentGet);
-    GameWorld::SetCustomService(CustomServiceMake);
-    mGameWorld.LoadLevel(L"../../Assets/Templates/Levels/test_level.json");
+
+    mGameWorld.LoadLevel(L"../../Assets/Templates/ProjectDiva/gameplay_level.json");
 }
 
 void GameState::Terminate()
@@ -51,7 +43,6 @@ void GameState::Update(float deltaTime)
 void GameState::Render()
 {
     mGameWorld.Render();
-    // UIFont::Get()->DrawString(L"Hello Game World", { 100.0f, 100.0f }, 20.0f, Colors::Red);
 }
 
 void GameState::DebugUI()

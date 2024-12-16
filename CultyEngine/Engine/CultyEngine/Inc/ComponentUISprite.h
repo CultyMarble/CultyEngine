@@ -12,7 +12,9 @@ namespace CultyEngine
         void Terminate() override;
         void Render() override;
         void Deserialize(const rapidjson::Value& value) override;
+
         MathC::Vector2 GetPosition(bool includeOrigin = true);
+        void SetPosition(const MathC::Vector2& position) { mPosition = { position.x, position.y }; }
 
     private:
         std::filesystem::path mTexturePath;

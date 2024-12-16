@@ -1,0 +1,14 @@
+{
+    "Components": {
+    },
+
+    "Children": {
+        "Note_000": {
+            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
+            "Components": {
+                "ComponentUISprite": { "Position": [ 100.0, 100.0 ] },
+                "ComponentNoteMovement": { "Speed": 200.0 }
+            }
+        }
+    }
+}
