@@ -33,21 +33,18 @@
                 }
             }
         },
+        "ComponentCustomDebugDraw": {
+            "Slices": 30,
+            "Rings": 30,
+            "Radius": 1,
+            "Position": [ 0.0, 1.0, 0.0 ],
+            "Color": [ 1.0, 0.0, 0.0, 1.0 ]
+        },
         "ComponentUIText": {
             "Text": "Hello There Class",
             "Size": 30.0,
             "Position": [ 250.0, 250.0 ],
             "Color": [ 1.0, 1.0, 1.0, 1.0 ]
-        }
-    },
-    "Children": {
-        "CarryObject": {
-            "Template": "../../Assets/Templates/test_carry_obj.json",
-            "Components": {
-                "ComponentTransform": {
-                    "Position": [ -0.5, 1.0, 0.0 ]
-                }
-            }
         }
     }
 }

@@ -1,0 +1,48 @@
+{
+    "Components": {
+        "ComponentUISprite": {
+            "Texture": "../../Assets/Images/cyan.jpg",
+            "Rect": [ 0, 0, 320, 320 ],
+            "Position": [ 500.0, 10.0 ],
+            "Pivot": "Top"
+        }
+    },
+    "Children": {
+        "BarBackground": {
+            "Template": "../../Assets/Templates/UI/BarBackground.json",
+            "Components": {
+                "ComponentUISprite": {
+                    "Position": [ 10.0, 10.0 ],
+                    "Pivot": "TopLeft"
+                }
+            }
+        },
+        "BarFull": {
+            "Template": "../../Assets/Templates/UI/BarFull.json",
+            "Components": {
+                "ComponentUISprite": {
+                    "Position": [ 10.0, 10.0 ],
+                    "Pivot": "TopLeft"
+                }
+            }
+        },
+        "Button0": {
+            "Template": "../../Assets/Templates/UI/Button.json",
+            "Components": {
+                "ComponentUIButton": {
+                    "Position": [ 10.0, 60.0 ],
+                    "Pivot": "TopLeft"
+                }
+            }
+        },
+        "Button1": {
+            "Template": "../../Assets/Templates/UI/Button.json",
+            "Components": {
+                "ComponentUIButton": {
+                    "Position": [ 10.0, 100.0 ],
+                    "Pivot": "TopLeft"
+                }
+            }
+        }
+    }
+}

@@ -24,6 +24,14 @@ namespace CultyEngine
         const GameWorld& GetWorld() const { return *mWorld; }
         const GameObjectHandle& GetHandle() { return mHandle; }
 
+        void SetParent(GameObject* parent) { mParent = parent; }
+        GameObject* GetParent() { return mParent; }
+        const GameObject* GetParent() const { return mParent; }
+
+        void AddChild(GameObject* child) { mChildren.push_back(child); }
+        GameObject* GetChild(uint32_t index) { return mChildren[index]; }
+        const GameObject* GetChild(uint32_t index) const { return mChildren[index]; }
+
         template<class ComponentType>
         ComponentType* AddComponent()
         {
@@ -79,9 +87,13 @@ namespace CultyEngine
         using Components = std::vector<std::unique_ptr<Component>>;
         Components mComponents;
 
+        using Children = std::vector<GameObject*>;
+        Children mChildren;
+
         friend class GameWorld;
         std::filesystem::path mTemplateFilePath = "";
         GameObjectHandle mHandle;
         GameWorld* mWorld = nullptr;
+        GameObject* mParent = nullptr;
     };
 }

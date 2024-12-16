@@ -1,0 +1,28 @@
+{
+    "Components": {
+        "ComponentTransform": {
+            "Position": [ 0.0, 0.0, 0.0 ],
+            "Rotation": [ 0.0, 0.0, 0.0, 1.0 ],
+            "Scale": [ 1.0, 1.0, 1.0 ]
+        },
+        "ComponentMesh": {
+            "Shape": {
+                "Type": "Sphere",
+                "Slices": 60,
+                "Rings": 60,
+                "Radius": 0.1
+            },
+            "Material": {
+                "Ambient": [ 0.5, 0.5, 0.5, 1.0 ],
+                "Diffuse": [ 0.8, 0.8, 0.8, 1.0 ],
+                "Specular": [ 1.0, 1.0, 1.0, 1.0 ],
+                "Emissive": [ 0.0, 0.0, 0.0, 1.0 ],
+                "SpecularPower": 10.0
+            },
+            "Textures": {
+                "DiffuseMap": "../../Assets/Images/planets/earth/earth.jpg",
+                "NormalMap": "../../Assets/Images/planets/earth/earth_normal.jpg"
+            }
+        }
+    }
+}

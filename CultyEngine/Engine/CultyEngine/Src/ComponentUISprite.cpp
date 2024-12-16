@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "ComponentUISprite.h"
+#include "ComponentUIButton.h"
 
 #include "GameWorld.h"
 #include "ServiceUIRender.h"
@@ -11,6 +12,10 @@ void ComponentUISprite::Initialize()
 {
     ASSERT(!mTexturePath.empty(), "ComponentUISprite: texture path is not set");
     mUISprite.Initialize(mTexturePath);
+
+    if (mRect.right - mRect.left > 0)
+        mUISprite.SetRect(mRect.top, mRect.left, mRect.right, mRect.bottom);
+
     ServiceUIRender* renderService = GetOwner().GetWorld().GetService<ServiceUIRender>();
     renderService->Register(this);
 }
@@ -24,6 +29,28 @@ void ComponentUISprite::Terminate()
 
 void ComponentUISprite::Render()
 {
+    MathC::Vector2 worldPosition = GetPosition(false);
+    GameObject* parent = GetOwner().GetParent();
+    while (parent != nullptr)
+    {
+        ComponentUISprite* componentUISprite = parent->GetComponent<ComponentUISprite>();
+        if (componentUISprite != nullptr)
+        {
+            worldPosition += componentUISprite->GetPosition();
+        }
+        else
+        {
+            ComponentUIButton* componentUIButton = parent->GetComponent<ComponentUIButton>();
+            if (componentUIButton != nullptr)
+            {
+                worldPosition += componentUIButton->GetPosition();
+            }
+        }
+
+        parent = parent->GetParent();
+    }
+
+    mUISprite.SetPosition({ worldPosition.x, worldPosition.y });
     UISpriteRenderer::Get()->Render(&mUISprite);
 }
 
@@ -35,14 +62,13 @@ void ComponentUISprite::Deserialize(const rapidjson::Value& value)
     if (value.HasMember("Position"))
     {
         auto pos = value["Position"].GetArray();
-        const float x = pos[0].GetFloat();
-        const float y = pos[1].GetFloat();
-        mUISprite.SetPosition({ x, y });
+        mPosition.x = pos[0].GetFloat();
+        mPosition.y = pos[1].GetFloat();
     }
 
     if (value.HasMember("Scale"))
     {
-        auto scale = value["Position"].GetArray();
+        auto scale = value["Scale"].GetArray();
         const float x = scale[0].GetFloat();
         const float y = scale[1].GetFloat();
         mUISprite.SetScale({ x, y });
@@ -133,4 +159,24 @@ void ComponentUISprite::Deserialize(const rapidjson::Value& value)
             ASSERT(false, "ComponentUISprite: invalid flip %s", flip.c_str());
         }
     }
+
+    if (value.HasMember("Rect"))
+    {
+        auto rect = value["Rect"].GetArray();
+        mRect.top = rect[0].GetInt();
+        mRect.left = rect[1].GetInt();
+        mRect.right = rect[2].GetInt();
+        mRect.bottom = rect[3].GetInt();
+    }
+}
+
+MathC::Vector2 ComponentUISprite::GetPosition(bool includeOrigin)
+{
+    float x = {};
+    float y = {};
+
+    if (includeOrigin)
+        mUISprite.GetOrigin(x, y);
+
+    return { mPosition.x - x, mPosition.y - y };
 }

@@ -3,7 +3,6 @@
 
     "Services": {
         "ServiceCamera": {
-
         },
         "ServicePhysics": {
             "Grabity": [ 0.0, -9.1, 0.0 ],
@@ -11,13 +10,10 @@
             "FixedTimeStep": 0.016666666667
         },
         "ServiceRender": {
-
         },
         "ServiceCustomDebugDraw": {
-
         },
         "ServiceUIRender": {
-
         }
     },
 
@@ -50,23 +46,8 @@
                 }
             }
         },
-        "BarBackground": {
-            "Template": "../../Assets/Templates/UI/BarBackground.json",
-            "Components": {
-                "ComponentUISprite": {
-                    "Position": [ 10.0, 10.0 ],
-                    "Pivot": "TopLeft"
-                }
-            }
-        },
-        "BarFull": {
-            "Template": "../../Assets/Templates/UI/BarFull.json",
-            "Components": {
-                "ComponentUISprite": {
-                    "Position": [ 10.0, 10.0 ],
-                    "Pivot": "TopLeft"
-                }
-            }
+        "TestScreen": {
+            "Template": "../../Assets/Templates/UI/test_screen.json"
         }
     }
 }

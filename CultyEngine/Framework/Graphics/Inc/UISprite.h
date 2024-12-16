@@ -43,6 +43,7 @@ namespace CultyEngine::Graphics
         void SetRotation(float rotation);
 
         bool IsInSprite(float x, float y);
+        void GetOrigin(float& x, float& y);
 
     private:
         friend class UISpriteRenderer;
@@ -50,7 +51,7 @@ namespace CultyEngine::Graphics
         void UpdateOrigin();
 
         TextureID mTextureID;
-        RECT mRect = { 0,0,100,100 };
+        RECT mRect = { 0, 0, 100, 100 };
         DirectX::XMFLOAT2 mPosition = { 0.0f, 0.0f };
         DirectX::XMFLOAT2 mOrigin = { 0.0f, 0.0f };
         DirectX::XMFLOAT2 mScale = { 1.0f, 1.0f };

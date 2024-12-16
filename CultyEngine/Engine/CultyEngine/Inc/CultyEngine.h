@@ -22,6 +22,7 @@
 #include "ServiceCamera.h"
 #include "ServicePhysics.h"
 #include "ServiceRender.h"
+#include "ServiceUIRender.h"
 
 // Components
 #include "Component.h"
@@ -35,6 +36,10 @@
 #include "ComponentSoundBank.h"
 #include "ComponentSoundEffect.h"
 #include "ComponentTransform.h"
+#include "ComponentUI.h"
+#include "ComponentUIButton.h"
+#include "ComponentUISprite.h"
+#include "ComponentUIText.h"
 
 // Misc
 #include "TypeID.h"

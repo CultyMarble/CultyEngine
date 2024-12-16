@@ -117,6 +117,9 @@
     <ClInclude Include="Inc\ComponentUISprite.h">
       <Filter>Inc\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\ComponentUIButton.h">
+      <Filter>Inc\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -189,6 +192,9 @@
       <Filter>Src\Component</Filter>
     </ClCompile>
     <ClCompile Include="Src\ComponentUISprite.cpp">
+      <Filter>Src\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ComponentUIButton.cpp">
       <Filter>Src\Component</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,5 +11,7 @@ namespace CultyEngine
         void DebugUI() override;
         virtual void Serialize(rapidjson::Document& doc, rapidjson::Value& value) override;
         virtual void Deserialize(const rapidjson::Value& value) override;
+
+        Transform GetWorldTransform() const;
     };
 }

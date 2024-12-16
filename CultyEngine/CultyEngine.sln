@@ -129,6 +129,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\fps_camera.json = Assets\Templates\fps_camera.json
 		Assets\Templates\ground.json = Assets\Templates\ground.json
+		Assets\Templates\test_carry_obj.json = Assets\Templates\test_carry_obj.json
 		Assets\Templates\test_model.json = Assets\Templates\test_model.json
 		Assets\Templates\test_object.json = Assets\Templates\test_object.json
 	EndProjectSection
@@ -148,6 +149,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{B437381E-F266-
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\UI\BarBackground.json = Assets\Templates\UI\BarBackground.json
 		Assets\Templates\UI\BarFull.json = Assets\Templates\UI\BarFull.json
+		Assets\Templates\UI\Button.json = Assets\Templates\UI\Button.json
+		Assets\Templates\UI\test_screen.json = Assets\Templates\UI\test_screen.json
 	EndProjectSection
 EndProject
 Global

@@ -93,6 +93,12 @@ bool UISprite::IsInSprite(float x, float y)
         y <= mPosition.y + height - mOrigin.y;
 }
 
+void CultyEngine::Graphics::UISprite::GetOrigin(float& x, float& y)
+{
+    x = mOrigin.x;
+    y = mOrigin.y;
+}
+
 void UISprite::UpdateOrigin()
 {
     const float width = mRect.right - mRect.left;

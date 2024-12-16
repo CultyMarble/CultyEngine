@@ -48,7 +48,7 @@ void ServiceRender::Render()
     {
         for (RenderObject& renderObject : entry.renderGroup)
         {
-            renderObject.transform = *entry.componentTransform;
+            renderObject.transform = entry.componentTransform->GetWorldTransform();
         }
     }
 

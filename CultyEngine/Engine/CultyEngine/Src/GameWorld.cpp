@@ -216,7 +216,7 @@ GameObject* GameWorld::CreateGameObject(std::string name, const std::filesystem:
 
     if (!templatePath.empty())
     {
-        GameObjectFactory::Make(templatePath, *newGameObject);
+        GameObjectFactory::Make(templatePath, *newGameObject, *this);
         newGameObject->mTemplateFilePath = templatePath;
         if (initialize)
             newGameObject->Initialize();

@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "ComponentTransform.h"
 #include "SaveUtil.h"
+#include "GameObject.h"
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
@@ -49,4 +50,26 @@ void ComponentTransform::Deserialize(const rapidjson::Value& value)
         scale.y = s[1].GetFloat();
         scale.z = s[2].GetFloat();
     }
+}
+
+Transform ComponentTransform::GetWorldTransform() const
+{
+    Transform worldTransform = *this;
+    const GameObject* parent = GetOwner().GetParent();
+
+    if (parent != nullptr)
+    {
+        Matrix4 matWorld = GetMatrix4();
+        while (parent != nullptr)
+        {
+            const ComponentTransform* transformComponent = parent->GetComponent<ComponentTransform>();
+            ASSERT(transformComponent != nullptr, "ComponentTransform: parent does not have transform");
+            matWorld = matWorld * transformComponent->GetMatrix4();
+            parent = parent->GetParent();
+        }
+        worldTransform.position = MathC::GetTranslation(matWorld);
+        worldTransform.scale = MathC::GetScale(matWorld);
+    }
+
+    return worldTransform;
 }
