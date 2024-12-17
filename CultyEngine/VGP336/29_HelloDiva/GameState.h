@@ -12,4 +12,10 @@ public:
 
 protected:
     CultyEngine::GameWorld mGameWorld;
+
+private:
+    using NoteList = std::vector<std::tuple<float, std::string, std::string>>; // {time, templatePath, componentsJson}
+
+    NoteList mNotes;
+    float mElapsedTime = 0.0f;
 };

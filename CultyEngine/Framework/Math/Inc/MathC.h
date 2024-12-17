@@ -46,6 +46,24 @@ namespace CultyEngine::MathC
 		return value * value;
 	}
 
+    // Normalize a Vector2
+    inline Vector2 Normalize(const Vector2& v)
+    {
+        return v.Normalize();
+    }
+
+    // Calculate the distance squared between two Vector2 points
+    inline float DistanceSqr(const Vector2& a, const Vector2& b)
+    {
+        return (a - b).LengthSquared();
+    }
+
+    // Calculate the distance between two Vector2 points
+    inline float Distance(const Vector2& a, const Vector2& b)
+    {
+        return std::sqrt(DistanceSqr(a, b));
+    }
+
 	constexpr float Dot(Vector3 a, Vector3 b)
 	{
 		return a.x * b.x + a.y * b.y + a.z * b.z;

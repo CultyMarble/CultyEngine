@@ -31,6 +31,7 @@ void ComponentUISprite::Render()
 {
     MathC::Vector2 worldPosition = GetPosition(false);
     GameObject* parent = GetOwner().GetParent();
+
     while (parent != nullptr)
     {
         ComponentUISprite* componentUISprite = parent->GetComponent<ComponentUISprite>();
@@ -46,7 +47,6 @@ void ComponentUISprite::Render()
                 worldPosition += componentUIButton->GetPosition();
             }
         }
-
         parent = parent->GetParent();
     }
 

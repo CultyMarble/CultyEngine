@@ -5,7 +5,11 @@
             "Pivot": "Center"
         },
         "ComponentNoteMovement": {
-
+            "ComponentUISprite": {
+                "PositionStart": [ 80.0, 80.0 ],
+                "PositionEnd": [ 500.0, 80.0 ],
+                "Speed": 100.0
+            }
         }
     }
 }

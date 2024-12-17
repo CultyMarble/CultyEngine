@@ -1,0 +1,15 @@
+{
+    "Timeline": [
+        {
+            "Time": 2.0,
+            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
+            "Components": {
+                "ComponentNoteMovement": {
+                    "PositionStart": [ 80.0, 80.0 ],
+                    "PositionEnd": [ 600.0, 200.0 ],
+                    "Speed": 150.0
+                }
+            }
+        }
+    ]
+}

@@ -13,5 +13,7 @@ public:
 
 private:
     float mSpeed = 0.0f;
-    CultyEngine::MathC::Vector2 mPosition;
+    CultyEngine::MathC::Vector2 mPositionStart;
+    CultyEngine::MathC::Vector2 mPositionEnd;
+    CultyEngine::MathC::Vector2 mPositionCurrent;
 };

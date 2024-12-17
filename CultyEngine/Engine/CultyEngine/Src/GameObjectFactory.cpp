@@ -174,15 +174,14 @@ void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObje
 
 void GameObjectFactory::OverrideDeserialize(const rapidjson::Value& value, GameObject& gameObject)
 {
-    if (value.HasMember("Components") == false)
-        return;
-
-    auto components = value["Components"].GetObj();
-    for (auto& component : components)
+    if (value.HasMember("Components"))
     {
-        Component* ownedComponent = GetComponent(component.name.GetString(), gameObject);
-
-        if (ownedComponent != nullptr)
-            ownedComponent->Deserialize(component.value);
+        auto components = value["Components"].GetObj();
+        for (auto& component : components)
+        {
+            Component* ownedComponent = GetComponent(component.name.GetString(), gameObject);
+            if (ownedComponent != nullptr)
+                ownedComponent->Deserialize(component.value);
+        }
     }
 }
