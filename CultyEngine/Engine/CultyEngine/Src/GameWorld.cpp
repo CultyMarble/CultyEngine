@@ -234,6 +234,14 @@ void GameWorld::DestroyGameObject(const GameObjectHandle& handle)
     mToBeDestroyed.push_back(handle.mIndex);
 }
 
+GameObject* CultyEngine::GameWorld::GetGameObject(const GameObjectHandle& handle)
+{
+    if (!IsValid(handle))
+        return nullptr;
+
+    return mGameObjectSlots[handle.mIndex].gameObject.get();
+}
+
 bool GameWorld::IsValid(const GameObjectHandle& handle)
 {
     if (handle.mIndex < 0 || handle.mIndex >= mGameObjectSlots.size())

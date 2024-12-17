@@ -23,6 +23,8 @@ namespace CultyEngine
         GameObject* CreateGameObject(std::string name, const std::filesystem::path& templatePath = "", bool initialize = false);
         void DestroyGameObject(const GameObjectHandle& handle);
 
+        GameObject* GetGameObject(const GameObjectHandle& handle);
+
         template<class ServiceType>
         ServiceType* AddService()
         {

@@ -1,0 +1,8 @@
+{
+    "Components": {
+        "ComponentUISprite": {
+            "Texture": "../../Assets/Images/projectdiva/time_arrow.png",
+            "Pivot": "Center"
+        }
+    }
+}

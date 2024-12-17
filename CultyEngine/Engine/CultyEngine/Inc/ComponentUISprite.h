@@ -16,9 +16,13 @@ namespace CultyEngine
         MathC::Vector2 GetPosition(bool includeOrigin = true);
         void SetPosition(const MathC::Vector2& position) { mPosition = { position.x, position.y }; }
 
+        float GetRotation() const { return mRotation; }
+        void SetRotation(float rotation) { mRotation = rotation; mUISprite.SetRotation(rotation); }
+
     private:
         std::filesystem::path mTexturePath;
         DirectX::XMFLOAT2 mPosition;
+        float mRotation = 0.0f;
         RECT mRect = { 0, 0, 0, 0 };
         Graphics::UISprite mUISprite;
     };

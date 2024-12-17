@@ -86,8 +86,8 @@ void ComponentUISprite::Deserialize(const rapidjson::Value& value)
 
     if (value.HasMember("Rotation"))
     {
-        auto rotation = value["Rotation"].GetFloat();
-        mUISprite.SetRotation(rotation);
+        mRotation = value["Rotation"].GetFloat();
+        mUISprite.SetRotation(mRotation);
     }
 
     if (value.HasMember("Pivot"))
