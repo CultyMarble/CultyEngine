@@ -152,8 +152,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectDiva", "ProjectDiva"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\ProjectDiva\gameplay_level.json = Assets\Templates\ProjectDiva\gameplay_level.json
 		Assets\Templates\ProjectDiva\gameplay_timeline.json = Assets\Templates\ProjectDiva\gameplay_timeline.json
-		Assets\Templates\ProjectDiva\note_o - Copy.json = Assets\Templates\ProjectDiva\note_o - Copy.json
 		Assets\Templates\ProjectDiva\note_o.json = Assets\Templates\ProjectDiva\note_o.json
+		Assets\Templates\ProjectDiva\note_o_end.json = Assets\Templates\ProjectDiva\note_o_end.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C4729186-E392-4F70-BFB4-B218F128ADD6}"

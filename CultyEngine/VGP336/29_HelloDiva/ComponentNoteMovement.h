@@ -1,5 +1,6 @@
 #pragma once
 #include "CustomTypeID.h"
+#include <CultyEngine/Inc/GameObjectHandle.h>
 
 class ComponentNoteMovement : public CultyEngine::Component
 {
@@ -16,4 +17,7 @@ private:
     CultyEngine::MathC::Vector2 mPositionStart;
     CultyEngine::MathC::Vector2 mPositionEnd;
     CultyEngine::MathC::Vector2 mPositionCurrent;
+
+    std::string mSilhouetteTemplatePath;             // Path to the silhouette template
+    CultyEngine::GameObjectHandle mSilhouetteHandle; // Handle to the silhouette
 };

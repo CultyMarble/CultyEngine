@@ -1,15 +1,11 @@
 {
     "Components": {
+        "ComponentNoteMovement": {
+            "SilhouetteTemplate": "../../Assets/Templates/ProjectDiva/note_o_end.json"
+        },
         "ComponentUISprite": {
             "Texture": "../../Assets/Images/projectdiva/note_o.png",
             "Pivot": "Center"
-        },
-        "ComponentNoteMovement": {
-            "ComponentUISprite": {
-                "PositionStart": [ 80.0, 80.0 ],
-                "PositionEnd": [ 500.0, 80.0 ],
-                "Speed": 100.0
-            }
         }
     }
 }
