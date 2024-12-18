@@ -19,6 +19,8 @@ namespace CultyEngine
         float GetRotation() const { return mRotation; }
         void SetRotation(float rotation) { mRotation = rotation; mUISprite.SetRotation(rotation); }
 
+        void SetTexture(Graphics::Texture* texture);
+
     private:
         std::filesystem::path mTexturePath;
         DirectX::XMFLOAT2 mPosition;

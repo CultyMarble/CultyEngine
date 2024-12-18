@@ -5,6 +5,7 @@
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
+using namespace CultyEngine::MathC;
 
 namespace
 {
@@ -102,6 +103,23 @@ void UISpriteRenderer::Render(const UISprite* uiSprite)
             uiSprite->mOrigin,
             uiSprite->mScale,
             uiSprite->mFlip
+        );
+    }
+}
+
+void UISpriteRenderer::Render(Graphics::Texture* texture, const UISprite& uiSprite)
+{
+    if (texture != nullptr)
+    {
+        UISpriteRenderer::Get()->mSpriteBatch->Draw(
+            (ID3D11ShaderResourceView*)texture->GetRawData(),
+            uiSprite.mPosition,
+            &uiSprite.mRect,
+            uiSprite.mColor,
+            uiSprite.mRotation,
+            uiSprite.mOrigin,
+            uiSprite.mScale,
+            uiSprite.mFlip
         );
     }
 }

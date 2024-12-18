@@ -309,6 +309,7 @@
 
 #include <stdio.h>  /* FILE */
 
+#include "FFmpeg/include/libavcodec/codec_par.h"
 #include "libavcodec/codec_par.h"
 #include "libavcodec/defs.h"
 #include "libavcodec/packet.h"

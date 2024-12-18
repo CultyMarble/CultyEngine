@@ -99,6 +99,12 @@ void CultyEngine::Graphics::UISprite::GetOrigin(float& x, float& y)
     y = mOrigin.y;
 }
 
+void UISprite::SetTexture(Graphics::Texture* texture)
+{
+    mTexture = texture;
+    mTextureID = -1; // Reset texture ID since we are using the actual texture
+}
+
 void UISprite::UpdateOrigin()
 {
     const float width = mRect.right - mRect.left;

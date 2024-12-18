@@ -3,6 +3,7 @@
 namespace CultyEngine::Graphics
 {
     class UISprite;
+    class Texture;
 
     class UISpriteRenderer final
     {
@@ -21,6 +22,7 @@ namespace CultyEngine::Graphics
         void EndRender();
 
         void Render(const UISprite* uiSprite);
+        static void Render(Graphics::Texture* texture, const UISprite& uiSprite);
 
     private:
         DirectX::CommonStates* mCommonStates = nullptr;

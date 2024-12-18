@@ -1,8 +1,8 @@
 #pragma once
 #include <CultyEngine/Inc/CultyEngine.h>
 #include <queue>
-
-
+#include <vector>
+#include <string>
 
 class GameState : public CultyEngine::ApplicationState
 {
@@ -22,8 +22,22 @@ private:
     void HandleTrackedNote();
     void HandlePlayerInput();
 
+    // Frame extraction and cleanup
+    void ExtractFramesFromVideo(const std::string& videoPath, const std::string& outputFolder);
+    void CleanFrameFolder(const std::string& outputFolder);
+    void LoadPPMFramesAsTextures(const std::string& folderPath);
+
+    // Texture handling
+    std::vector<CultyEngine::Graphics::Texture*> mTextures;
+    float mFrameTime = 1.0f / 30.0f; // For 60 FPS
+    float mCurrentFrameTime = 0.0f;
+    size_t mCurrentFrameIndex = 0;
+
+    void CreateFullscreenUISpriteWithTexture();
+    void UpdateFullscreenUISpriteTexture();
+
 private:
-    // Define valid buttons
+    // Define valid input buttons
     std::vector<int> mValidButtons =
     {
         CultyEngine::Input::PS4_BUTTON_SQUARE,
@@ -40,10 +54,13 @@ private:
 
     float mElapsedTime = 0.0f;
     CultyEngine::GameObjectHandle mTrackedNote;
+    CultyEngine::GameObjectHandle mFullscreenUISpriteHandle;
 
     // Audio System variables
     CultyEngine::Audio::SoundId mSoundIdHit_Cool;
     CultyEngine::Audio::SoundId mSoundIdHit_Empty;
     CultyEngine::Audio::SoundId mSoundIdHit_Regular;
     CultyEngine::Audio::SoundId mSoundIdMiss;
+
+    CultyEngine::Audio::SoundId mBackgroundMusic;
 };

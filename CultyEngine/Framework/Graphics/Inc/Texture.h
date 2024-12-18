@@ -26,6 +26,7 @@ namespace CultyEngine::Graphics
 
 		virtual void Initialize(const std::filesystem::path& fileName);
 		virtual void Initialize(uint32_t width, uint32_t heigth, Format format);
+        virtual void Initialize(uint32_t width, uint32_t height, Format format, const void* data);
 		virtual void Terminate();
 
 		void BindVS(uint32_t slot) const;

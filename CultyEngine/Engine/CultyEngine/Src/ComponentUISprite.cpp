@@ -10,8 +10,9 @@ using namespace CultyEngine::Graphics;
 
 void ComponentUISprite::Initialize()
 {
-    ASSERT(!mTexturePath.empty(), "ComponentUISprite: texture path is not set");
-    mUISprite.Initialize(mTexturePath);
+    //ASSERT(!mTexturePath.empty(), "ComponentUISprite: texture path is not set");
+    if (!mTexturePath.empty())
+        mUISprite.Initialize(mTexturePath);
 
     if (mRect.right - mRect.left > 0)
         mUISprite.SetRect(mRect.top, mRect.left, mRect.right, mRect.bottom);
@@ -51,7 +52,17 @@ void ComponentUISprite::Render()
     }
 
     mUISprite.SetPosition({ worldPosition.x, worldPosition.y });
-    UISpriteRenderer::Get()->Render(&mUISprite);
+
+    if (mUISprite.mTexture != nullptr)
+    {
+        // Directly render the texture
+        UISpriteRenderer::Get()->Render(mUISprite.mTexture, mUISprite);
+    }
+    else
+    {
+        // Fallback to default rendering
+        UISpriteRenderer::Get()->Render(&mUISprite);
+    }
 }
 
 void ComponentUISprite::Deserialize(const rapidjson::Value& value)
@@ -179,4 +190,24 @@ MathC::Vector2 ComponentUISprite::GetPosition(bool includeOrigin)
         mUISprite.GetOrigin(x, y);
 
     return { mPosition.x - x, mPosition.y - y };
+}
+
+void ComponentUISprite::SetTexture(Graphics::Texture* texture)
+{
+    if (texture != nullptr)
+    {
+        mUISprite.mTexture = texture;
+
+        // Set mRect to cover the entire texture
+        mUISprite.mRect = { 0, 0, static_cast<int>(texture->GetWidth()), static_cast<int>(texture->GetHeight()) };
+
+        // Scale the texture to fill the screen (example for a 1280x720 screen)
+        float screenWidth = 1280.0f; // Replace with actual screen width
+        float screenHeight = 720.0f; // Replace with actual screen height
+        mUISprite.mScale.x = screenWidth / texture->GetWidth();
+        mUISprite.mScale.y = screenHeight / texture->GetHeight();
+
+        // Center the sprite on the screen
+        mUISprite.mPosition = { 0.0f, 0.0f };
+    }
 }

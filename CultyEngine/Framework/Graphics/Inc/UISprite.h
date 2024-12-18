@@ -45,16 +45,21 @@ namespace CultyEngine::Graphics
         bool IsInSprite(float x, float y);
         void GetOrigin(float& x, float& y);
 
+        void SetTexture(Graphics::Texture* texture);
+        Texture* mTexture = nullptr;
+
+        RECT mRect = { 0, 0, 100, 100 };
+        DirectX::XMFLOAT2 mScale = { 1.0f, 1.0f };
+        DirectX::XMFLOAT2 mPosition = { 0.0f, 0.0f };
+
     private:
         friend class UISpriteRenderer;
 
         void UpdateOrigin();
 
         TextureID mTextureID;
-        RECT mRect = { 0, 0, 100, 100 };
-        DirectX::XMFLOAT2 mPosition = { 0.0f, 0.0f };
+
         DirectX::XMFLOAT2 mOrigin = { 0.0f, 0.0f };
-        DirectX::XMFLOAT2 mScale = { 1.0f, 1.0f };
         DirectX::XMVECTOR mColor = DirectX::Colors::White;
         float mRotation = 0.0f;
         Pivot mPivot = Pivot::Center;

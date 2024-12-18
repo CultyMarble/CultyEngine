@@ -16,6 +16,7 @@ namespace CultyEngine::Graphics
 
         void BeginRender(Color clearColor = Colors::Black);
         void EndRender();
+
     private:
         ID3D11RenderTargetView* mRenderTargetView = nullptr;
         ID3D11DepthStencilView* mDepthStencilView = nullptr;
