@@ -1,4 +1,6 @@
 #pragma once
+#define XINPUT_USE_9_1_0 0 // Force use of XInput 1.4
+#include <Xinput.h>
 
 namespace CultyEngine::Input
 {
@@ -132,4 +134,23 @@ namespace CultyEngine::Input
 		RBUTTON		= 1,
 		MBUTTON		= 2,
 	};
+
+    // DirectInput button indices for PS4 controller
+    constexpr int PS4_BUTTON_X          = 1;  // Bottom button
+    constexpr int PS4_BUTTON_CIRCLE     = 2;  // Right button
+    constexpr int PS4_BUTTON_SQUARE     = 0;  // Left button
+    constexpr int PS4_BUTTON_TRIANGLE   = 3;  // Top button
+
+    constexpr int PS4_BUTTON_L1         = 4;  // Left Shoulder
+    constexpr int PS4_BUTTON_R1         = 5;  // Right Shoulder
+    constexpr int PS4_BUTTON_SHARE      = 8;  // Share button
+    constexpr int PS4_BUTTON_OPTIONS    = 9;  // Options button
+
+    constexpr int PS4_BUTTON_L3         = 10; // Left stick click
+    constexpr int PS4_BUTTON_R3         = 11; // Right stick click
+
+    constexpr int PS4_DPAD_UP           = 12; // D-Pad Up
+    constexpr int PS4_DPAD_DOWN         = 13; // D-Pad Down
+    constexpr int PS4_DPAD_LEFT         = 14; // D-Pad Left
+    constexpr int PS4_DPAD_RIGHT        = 15; // D-Pad Right
 }

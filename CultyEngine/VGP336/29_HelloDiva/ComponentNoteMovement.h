@@ -12,9 +12,16 @@ public:
     void Update(float deltaTime) override;
     void Deserialize(const rapidjson::Value& value) override;
 
+    enum class MovementType { Line, Sine, Bezier };
+
 private:
+    MovementType mMovementType = MovementType::Line;
+
     float mSpeed = 0.0f;
     float mElapsedTime = 0.0f;
+    float mFrequency = 1.0f;                        // Frequency for sine wave
+    float mAmplitude = 35.0f;                       // Amplitude for sine wave
+    CultyEngine::MathC::Vector2 mControlPoint;      // Control point for Bezier curve
 
     CultyEngine::MathC::Vector2 mPositionStart;
     CultyEngine::MathC::Vector2 mPositionEnd;

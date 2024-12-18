@@ -7,7 +7,6 @@
 
 using namespace CultyEngine;
 using namespace CultyEngine::Graphics;
-using namespace CultyEngine::Input;
 using namespace CultyEngine::Audio;
 
 namespace
@@ -113,6 +112,20 @@ void GameState::Update(float deltaTime)
     SpawnNotes(mNotes, mElapsedTime, mGameWorld);
 
     mGameWorld.Update(deltaTime);
+
+    auto inputSystem = Input::InputSystem::Get();
+
+    if (inputSystem->IsControllerButtonDown(Input::PS4_BUTTON_X))
+        LOG("Test -- Controller: Button X Pressed!");
+
+    if (inputSystem->IsControllerButtonDown(Input::PS4_BUTTON_CIRCLE))
+        LOG("Test -- Controller: Button Circle Pressed!");
+
+    if (inputSystem->IsControllerButtonDown(Input::PS4_BUTTON_SQUARE))
+        LOG("Test -- Controller: Button Square Pressed!");
+
+    if (inputSystem->IsControllerButtonDown(Input::PS4_BUTTON_TRIANGLE))
+        LOG("Test -- Controller: Button Triangle Pressed!");
 }
 
 void GameState::Render()

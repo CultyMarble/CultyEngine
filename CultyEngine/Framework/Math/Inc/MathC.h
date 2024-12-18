@@ -10,6 +10,8 @@
 
 namespace CultyEngine::MathC
 {
+    constexpr const float EPSILON = 0.0001f;
+
 	template<class T>
 	constexpr T Min(T a, T b)
 	{
@@ -45,6 +47,18 @@ namespace CultyEngine::MathC
 	{
 		return value * value;
 	}
+
+    // Scalar multiplication: float * Vector2
+    inline Vector2 operator*(float scalar, const Vector2& vec)
+    {
+        return Vector2(scalar * vec.x, scalar * vec.y);
+    }
+
+    // Scalar multiplication: Vector2 * float
+    inline Vector2 operator*(const Vector2& vec, float scalar)
+    {
+        return Vector2(vec.x * scalar, vec.y * scalar);
+    }
 
     // Normalize a Vector2
     inline Vector2 Normalize(const Vector2& v)

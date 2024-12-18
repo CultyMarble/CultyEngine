@@ -1,24 +1,14 @@
 {
     "Timeline": [
         {
-            "Time": 2.0,
+            "Time": 1.0,
             "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
             "Components": {
                 "ComponentNoteMovement": {
-                    "PositionStart": [ 600.0, 300.0 ],
-                    "PositionEnd": [ 100.0, 80.0 ],
-                    "Speed": 100.0
-                }
-            }
-        },
-        {
-            "Time": 3.0,
-            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
-            "Components": {
-                "ComponentNoteMovement": {
-                    "PositionStart": [ 200.0, 300.0 ],
-                    "PositionEnd": [ 500.0, 640.0 ],
-                    "Speed": 150.0
+                    "PositionStart": [ -80.0, -80.0 ],
+                    "PositionEnd": [ 640.0, 500.0 ],
+                    "Speed": 350.0,
+                    "MovementType": "Sine"
                 }
             }
         }

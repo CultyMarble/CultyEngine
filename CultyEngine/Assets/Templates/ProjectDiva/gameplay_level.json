@@ -2,10 +2,8 @@
     "Capacity": 999,
 
     "Services": {
-        "ServiceCamera": {
-        },
-        "ServiceUIRender": {
-        }
+        "ServiceCamera": {},
+        "ServiceUIRender": {}
     },
 
     "GameObjects": {

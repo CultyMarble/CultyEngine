@@ -23,7 +23,7 @@ namespace CultyEngine::MathC
         constexpr Vector2 operator-() const { return { -x, -y }; }
         constexpr Vector2 operator+(Vector2 b) const { return { x + b.x, y + b.y }; }
         constexpr Vector2 operator-(Vector2 b) const { return { x - b.x, y - b.y }; }
-        constexpr Vector2 operator*(float s) const { return { x * s, y * s }; }
+        // constexpr Vector2 operator*(float s) const { return { x * s, y * s }; }
         constexpr Vector2 operator/(float s) const { return { x / s, y / s }; }
 
         constexpr Vector2& operator+=(const Vector2& v) { x += v.x; y += v.y; return *this; }
@@ -42,7 +42,6 @@ namespace CultyEngine::MathC
             return !(*this == other);
         }
 
-
         // Utility functions
         float LengthSquared() const { return x * x + y * y; }
         float Length() const { return std::sqrt(LengthSquared()); }
@@ -51,6 +50,11 @@ namespace CultyEngine::MathC
         {
             float len = Length();
             return (len > 0.0f) ? Vector2(x / len, y / len) : Vector2(0.0f, 0.0f);
+        }
+
+        constexpr Vector2 Perpendicular() const
+        {
+            return Vector2(-y, x);
         }
 
         static float Dot(const Vector2& a, const Vector2& b)
