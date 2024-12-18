@@ -56,9 +56,7 @@ SoundId SoundEffectManager::Load(const std::filesystem::path& fileName)
         soundEventPtr->effect = std::make_unique<SoundEffect>(as->mAudioEngine, fullPath.wstring().c_str());
         soundEventPtr->instance = soundEventPtr->effect->CreateInstance();
     }
-
     return soundId;
-
 }
 
 void SoundEffectManager::Clear()

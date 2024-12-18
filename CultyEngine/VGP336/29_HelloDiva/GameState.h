@@ -2,6 +2,8 @@
 #include <CultyEngine/Inc/CultyEngine.h>
 #include <queue>
 
+
+
 class GameState : public CultyEngine::ApplicationState
 {
 public:
@@ -15,6 +17,7 @@ protected:
     CultyEngine::GameWorld mGameWorld;
 
 private:
+    void LoadTimeline(const std::filesystem::path& timelineFile);
     void SpawnNote();
     void HandleTrackedNote();
     void HandlePlayerInput();
@@ -37,4 +40,10 @@ private:
 
     float mElapsedTime = 0.0f;
     CultyEngine::GameObjectHandle mTrackedNote;
+
+    // Audio System variables
+    CultyEngine::Audio::SoundId mSoundIdHit_Cool;
+    CultyEngine::Audio::SoundId mSoundIdHit_Empty;
+    CultyEngine::Audio::SoundId mSoundIdHit_Regular;
+    CultyEngine::Audio::SoundId mSoundIdMiss;
 };

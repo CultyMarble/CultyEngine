@@ -283,7 +283,7 @@ bool ComponentNoteMovement::HasDisappeared() const
     return TimeRemaining() <= 0.0f;
 }
 
-bool ComponentNoteMovement::IsCorrectButton(int button) const
+bool ComponentNoteMovement::IsCorrectButtonDown(int button) const
 {
     return button == mRequiredButton;
 }

@@ -22,7 +22,7 @@ public:
     float GetTotalTime() const;
     bool HasDisappeared() const;
 
-    bool IsCorrectButton(int button) const;
+    bool IsCorrectButtonDown(int button) const;
     void SetRequiredButton(int button);
 
     void SetOnDestroyedCallback(NoteDestroyedCallback cb);
@@ -32,7 +32,6 @@ private:
     void SelfTerminate();
 
 private:
-
     MovementType mMovementType = MovementType::Line;
 
     bool mIsActive = false;                         // Indicates if the note is in the active state
