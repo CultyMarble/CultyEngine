@@ -166,6 +166,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C4729186-E
 		Assets\Templates\Test\test_object.json = Assets\Templates\Test\test_object.json
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Video", "Framework\Video\Video.vcxproj", "{B7903DDC-0097-45BB-9D14-EE70AB605BDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -510,6 +512,14 @@ Global
 		{40232229-DB14-4FE4-8FE6-A5C072DABA8F}.Release|x64.Build.0 = Release|x64
 		{40232229-DB14-4FE4-8FE6-A5C072DABA8F}.Release|x86.ActiveCfg = Release|Win32
 		{40232229-DB14-4FE4-8FE6-A5C072DABA8F}.Release|x86.Build.0 = Release|Win32
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Debug|x64.ActiveCfg = Debug|x64
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Debug|x64.Build.0 = Debug|x64
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Debug|x86.ActiveCfg = Debug|Win32
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Debug|x86.Build.0 = Debug|Win32
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Release|x64.ActiveCfg = Release|x64
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Release|x64.Build.0 = Release|x64
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Release|x86.ActiveCfg = Release|Win32
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -564,6 +574,7 @@ Global
 		{40232229-DB14-4FE4-8FE6-A5C072DABA8F} = {878D1975-821D-466B-96E6-7AB22E49F50C}
 		{76DDE9CE-FB20-46AD-B863-095A3D74EDA9} = {01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}
 		{C4729186-E392-4F70-BFB4-B218F128ADD6} = {01EBF1A6-2815-4CD9-A0B4-01B4F9D18372}
+		{B7903DDC-0097-45BB-9D14-EE70AB605BDD} = {D1A585D4-C5A9-450F-9FF7-23C490A1F2ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {033DDF7C-49D3-4D78-851F-7A065F9F78EE}

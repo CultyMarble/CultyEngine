@@ -81,6 +81,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)External/FFmpeg/include;$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;
+                $(SolutionDir)External/Bullet;
+                %(AdditionalIncludeDirectories)
+            </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -96,6 +100,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)External/FFmpeg/include;$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;
+                $(SolutionDir)External/Bullet;
+                %(AdditionalIncludeDirectories)
+            </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -111,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;%(AdditionalIncludeDirectories)
+      <AdditionalIncludeDirectories>$(SolutionDir)External/FFmpeg/include;$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;%(AdditionalIncludeDirectories)
 			</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -128,6 +136,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)External/FFmpeg/include;$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;
+                $(SolutionDir)External/Bullet;
+                %(AdditionalIncludeDirectories)
+            </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -219,6 +231,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Framework\Physics\Physics.vcxproj">
       <Project>{899acd7f-2c52-4b57-a62d-f506c597a094}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Video\Video.vcxproj">
+      <Project>{b7903ddc-0097-45bb-9d14-ee70ab605bdd}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

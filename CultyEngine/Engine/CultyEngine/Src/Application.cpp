@@ -3,6 +3,8 @@
 #include "ApplicationState.h"
 #include "EventManager.h"
 
+#include "Video/Inc/Video.h"
+
 using namespace CultyEngine;
 using namespace CultyEngine::Core;
 using namespace CultyEngine::Graphics;
