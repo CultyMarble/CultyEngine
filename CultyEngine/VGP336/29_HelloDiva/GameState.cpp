@@ -47,8 +47,8 @@ void GameState::Initialize()
 {
     // Load sound effects
     auto* soundManager = CultyEngine::Audio::SoundEffectManager::Get();
-    mSoundIdHit_Cool = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/hit_cool.wav");
-    mSoundIdHit_Empty = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/hit_empty.wav");
+    mSoundIdHit_Cool = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/hit_empty.wav");
+    mSoundIdHit_Empty = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/hit_cool.wav");
     mSoundIdHit_Regular = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/hit_regular.wav");
     mSoundIdMiss = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/miss.wav");
 
@@ -58,14 +58,14 @@ void GameState::Initialize()
     LoadTimeline(L"../../Assets/Templates/ProjectDiva/gameplay_timeline.json");
 
     // CleanFrameFolder("../../Assets/Videos/ppmFrames");
-    // ExtractFramesFromVideo("../../Assets/Videos/byebyebye.mp4", "../../Assets/Videos/ppmFrames");
+    // ExtractFramesFromVideo("../../Assets/Videos/rnc.mp4", "../../Assets/Videos/ppmFrames");
     LoadPPMFramesAsTextures("../../Assets/Videos/ppmFrames");
 
     mGameWorld.LoadLevel(L"../../Assets/Templates/ProjectDiva/gameplay_level.json");
 
     CreateFullscreenUISpriteWithTexture();
 
-    mBackgroundMusic = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/byebyebye.wav");
+    mBackgroundMusic = soundManager->Load(L"../../Assets/Sounds/ProjectDiva/rnc.wav");
     Audio::SoundEffectManager::Get()->Play(mBackgroundMusic, true);
 }
 
@@ -89,10 +89,10 @@ void GameState::Update(float deltaTime)
     mElapsedTime += deltaTime;
 
     static float frameTimer = 0.0f;
-    const float frameDuration = 1.0f / 16.0f;
+    const float frameDuration = 1.0f / 59.0f;
 
     frameTimer += deltaTime;
-    if (frameTimer >= frameDuration)
+    while (frameTimer >= frameDuration)
     {
         frameTimer -= frameDuration; // Reset timer
         mCurrentFrameIndex = (mCurrentFrameIndex + 1) % mTextures.size();
