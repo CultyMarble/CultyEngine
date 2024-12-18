@@ -2,6 +2,8 @@
 #include "CustomTypeID.h"
 #include <CultyEngine/Inc/GameObjectHandle.h>
 
+using NoteDestroyedCallback = std::function<void(CultyEngine::GameObjectHandle)>;
+
 class ComponentNoteMovement : public CultyEngine::Component
 {
 public:
@@ -14,8 +16,28 @@ public:
 
     enum class MovementType { Line, Sine, Bezier };
 
+    bool IsActive() const;
+    void SetActive(bool active);
+    float TimeRemaining() const;
+    float GetTotalTime() const;
+    bool HasDisappeared() const;
+
+    bool IsCorrectButton(int button) const;
+    void SetRequiredButton(int button);
+
+    void SetOnDestroyedCallback(NoteDestroyedCallback cb);
+
 private:
+    NoteDestroyedCallback mOnDestroyedCallback = nullptr; // Callback for note destruction
+    void SelfTerminate();
+
+private:
+
     MovementType mMovementType = MovementType::Line;
+
+    bool mIsActive = false;                         // Indicates if the note is in the active state
+    float mTotalTravelTime = 0.0f;                  // Total time for note movement
+    int mRequiredButton = -1;                       // Button required for this note
 
     float mSpeed = 0.0f;
     float mElapsedTime = 0.0f;
@@ -30,6 +52,6 @@ private:
     std::string mSilhouetteTemplatePath;             // Path to the silhouette template
     CultyEngine::GameObjectHandle mSilhouetteHandle; // Handle to the silhouette
 
-    std::string mArrowTemplatePath;                  // Path to the arrow template
-    CultyEngine::GameObjectHandle mArrowHandle;      // Handle to the arrow sprite
+    std::string mTimeArrowTemplatePath;              // Path to the arrow template
+    CultyEngine::GameObjectHandle mTimeArrowHandle;  // Handle to the arrow sprite
 };

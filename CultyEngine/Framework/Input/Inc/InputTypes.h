@@ -136,9 +136,9 @@ namespace CultyEngine::Input
 	};
 
     // DirectInput button indices for PS4 controller
+    constexpr int PS4_BUTTON_SQUARE     = 0;  // Left button
     constexpr int PS4_BUTTON_X          = 1;  // Bottom button
     constexpr int PS4_BUTTON_CIRCLE     = 2;  // Right button
-    constexpr int PS4_BUTTON_SQUARE     = 0;  // Left button
     constexpr int PS4_BUTTON_TRIANGLE   = 3;  // Top button
 
     constexpr int PS4_BUTTON_L1         = 4;  // Left Shoulder

@@ -8,6 +8,41 @@ using namespace CultyEngine;
 
 namespace
 {
+    void SpawnSilhouette(const std::string& silhouetteTemplatePath, GameObject& owner, const Vector2& positionEnd, GameObjectHandle& silhouetteHandle)
+    {
+        if (!silhouetteTemplatePath.empty())
+        {
+            GameObject* silhouetteObject = owner.GetWorld().CreateGameObject("Silhouette", silhouetteTemplatePath);
+            if (silhouetteObject)
+            {
+                // Place the silhouette at PositionEnd
+                auto* sprite = silhouetteObject->GetComponent<ComponentUISprite>();
+                if (sprite)
+                    sprite->SetPosition(positionEnd);
+
+                silhouetteObject->Initialize();
+                silhouetteHandle = silhouetteObject->GetHandle();
+            }
+        }
+    }
+
+    void SpawnTimeArrow(const std::string& mArrowTemplatePath, GameObject& owner, const Vector2& positionEnd, GameObjectHandle& arrowHandle)
+    {
+        if (!mArrowTemplatePath.empty())
+        {
+            GameObject* arrowObject = owner.GetWorld().CreateGameObject("Arrow", mArrowTemplatePath);
+            if (arrowObject)
+            {
+                auto* arrowSprite = arrowObject->GetComponent<ComponentUISprite>();
+                if (arrowSprite)
+                    arrowSprite->SetPosition(positionEnd); // Place arrow at silhouette position
+
+                arrowObject->Initialize();
+                arrowHandle = arrowObject->GetHandle();
+            }
+        }
+    }
+
     // Calculate rotation angle in radians based on elapsed and total travel time
     float CalculateRotationAngle(const float& elapsedTime, const float& totalTravelTime)
     {
@@ -17,8 +52,7 @@ namespace
         return rotationAngleDegrees * (static_cast<float>(M_PI) / 180.0f); // Convert to radians
     }
 
-    void UpdateTimeArrow(const float& totalTravelTime, const float& elapsedTime,
-        GameObject& owner, const GameObjectHandle& arrowHandle)
+    void UpdateTimeArrow(const float& totalTravelTime, const float& elapsedTime, GameObject& owner, const GameObjectHandle& arrowHandle)
     {
         // Calculate arrow rotation
         float rotationAngleRadians = CalculateRotationAngle(elapsedTime, totalTravelTime);
@@ -34,8 +68,7 @@ namespace
     }
 
     // Update position along a line
-    Vector2 UpdateLineMovement(const Vector2& positionStart, const Vector2& positionEnd, 
-        const float& speed, const float& deltaTime, Vector2& positionCurrent)
+    Vector2 UpdateLineMovement(const Vector2& positionStart, const Vector2& positionEnd, const float& speed, const float& deltaTime, Vector2& positionCurrent)
     {
         Vector2 direction = positionEnd - positionStart;
         if (direction.LengthSquared() > 0.0f) // Avoid division by zero
@@ -56,8 +89,7 @@ namespace
     }
 
     // Update position with sine wave movement
-    Vector2 UpdateSineMovement(const Vector2& positionStart, const Vector2& positionEnd, const float& totalTravelTime,
-        const float& amplitude, const float& frequency, const float& elapsedTime, Vector2& positionCurrent)
+    Vector2 UpdateSineMovement(const Vector2& positionStart, const Vector2& positionEnd, const float& totalTravelTime, const float& amplitude, const float& frequency, const float& elapsedTime, Vector2& positionCurrent)
     {
         // Calculate the normalized direction from start to end
         Vector2 direction = positionEnd - positionStart;
@@ -81,55 +113,27 @@ namespace
     }
 
     // Update position along a Bezier curve
-    Vector2 UpdateBezierMovement(const Vector2& positionStart, const Vector2& positionEnd,
-        const Vector2& controlPoint, const float& elapsedTime, const float& totalTravelTime, Vector2& positionCurrent)
+    Vector2 UpdateBezierMovement(const Vector2& positionStart, const Vector2& positionEnd, const Vector2& controlPoint, const float& elapsedTime, const float& totalTravelTime, Vector2& positionCurrent)
     {
         float t = Clamp(elapsedTime / totalTravelTime, 0.0f, 1.0f); // Ensure t is between 0 and 1
         positionCurrent = (1 - t) * (1 - t) * positionStart + 2 * (1 - t) * t * controlPoint + t * t * positionEnd;
         return positionCurrent;
     }
-
-    // Handle object cleanup when the note reaches its destination
-    void Cleanup(GameObject& owner, const GameObjectHandle& silhouetteHandle, const GameObjectHandle& arrowHandle)
-    {
-        owner.GetWorld().DestroyGameObject(silhouetteHandle);
-        owner.GetWorld().DestroyGameObject(arrowHandle);
-        owner.GetWorld().DestroyGameObject(owner.GetHandle());
-    }
 }
 
 void ComponentNoteMovement::Initialize()
 {
-    // Spawn the silhouette at PositionEnd
-    if (!mSilhouetteTemplatePath.empty())
-    {
-        GameObject* silhouetteObject = GetOwner().GetWorld().CreateGameObject("Silhouette", mSilhouetteTemplatePath);
-        if (silhouetteObject)
-        {
-            // Place the silhouette at PositionEnd
-            auto* sprite = silhouetteObject->GetComponent<ComponentUISprite>();
-            if (sprite)
-                sprite->SetPosition(mPositionEnd);
+    // Spawn note silhouette at PositionEnd
+    SpawnSilhouette(mSilhouetteTemplatePath, GetOwner(), mPositionEnd, mSilhouetteHandle);
 
-            silhouetteObject->Initialize();
-            mSilhouetteHandle = silhouetteObject->GetHandle();
-        }
-    }
+    // Spawn silhouette time arrow at PositionEnd
+    SpawnTimeArrow(mTimeArrowTemplatePath, GetOwner(), mPositionEnd, mTimeArrowHandle);
 
-    // Spawn the arrow at PositionEnd
-    if (!mArrowTemplatePath.empty())
-    {
-        GameObject* arrowObject = GetOwner().GetWorld().CreateGameObject("Arrow", mArrowTemplatePath);
-        if (arrowObject)
-        {
-            auto* arrowSprite = arrowObject->GetComponent<ComponentUISprite>();
-            if (arrowSprite)
-                arrowSprite->SetPosition(mPositionEnd); // Place arrow at silhouette position
+    // Calculate total travel time for movement
+    mTotalTravelTime = (mPositionStart - mPositionEnd).Length() / mSpeed;
 
-            arrowObject->Initialize();
-            mArrowHandle = arrowObject->GetHandle();
-        }
-    }
+    // Default note is inactive at the start
+    mIsActive = false;
 
     // Place the note at PositionStart
     auto* sprite = GetOwner().GetComponent<ComponentUISprite>();
@@ -142,7 +146,9 @@ void ComponentNoteMovement::Initialize()
 
 void ComponentNoteMovement::Terminate()
 {
-
+    GetOwner().GetWorld().DestroyGameObject(mSilhouetteHandle);
+    GetOwner().GetWorld().DestroyGameObject(mTimeArrowHandle);
+    GetOwner().GetWorld().DestroyGameObject(GetOwner().GetHandle());
 }
 
 void ComponentNoteMovement::Update(float deltaTime)
@@ -154,7 +160,7 @@ void ComponentNoteMovement::Update(float deltaTime)
     float totalTravelTime = (mPositionStart - mPositionEnd).Length() / mSpeed;
 
     // Update the rotation of time arrow
-    UpdateTimeArrow(totalTravelTime, mElapsedTime, GetOwner(), mArrowHandle);
+    UpdateTimeArrow(totalTravelTime, mElapsedTime, GetOwner(), mTimeArrowHandle);
 
     // Update position based on movement type
     switch (mMovementType)
@@ -178,7 +184,7 @@ void ComponentNoteMovement::Update(float deltaTime)
     if ((mPositionCurrent - mPositionEnd).LengthSquared() <= MathC::EPSILON * MathC::EPSILON)
     {
         mPositionCurrent = mPositionEnd;
-        Cleanup(GetOwner(), mSilhouetteHandle, mArrowHandle);
+        SelfTerminate();
     }
 }
 
@@ -208,7 +214,7 @@ void ComponentNoteMovement::Deserialize(const rapidjson::Value& value)
 
     if (value.HasMember("ArrowTemplate"))
     {
-        mArrowTemplatePath = value["ArrowTemplate"].GetString();
+        mTimeArrowTemplatePath = value["ArrowTemplate"].GetString();
     }
 
     if (value.HasMember("MovementType"))
@@ -245,4 +251,59 @@ void ComponentNoteMovement::Deserialize(const rapidjson::Value& value)
             mMovementType = MovementType::Line; // Default
         }
     }
+
+    if (value.HasMember("RequiredButton"))
+    {
+        mRequiredButton = value["RequiredButton"].GetInt();
+    }
+}
+
+bool ComponentNoteMovement::IsActive() const
+{
+    return mIsActive;
+}
+
+void ComponentNoteMovement::SetActive(bool active)
+{
+    mIsActive = active;
+}
+
+float ComponentNoteMovement::TimeRemaining() const
+{
+    return mTotalTravelTime - mElapsedTime;
+}
+
+float ComponentNoteMovement::GetTotalTime() const
+{
+    return mTotalTravelTime;
+}
+
+bool ComponentNoteMovement::HasDisappeared() const
+{
+    return TimeRemaining() <= 0.0f;
+}
+
+bool ComponentNoteMovement::IsCorrectButton(int button) const
+{
+    return button == mRequiredButton;
+}
+
+void ComponentNoteMovement::SetRequiredButton(int button)
+{
+    mRequiredButton = button;
+}
+
+void ComponentNoteMovement::SetOnDestroyedCallback(NoteDestroyedCallback cb)
+{
+    mOnDestroyedCallback = cb;
+}
+
+void ComponentNoteMovement::SelfTerminate()
+{
+    if (mOnDestroyedCallback)
+        mOnDestroyedCallback(GetOwner().GetHandle());
+
+    GetOwner().GetWorld().DestroyGameObject(mSilhouetteHandle);
+    GetOwner().GetWorld().DestroyGameObject(mTimeArrowHandle);
+    GetOwner().GetWorld().DestroyGameObject(GetOwner().GetHandle());
 }

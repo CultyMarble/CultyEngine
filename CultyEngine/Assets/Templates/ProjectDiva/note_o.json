@@ -2,7 +2,8 @@
     "Components": {
         "ComponentNoteMovement": {
             "SilhouetteTemplate": "../../Assets/Templates/ProjectDiva/note_o_end.json",
-            "ArrowTemplate": "../../Assets/Templates/ProjectDiva/time_arrow.json"
+            "ArrowTemplate": "../../Assets/Templates/ProjectDiva/time_arrow.json",
+            "RequiredButton": 2
         },
         "ComponentUISprite": {
             "Texture": "../../Assets/Images/projectdiva/note_o.png",

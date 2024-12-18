@@ -7,6 +7,8 @@ namespace CultyEngine
 	public:
 		GameObjectHandle() = default;
 
+        const int GetIndex() const { return mIndex; }
+
 	private:
 		friend class GameWorld;
 
