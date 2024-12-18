@@ -22,6 +22,8 @@ private:
     void HandleTrackedNote();
     void HandlePlayerInput();
 
+    void SpawnFeedbackPopup(const std::string& templatePath, const CultyEngine::MathC::Vector2& position, float lifetime);
+
     // Frame extraction and cleanup
     void ExtractFramesFromVideo(const std::string& videoPath, const std::string& outputFolder);
     void CleanFrameFolder(const std::string& outputFolder);

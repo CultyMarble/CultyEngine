@@ -25,6 +25,8 @@ public:
     bool IsCorrectButtonDown(int button) const;
     void SetRequiredButton(int button);
 
+    CultyEngine::MathC::Vector2 GetCurrentPosition() const { return mPositionCurrent; }
+
     void SetOnDestroyedCallback(NoteDestroyedCallback cb);
 
 private:

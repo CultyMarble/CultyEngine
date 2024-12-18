@@ -1,4 +1,4 @@
-#include "ComponentNoteMovement.h"
+#include "ComponentNote.h"
 #include <CultyEngine/Inc/ComponentUISprite.h>
 #include <CultyEngine/Inc/GameObject.h>
 #include <CultyEngine/Inc/GameWorld.h>

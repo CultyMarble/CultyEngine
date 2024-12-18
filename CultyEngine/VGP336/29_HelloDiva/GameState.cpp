@@ -6,9 +6,10 @@
 #include <sstream>
 #include <iostream>
 
-#include "GameState.h"
-#include "ComponentNoteMovement.h"
 #include "Windows.h"
+#include "GameState.h"
+#include "ComponentNote.h"
+#include "ComponentFeedbackPopup.h"
 
 extern "C"
 {
@@ -28,6 +29,8 @@ Component* CustomComponentMake(const std::string& componentName, GameObject& gam
 {
     if (componentName == "ComponentNoteMovement")
         return gameObject.AddComponent<ComponentNoteMovement>();
+    if (componentName == "ComponentFeedbackPopup")
+        return gameObject.AddComponent<ComponentFeedbackPopup>();
     return nullptr;
 }
 
@@ -35,6 +38,8 @@ Component* CustomComponentGet(const std::string& componentName, GameObject& game
 {
     if (componentName == "ComponentNoteMovement")
         return gameObject.GetComponent<ComponentNoteMovement>();
+    if (componentName == "ComponentFeedbackPopup")
+        return gameObject.GetComponent<ComponentFeedbackPopup>();
     return nullptr;
 }
 
@@ -52,9 +57,9 @@ void GameState::Initialize()
 
     LoadTimeline(L"../../Assets/Templates/ProjectDiva/gameplay_timeline.json");
 
-    CleanFrameFolder("../../Assets/Videos/ppmFrames");
+    // CleanFrameFolder("../../Assets/Videos/ppmFrames");
     // ExtractFramesFromVideo("../../Assets/Videos/byebyebye.mp4", "../../Assets/Videos/ppmFrames");
-    // LoadPPMFramesAsTextures("../../Assets/Videos/ppmFrames");
+    LoadPPMFramesAsTextures("../../Assets/Videos/ppmFrames");
 
     mGameWorld.LoadLevel(L"../../Assets/Templates/ProjectDiva/gameplay_level.json");
 
@@ -258,7 +263,7 @@ void GameState::HandlePlayerInput()
         return;
     }
 
-    auto* noteMovement = trackedObject->GetComponent<ComponentNoteMovement>();
+    auto* note = trackedObject->GetComponent<ComponentNoteMovement>();
 
     // Process player input for the tracked note
     for (int button : mValidButtons)
@@ -266,18 +271,22 @@ void GameState::HandlePlayerInput()
         if (!inputSystem->IsControllerButtonDown(button))
             continue;
 
-        float timeRemaining = noteMovement->TimeRemaining();
-        float totalTime = noteMovement->GetTotalTime();
+        float timeRemaining = note->TimeRemaining();
+        float totalTime = note->GetTotalTime();
 
         // Process hits or misses within the active timing window
         if (timeRemaining <= totalTime * 0.1f)
         {
-            if (!noteMovement->IsCorrectButtonDown(button))
+            if (!note->IsCorrectButtonDown(button))
             {
                 // Miss: Incorrect button
                 LOG("Miss: Incorrect button.");
                 soundManager->Play(mSoundIdMiss);
-                noteMovement->Terminate();
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
+
+                note->Terminate();
                 mTrackedNote = CultyEngine::GameObjectHandle();
                 return;
             }
@@ -287,35 +296,53 @@ void GameState::HandlePlayerInput()
             {
                 LOG("Hit: Cool (Golden)");
                 soundManager->Play(mSoundIdHit_Cool);
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.03f)
             {
                 LOG("Hit: Cool (Normal)");
                 soundManager->Play(mSoundIdHit_Regular);
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.04f)
             {
                 LOG("Hit: Fine");
                 soundManager->Play(mSoundIdHit_Regular);
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.05f)
             {
                 LOG("Hit: Safe");
                 soundManager->Play(mSoundIdHit_Regular);
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.07f)
             {
                 LOG("Hit: Worst");
                 soundManager->Play(mSoundIdHit_Regular);
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
             }
             else
             {
                 LOG("Hit: Miss");
                 soundManager->Play(mSoundIdMiss);
+
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
             }
 
             // Terminate the note after processing a hit
-            noteMovement->Terminate();
+            note->Terminate();
             mTrackedNote = CultyEngine::GameObjectHandle();
             return;
         }
@@ -324,6 +351,24 @@ void GameState::HandlePlayerInput()
     // Play empty hit sound for valid button presses outside active timing window
     if (isAnyButtonPressed)
         soundManager->Play(mSoundIdHit_Empty);
+}
+
+void GameState::SpawnFeedbackPopup(const std::string& templatePath, const MathC::Vector2& position, float lifetime)
+{
+    // Create the popup GameObject
+    GameObject* popupObject = mGameWorld.CreateGameObject("FeedbackPopup", templatePath);
+    ASSERT(popupObject != nullptr, "Failed to create FeedbackPopup!");
+
+    // Set the position
+    popupObject->GetComponent<ComponentUISprite>()->SetPosition({ position.x, position.y - 50});
+
+    // Set the lifetime in the FeedbackPopup component
+    auto* feedbackPopup = popupObject->GetComponent<ComponentFeedbackPopup>();
+    if (feedbackPopup != nullptr)
+        feedbackPopup->SetLifetime(lifetime);
+
+    // Initialize the GameObject
+    popupObject->Initialize();
 }
 
 // VIDEO PLAYER

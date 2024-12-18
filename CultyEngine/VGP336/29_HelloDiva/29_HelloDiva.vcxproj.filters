@@ -21,7 +21,10 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentNoteMovement.cpp">
+    <ClCompile Include="ComponentNote.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentFeedbackPopup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +35,10 @@
     <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentNoteMovement.h">
+    <ClInclude Include="ComponentNote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentFeedbackPopup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

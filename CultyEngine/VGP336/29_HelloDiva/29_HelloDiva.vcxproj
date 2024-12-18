@@ -135,12 +135,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ComponentNoteMovement.cpp" />
+    <ClCompile Include="ComponentFeedbackPopup.cpp" />
+    <ClCompile Include="ComponentNote.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ComponentNoteMovement.h" />
+    <ClInclude Include="ComponentFeedbackPopup.h" />
+    <ClInclude Include="ComponentNote.h" />
     <ClInclude Include="CustomTypeID.h" />
     <ClInclude Include="GameState.h" />
   </ItemGroup>

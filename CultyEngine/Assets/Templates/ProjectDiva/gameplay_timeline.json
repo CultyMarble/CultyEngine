@@ -11,6 +11,18 @@
                     "MovementType": "Sine"
                 }
             }
+        },
+        {
+            "Time": 3.0,
+            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
+            "Components": {
+                "ComponentNoteMovement": {
+                    "PositionStart": [ -80.0, -80.0 ],
+                    "PositionEnd": [ 640.0, 500.0 ],
+                    "Speed": 250.0,
+                    "MovementType": "Sine"
+                }
+            }
         }
     ]
 }
