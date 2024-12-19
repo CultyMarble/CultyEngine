@@ -2,7 +2,7 @@
     "Timeline": [
         {
             "Time": 0.65,
-            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
+            "Template": "../../Assets/Templates/ProjectDiva/note_s.json",
             "Components": {
                 "ComponentNoteMovement": {
                     "PositionStart": [ 340.0, -80.0 ],
@@ -35,7 +35,7 @@
         },
         {
             "Time": 2.4,
-            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
+            "Template": "../../Assets/Templates/ProjectDiva/note_s.json",
             "Components": {
                 "ComponentNoteMovement": {
                     "PositionStart": [ 240.0, -80.0 ],
@@ -47,7 +47,7 @@
 
         {
             "Time": 3.7,
-            "Template": "../../Assets/Templates/ProjectDiva/note_x.json",
+            "Template": "../../Assets/Templates/ProjectDiva/note_t.json",
             "Components": {
                 "ComponentNoteMovement": {
                     "PositionStart": [ 340.0, 800.0 ],
@@ -58,7 +58,7 @@
         },
         {
             "Time": 4.35,
-            "Template": "../../Assets/Templates/ProjectDiva/note_x.json",
+            "Template": "../../Assets/Templates/ProjectDiva/note_t.json",
             "Components": {
                 "ComponentNoteMovement": {
                     "PositionStart": [ 360.0, 800.0 ],
@@ -69,7 +69,7 @@
         },
         {
             "Time": 5,
-            "Template": "../../Assets/Templates/ProjectDiva/note_o.json",
+            "Template": "../../Assets/Templates/ProjectDiva/note_t.json",
             "Components": {
                 "ComponentNoteMovement": {
                     "PositionStart": [ 380.0, 800.0 ],

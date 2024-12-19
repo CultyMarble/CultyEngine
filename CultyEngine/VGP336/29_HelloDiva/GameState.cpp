@@ -59,7 +59,7 @@ void GameState::Initialize()
 
     // CleanFrameFolder("../../Assets/Videos/ppmFrames");
     // ExtractFramesFromVideo("../../Assets/Videos/rnc.mp4", "../../Assets/Videos/ppmFrames");
-    LoadPPMFramesAsTextures("../../Assets/Videos/ppmFrames");
+    LoadPPMFramesAsTextures("../../Assets/Videos/ppmFrame");
 
     mGameWorld.LoadLevel(L"../../Assets/Templates/ProjectDiva/gameplay_level.json");
 
