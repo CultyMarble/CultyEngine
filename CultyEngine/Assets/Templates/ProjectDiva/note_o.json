@@ -1,14 +1,14 @@
 {
-    "Components": {
-        "ComponentNoteMovement": {
-            "SilhouetteTemplate": "../../Assets/Templates/ProjectDiva/note_o_end.json",
-            "ArrowTemplate": "../../Assets/Templates/ProjectDiva/time_arrow.json",
-            "Speed": 400.0,
-            "RequiredButton": 2
-        },
-        "ComponentUISprite": {
-            "Texture": "../../Assets/Images/projectdiva/note_o.png",
-            "Pivot": "Center"
-        }
+  "Components": {
+    "ComponentNoteMovement": {
+      "SilhouetteTemplate": "../../Assets/Templates/ProjectDiva/note_o_end.json",
+      "ArrowTemplate": "../../Assets/Templates/ProjectDiva/time_arrow.json",
+      "Speed": 400.0,
+      "RequiredButton": 2
+    },
+    "ComponentUISprite": {
+      "Texture": "../../Assets/Images/projectdiva/note_o.png",
+      "Pivot": "Center"
     }
+  }
 }

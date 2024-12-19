@@ -1,0 +1,14 @@
+{
+    "Components": {
+        "ComponentNoteMovement": {
+            "SilhouetteTemplate": "../../Assets/Templates/ProjectDiva/note_x_end.json",
+            "ArrowTemplate": "../../Assets/Templates/ProjectDiva/time_arrow.json",
+            "Speed": 400.0,
+            "RequiredButton": 2
+        },
+        "ComponentUISprite": {
+            "Texture": "../../Assets/Images/projectdiva/note_x.png",
+            "Pivot": "Center"
+        }
+    }
+}

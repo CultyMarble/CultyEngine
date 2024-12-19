@@ -154,7 +154,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectDiva", "ProjectDiva"
 		Assets\Templates\ProjectDiva\gameplay_timeline.json = Assets\Templates\ProjectDiva\gameplay_timeline.json
 		Assets\Templates\ProjectDiva\note_o.json = Assets\Templates\ProjectDiva\note_o.json
 		Assets\Templates\ProjectDiva\note_o_end.json = Assets\Templates\ProjectDiva\note_o_end.json
+		Assets\Templates\ProjectDiva\note_x.json = Assets\Templates\ProjectDiva\note_x.json
+		Assets\Templates\ProjectDiva\note_x_end.json = Assets\Templates\ProjectDiva\note_x_end.json
 		Assets\Templates\ProjectDiva\popup_cool1.json = Assets\Templates\ProjectDiva\popup_cool1.json
+		Assets\Templates\ProjectDiva\popup_cool2.json = Assets\Templates\ProjectDiva\popup_cool2.json
+		Assets\Templates\ProjectDiva\popup_fine.json = Assets\Templates\ProjectDiva\popup_fine.json
+		Assets\Templates\ProjectDiva\popup_sad.json = Assets\Templates\ProjectDiva\popup_sad.json
+		Assets\Templates\ProjectDiva\popup_safe.json = Assets\Templates\ProjectDiva\popup_safe.json
+		Assets\Templates\ProjectDiva\popup_worst.json = Assets\Templates\ProjectDiva\popup_worst.json
 		Assets\Templates\ProjectDiva\time_arrow.json = Assets\Templates\ProjectDiva\time_arrow.json
 	EndProjectSection
 EndProject

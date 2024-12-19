@@ -121,7 +121,7 @@ namespace
     }
 }
 
-void ComponentNoteMovement::Initialize()
+void ComponentNote::Initialize()
 {
     // Spawn note silhouette at PositionEnd
     SpawnSilhouette(mSilhouetteTemplatePath, GetOwner(), mPositionEnd, mSilhouetteHandle);
@@ -144,14 +144,14 @@ void ComponentNoteMovement::Initialize()
     }
 }
 
-void ComponentNoteMovement::Terminate()
+void ComponentNote::Terminate()
 {
     GetOwner().GetWorld().DestroyGameObject(mSilhouetteHandle);
     GetOwner().GetWorld().DestroyGameObject(mTimeArrowHandle);
     GetOwner().GetWorld().DestroyGameObject(GetOwner().GetHandle());
 }
 
-void ComponentNoteMovement::Update(float deltaTime)
+void ComponentNote::Update(float deltaTime)
 {
     // Increment elapsed time for this note
     mElapsedTime += deltaTime;
@@ -188,7 +188,7 @@ void ComponentNoteMovement::Update(float deltaTime)
     }
 }
 
-void ComponentNoteMovement::Deserialize(const rapidjson::Value& value)
+void ComponentNote::Deserialize(const rapidjson::Value& value)
 {
     if (value.HasMember("Speed"))
         mSpeed = value["Speed"].GetFloat();
@@ -258,50 +258,50 @@ void ComponentNoteMovement::Deserialize(const rapidjson::Value& value)
     }
 }
 
-bool ComponentNoteMovement::IsActive() const
+bool ComponentNote::IsActive() const
 {
     return mIsActive;
 }
 
-void ComponentNoteMovement::SetActive(bool active)
+void ComponentNote::SetActive(bool active)
 {
     mIsActive = active;
 }
 
-float ComponentNoteMovement::TimeRemaining() const
+float ComponentNote::TimeRemaining() const
 {
     return mTotalTravelTime - mElapsedTime;
 }
 
-float ComponentNoteMovement::GetTotalTime() const
+float ComponentNote::GetTotalTime() const
 {
     return mTotalTravelTime;
 }
 
-bool ComponentNoteMovement::HasDisappeared() const
+bool ComponentNote::HasDisappeared() const
 {
     return TimeRemaining() <= 0.0f;
 }
 
-bool ComponentNoteMovement::IsCorrectButtonDown(int button) const
+bool ComponentNote::IsCorrectButtonDown(int button) const
 {
     return button == mRequiredButton;
 }
 
-void ComponentNoteMovement::SetRequiredButton(int button)
+void ComponentNote::SetRequiredButton(int button)
 {
     mRequiredButton = button;
 }
 
-void ComponentNoteMovement::SetOnDestroyedCallback(NoteDestroyedCallback cb)
+void ComponentNote::SetOnDestroyedCallback(NoteDestroyedCallback cb)
 {
-    mOnDestroyedCallback = cb;
+    mOnDestroyedCallback = std::move(cb);
 }
 
-void ComponentNoteMovement::SelfTerminate()
+void ComponentNote::SelfTerminate()
 {
     if (mOnDestroyedCallback)
-        mOnDestroyedCallback(GetOwner().GetHandle());
+        mOnDestroyedCallback(GetOwner().GetHandle(), mPositionCurrent);
 
     GetOwner().GetWorld().DestroyGameObject(mSilhouetteHandle);
     GetOwner().GetWorld().DestroyGameObject(mTimeArrowHandle);

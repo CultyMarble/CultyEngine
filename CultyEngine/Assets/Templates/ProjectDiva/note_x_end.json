@@ -1,0 +1,8 @@
+{
+    "Components": {
+        "ComponentUISprite": {
+            "Texture": "../../Assets/Images/projectdiva/note_x_end.png",
+            "Pivot": "Center"
+        }
+    }
+}

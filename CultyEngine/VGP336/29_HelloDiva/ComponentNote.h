@@ -2,9 +2,9 @@
 #include "CustomTypeID.h"
 #include <CultyEngine/Inc/GameObjectHandle.h>
 
-using NoteDestroyedCallback = std::function<void(CultyEngine::GameObjectHandle)>;
+using NoteDestroyedCallback = std::function<void(CultyEngine::GameObjectHandle, CultyEngine::MathC::Vector2)>;
 
-class ComponentNoteMovement : public CultyEngine::Component
+class ComponentNote : public CultyEngine::Component
 {
 public:
     SET_TYPE_ID(CustomComponentID::NoteMovement);

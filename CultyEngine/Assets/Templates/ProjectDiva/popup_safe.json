@@ -1,0 +1,11 @@
+{
+    "Components": {
+        "ComponentFeedbackPopup": {
+            "Lifetime": 0.2
+        },
+        "ComponentUISprite": {
+            "Texture": "../../Assets/Images/projectdiva/popup_safe.png",
+            "Pivot": "Center"
+        }
+    }
+}

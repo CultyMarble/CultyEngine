@@ -28,7 +28,7 @@ using namespace CultyEngine::Audio;
 Component* CustomComponentMake(const std::string& componentName, GameObject& gameObject)
 {
     if (componentName == "ComponentNoteMovement")
-        return gameObject.AddComponent<ComponentNoteMovement>();
+        return gameObject.AddComponent<ComponentNote>();
     if (componentName == "ComponentFeedbackPopup")
         return gameObject.AddComponent<ComponentFeedbackPopup>();
     return nullptr;
@@ -37,7 +37,7 @@ Component* CustomComponentMake(const std::string& componentName, GameObject& gam
 Component* CustomComponentGet(const std::string& componentName, GameObject& gameObject)
 {
     if (componentName == "ComponentNoteMovement")
-        return gameObject.GetComponent<ComponentNoteMovement>();
+        return gameObject.GetComponent<ComponentNote>();
     if (componentName == "ComponentFeedbackPopup")
         return gameObject.GetComponent<ComponentFeedbackPopup>();
     return nullptr;
@@ -196,13 +196,15 @@ void GameState::SpawnNote()
         noteObject->Initialize();
 
         // Get the movement component and set the destruction callback
-        auto* noteMovement = noteObject->GetComponent<ComponentNoteMovement>();
-        noteMovement->SetOnDestroyedCallback([this](CultyEngine::GameObjectHandle handle)
+        auto* componentNode = noteObject->GetComponent<ComponentNote>();
+
+        componentNode->SetOnDestroyedCallback([this](CultyEngine::GameObjectHandle handle, CultyEngine::MathC::Vector2 position)
             {
                 if (handle.GetIndex() == mTrackedNote.GetIndex())
                 {
+                    SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_sad.json", position, 0.25f);
                     LOG("Miss: Note disappeared.");
-                    mTrackedNote = CultyEngine::GameObjectHandle(); // Clear the tracked note
+                    mTrackedNote = CultyEngine::GameObjectHandle();
                 }
             });
 
@@ -220,21 +222,13 @@ void GameState::HandleTrackedNote()
     if (trackedObject == nullptr)
         return;
 
-    auto* noteMovement = trackedObject->GetComponent<ComponentNoteMovement>();
-    if (noteMovement == nullptr)
+    auto* note = trackedObject->GetComponent<ComponentNote>();
+    if (note == nullptr)
         return;
 
     // Activate the note if it's within the active zone
-    if (!noteMovement->IsActive() && noteMovement->TimeRemaining() <= noteMovement->GetTotalTime() * 0.4f)
-        noteMovement->SetActive(true);
-
-    // Handle note disappearance
-    if (noteMovement->HasDisappeared())
-    {
-        // Raise a miss and clear the tracked note
-        LOG("Miss: Note disappeared.");
-        mTrackedNote = CultyEngine::GameObjectHandle();
-    }
+    if (!note->IsActive() && note->TimeRemaining() <= note->GetTotalTime() * 0.4f)
+        note->SetActive(true);
 }
 
 void GameState::HandlePlayerInput()
@@ -256,14 +250,14 @@ void GameState::HandlePlayerInput()
 
     // Play empty hit sound if no tracked note exists or note is inactive
     GameObject* trackedObject = mGameWorld.GetGameObject(mTrackedNote);
-    if (!trackedObject || !trackedObject->GetComponent<ComponentNoteMovement>()->IsActive())
+    if (!trackedObject || !trackedObject->GetComponent<ComponentNote>()->IsActive())
     {
         if (isAnyButtonPressed)
             soundManager->Play(mSoundIdHit_Empty);
         return;
     }
 
-    auto* note = trackedObject->GetComponent<ComponentNoteMovement>();
+    auto* note = trackedObject->GetComponent<ComponentNote>();
 
     // Process player input for the tracked note
     for (int button : mValidButtons)
@@ -277,14 +271,13 @@ void GameState::HandlePlayerInput()
         // Process hits or misses within the active timing window
         if (timeRemaining <= totalTime * 0.1f)
         {
-            if (!note->IsCorrectButtonDown(button))
+            if (note->IsCorrectButtonDown(button) == false)
             {
-                // Miss: Incorrect button
+                auto position = note->GetCurrentPosition();
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_sad.json", position, 0.25f);
+
                 LOG("Miss: Incorrect button.");
                 soundManager->Play(mSoundIdMiss);
-
-                auto position = note->GetCurrentPosition();
-                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
 
                 note->Terminate();
                 mTrackedNote = CultyEngine::GameObjectHandle();
@@ -306,7 +299,7 @@ void GameState::HandlePlayerInput()
                 soundManager->Play(mSoundIdHit_Regular);
 
                 auto position = note->GetCurrentPosition();
-                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool2.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.04f)
             {
@@ -314,7 +307,7 @@ void GameState::HandlePlayerInput()
                 soundManager->Play(mSoundIdHit_Regular);
 
                 auto position = note->GetCurrentPosition();
-                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_fine.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.05f)
             {
@@ -322,7 +315,7 @@ void GameState::HandlePlayerInput()
                 soundManager->Play(mSoundIdHit_Regular);
 
                 auto position = note->GetCurrentPosition();
-                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_safe.json", position, 0.25f);
             }
             else if (timeRemaining <= totalTime * 0.07f)
             {
@@ -330,7 +323,7 @@ void GameState::HandlePlayerInput()
                 soundManager->Play(mSoundIdHit_Regular);
 
                 auto position = note->GetCurrentPosition();
-                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_worst.json", position, 0.25f);
             }
             else
             {
@@ -338,7 +331,7 @@ void GameState::HandlePlayerInput()
                 soundManager->Play(mSoundIdMiss);
 
                 auto position = note->GetCurrentPosition();
-                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_cool1.json", position, 0.25f);
+                SpawnFeedbackPopup("../../Assets/Templates/ProjectDiva/popup_sad.json", position, 0.25f);
             }
 
             // Terminate the note after processing a hit
